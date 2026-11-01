@@ -19,7 +19,7 @@ def _strip_fences(text: str) -> str:
     return text.strip()
 
 
-def generate_note(turns: list[Turn], call_llm: LLMCall, max_retries: int = 1) -> SOAPNote:
+def generate_note(turns: list[Turn], call_llm: LLMCall, max_retries: int = 2) -> SOAPNote:
     system = build_system_prompt()
     error: str | None = None
     for _ in range(max_retries + 1):

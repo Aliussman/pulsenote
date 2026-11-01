@@ -29,7 +29,7 @@ def make_anthropic_call(max_tokens: int = 2000):
     return call
 
 
-def make_gemini_call(max_tokens: int = 8000):
+def make_gemini_call(max_tokens: int = 32768):
     from google import genai  # pip install google-genai; reads GEMINI_API_KEY from environment
     from google.genai import types
 
@@ -82,7 +82,7 @@ def make_gemini_call(max_tokens: int = 8000):
     return call
 
 
-def get_llm_call(max_tokens: int = 8000):
+def get_llm_call(max_tokens: int = 32768):
     """Automatically select provider based on PULSENOTE_PROVIDER or available API keys."""
     provider = os.environ.get("PULSENOTE_PROVIDER", "").lower()
     if provider == "anthropic" or (not provider and "ANTHROPIC_API_KEY" in os.environ and "GEMINI_API_KEY" not in os.environ):
