@@ -31,6 +31,8 @@ class RawNote(BaseModel):
 class NoteSentence(RawSentence):
     flagged: bool = False
     flag_reasons: list[str] = Field(default_factory=list)
+    hard_flags: list[str] = Field(default_factory=list)
+    soft_flags: list[str] = Field(default_factory=list)
 
 
 class SOAPNote(BaseModel):

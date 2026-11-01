@@ -60,3 +60,19 @@ def test_assessment_from_clinician_passes():
 def test_plan_with_correct_follow_up_passes():
     s = sentence("Follow up in 10 days.", "P", 3, "see you in 10 days")
     assert reasons(s) == []
+
+
+def test_compound_number_passes():
+    turns = {
+        1: Turn(id=1, speaker="Patient", text="You know I am thirty one years old.")
+    }
+    s = RawSentence(text="Patient is 31 years old.", section="S", support=[Support(turn_id=1, quote="I am thirty one")])
+    assert validate_sentence(s, turns) == []
+
+
+def test_clinical_polarity_negation_passes():
+    turns = {
+        1: Turn(id=1, speaker="Patient", text="I cannot sleep at night because of itching.")
+    }
+    s = RawSentence(text="Patient reports an inability to sleep at night.", section="S", support=[Support(turn_id=1, quote="I cannot sleep at night")])
+    assert "possible_dropped_negation" not in validate_sentence(s, turns)

@@ -13,8 +13,9 @@ Hard rules:
 doses, test results, or plans that nobody said.
 2. Write one atomic claim per sentence. If a sentence contains two facts, split it.
 3. Every sentence must cite at least one turn. For each citation give the turn_id (an integer, \
-so 3 for [T3]) and a short \
-quote (at most 15 words) copied exactly from that turn, character for character.
+so 3 for [T3]) and a short quote (at most 15 words) copied exactly from that turn, character for character. \
+If a claim is an answer to a question (e.g. Doctor asks "Any fever?" and Patient answers "No"), cite BOTH \
+the question turn and the answer turn so the full clinical context is preserved.
 4. If you cannot support a sentence with an exact quote, leave the sentence out.
 5. Keep negations and uncertainty exactly as spoken. "No fever" must never become "fever". \
 "Possibly" or "might be" must stay hedged.

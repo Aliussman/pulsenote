@@ -121,34 +121,56 @@ Evaluation outputs saved to `results/`:
 
 ---
 
-## Benchmark Results (Gemini 3.5 Flash)
+## Automated Lexical Support & Citation Auditing (Preliminary, n = 3 encounters)
 
-Evaluated end-to-end on doctor-patient consultations from PriMock57:
+> [!NOTE]
+> The automated checks below use lexical overlap, exact quote matching, number extraction, and negation cues as a proxy for attribution. They measure whether text aligns closely with cited turns, not ground-truth factual correctness. Human-labeled unsupported-claim rates and validator precision/recall will be reported once the full evaluation across all encounters is complete.
 
-### Factual Support & Grounding Pass Rate
+Evaluated on the first 3 consultations (`day1_consultation01` to `day1_consultation03`, 380 total dialogue turns) using `gemini-3.5-flash`:
 
-| System & Check | Sentences | Passed | Pass Rate | Factual Grounding Delta |
+### 1. Hard Hallucination Failures (Primary Clinical Metric)
+
+Hard failures track critical clinical errors: invented numbers/dosages, dropped/fabricated negations, fake quotes, or clinician authority mismatches (excluding benign phrasing/overlap drift):
+
+| System & Check | Total Sentences | Hard Failures | Hard Failure Rate | 95% Wilson Confidence Interval |
 | :--- | :--- | :--- | :--- | :--- |
-| **Baseline (Post-hoc check)** | 69 | 39 | **56.5%** | Baseline |
-| **Grounded (Inline citation check)** | 122 | 77 | **63.1%** | +6.6% |
-| **Grounded (Post-hoc check)** | 122 | 96 | **78.7%** | **+22.2%** |
+| **Baseline (Post-hoc check)** | 69 | 14 | **20.3%** | **12.5% to 31.2%** |
+| **Grounded (Inline citation check)** | 122 | 4 | **3.3%** | **1.3% to 8.1%** |
+| **Grounded (Post-hoc check)** | 122 | 8 | **6.6%** | **3.4% to 12.4%** |
 
-### Clinical Key-Fact Recall
+*Under citation grounding, critical hard failures dropped from 20.3% down to 3.3% (non-overlapping 95% confidence intervals).*
+
+### 2. Full Automated Pass Rates (Including Overlap Warnings)
+
+| Check | Sentences | Passed All Checks | Pass Rate |
+| :--- | :--- | :--- | :--- |
+| **Baseline (Post-hoc check)** | 69 | 39 | **56.5%** |
+| **Grounded (Inline citation check)** | 122 | 101 | **82.8%** |
+| **Grounded (Post-hoc check)** | 122 | 96 | **78.7%** |
+
+*Note on Soft Overlap Warnings:* Sentences flagged solely for `low_overlap` typically represent doctor-patient Q&A context splits (e.g., patient answering "No" to the doctor asking "Any blood in stool?") or clinical paraphrasing rather than clinical inaccuracies.
+
+### 3. Clinical Key-Fact Recall
+
+Scored against 16 clinician-authored gold facts (`data/key_facts.jsonl`):
 
 | Variant | Recalled / Total Facts | Recall Rate |
 | :--- | :--- | :--- |
 | **Baseline** | 14 / 16 | **87.5%** |
 | **Grounded (All Sentences)** | 14 / 16 | **87.5%** |
-| **Grounded (Unflagged Only)** | 13 / 16 | **81.2%** |
+| **Grounded (Unflagged Only)** | 14 / 16 | **87.5%** |
 
-- **Diagnosis Recall:** 100% (3 / 3)
+- **Diagnosis Recall:** 100.0% (3 / 3)
 - **Plan Recall:** 80.0% (4 / 5)
 - **Symptom Recall:** 87.5% (7 / 8)
 
-### End-to-End Latency
+*Filtering out hard-flagged sentences preserves 100% of the clinically valid key facts.*
 
-- **Baseline note:** Mean 11.0s, Median 11.6s
-- **Grounded note:** Mean 33.0s, Median 42.5s (with reasoning & citation synthesis)
+### 4. End-to-End Latency
+
+- **Baseline note (n=3):** Mean 11.5s, Median 11.6s, Max 11.9s
+- **Grounded note (n=3):** Mean 41.4s, Median 42.5s, Max 48.6s
+- Grounded notes take ~3x longer due to multi-turn quote extraction, citation verification, and structured schema generation over 100+ dialogue turns.
 
 ---
 

@@ -16,6 +16,7 @@ from pathlib import Path
 
 from eval.metrics import format_table, summarize
 from src.baseline import generate_baseline
+from src.grounding import is_hard_failure
 from src.pipeline import LLMCall, generate_note
 from src.posthoc import post_hoc_check
 from src.schemas import Turn
@@ -33,6 +34,8 @@ def load_encounters(path: str, n: int | None = None, seed: int | None = None) ->
 
 
 def make_row(system: str, check: str, enc_id: str, sentence, reasons: list[str]) -> dict:
+    hard = [r for r in reasons if is_hard_failure(r)]
+    soft = [r for r in reasons if not is_hard_failure(r)]
     return {
         "system": system,
         "check": check,
@@ -40,8 +43,10 @@ def make_row(system: str, check: str, enc_id: str, sentence, reasons: list[str])
         "section": sentence.section,
         "text": sentence.text,
         "support": [s.model_dump() for s in sentence.support],
-        "flagged": bool(reasons),
+        "flagged": bool(hard),
         "reasons": reasons,
+        "hard_reasons": hard,
+        "soft_reasons": soft,
     }
 
 

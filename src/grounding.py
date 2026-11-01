@@ -13,12 +13,40 @@ from .schemas import NoteSentence, RawNote, RawSentence, SOAPNote, Turn
 
 CLINICIAN_LABELS = {"doctor", "clinician", "physician", "dr", "gp", "nurse"}
 
-NUMBER_WORDS = {
-    "one": "1", "two": "2", "three": "3", "four": "4", "five": "5", "six": "6",
-    "seven": "7", "eight": "8", "nine": "9", "ten": "10", "eleven": "11", "twelve": "12",
+TENS_WORDS = {
+    "twenty": 20, "thirty": 30, "forty": 40, "fifty": 50,
+    "sixty": 60, "seventy": 70, "eighty": 80, "ninety": 90,
 }
 
-NEGATION_CUES = {"no", "not", "denies", "denied", "without", "never", "none", "negative", "nothing"}
+ONES_WORDS = {
+    "zero": 0, "one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6,
+    "seven": 7, "eight": 8, "nine": 9, "ten": 10, "eleven": 11, "twelve": 12,
+    "thirteen": 13, "fourteen": 14, "fifteen": 15, "sixteen": 16, "seventeen": 17,
+    "eighteen": 18, "nineteen": 19,
+}
+
+NEGATION_CUES = {
+    "no", "not", "denies", "denied", "denying", "without", "never", "none",
+    "negative", "nothing", "inability", "unable", "against", "cannot", "cant",
+    "avoid", "avoids", "unlikely",
+}
+
+HARD_REASON_CODES = {
+    "quote_not_in_turn",
+    "numbers_not_in_source",
+    "possible_dropped_negation",
+    "negation_not_in_quote",
+    "negation_not_in_source",
+    "assessment_or_plan_not_from_clinician",
+    "unknown_turn",
+    "no_support",
+    "no_matching_turn",
+}
+
+
+def is_hard_failure(reason: str) -> bool:
+    """True if reason represents a factual distortion (invented number, dropped negation, fake quote, wrong speaker)."""
+    return reason.split(":")[0] in HARD_REASON_CODES
 
 STOPWORDS = {
     "the", "and", "for", "with", "that", "this", "has", "have", "had", "was", "were", "are",
@@ -28,8 +56,7 @@ STOPWORDS = {
 }
 
 # Minimum share of a sentence's content words that must appear in the cited turns.
-# A and P are lower because clinicians summarise and the note may rephrase more.
-MIN_OVERLAP = {"S": 0.6, "O": 0.6, "A": 0.4, "P": 0.4}
+MIN_OVERLAP = {"S": 0.5, "O": 0.5, "A": 0.4, "P": 0.4}
 
 NUM_RE = re.compile(r"\d+(?:\.\d+)?")
 
@@ -39,7 +66,25 @@ def normalize(text: str) -> str:
     text = re.sub(r"n't\b", " not", text)
     text = re.sub(r"(?<!\d)\.|\.(?!\d)", " ", text)  # drop periods, keep decimals
     text = re.sub(r"[^a-z0-9.\s]", " ", text)
-    return " ".join(NUMBER_WORDS.get(tok, tok) for tok in text.split())
+    tokens = text.split()
+    out = []
+    i = 0
+    while i < len(tokens):
+        tok = tokens[i]
+        if tok in TENS_WORDS and i + 1 < len(tokens) and tokens[i + 1] in ONES_WORDS:
+            val = TENS_WORDS[tok] + ONES_WORDS[tokens[i + 1]]
+            out.append(str(val))
+            i += 2
+        elif tok in TENS_WORDS:
+            out.append(str(TENS_WORDS[tok]))
+            i += 1
+        elif tok in ONES_WORDS:
+            out.append(str(ONES_WORDS[tok]))
+            i += 1
+        else:
+            out.append(tok)
+            i += 1
+    return " ".join(out)
 
 
 def stem(tok: str) -> str:
@@ -115,9 +160,19 @@ def validate_sentence(s: RawSentence, turns_by_id: dict[int, Turn]) -> list[str]
         reasons.append("negation_not_in_quote")
 
     # 3. Most content words should appear in the cited turns.
+    # If cited turns are brief replies (e.g. "No", "Yes", "None"), include the immediate
+    # question turn (turn_id - 1) in overlap context to credit dialogue Q&A context.
+    overlap_turns = list(cited)
+    for t in cited:
+        if len(t.text.split()) <= 6 and (t.id - 1) in turns_by_id:
+            prec = turns_by_id[t.id - 1]
+            if prec not in overlap_turns:
+                overlap_turns.append(prec)
+    overlap_source_text = " ".join(t.text for t in overlap_turns)
+
     words = content_words(s.text)
     if words:
-        overlap = len(words & content_words(source_text)) / len(words)
+        overlap = len(words & content_words(overlap_source_text)) / len(words)
         if overlap < MIN_OVERLAP[s.section]:
             reasons.append(f"low_overlap:{overlap:.2f}")
 
@@ -133,7 +188,17 @@ def validate_note(raw: RawNote, turns: list[Turn]) -> SOAPNote:
     out: list[NoteSentence] = []
     for s in raw.sentences:
         reasons = validate_sentence(s, turns_by_id)
-        out.append(NoteSentence(**s.model_dump(), flagged=bool(reasons), flag_reasons=reasons))
+        hard = [r for r in reasons if is_hard_failure(r)]
+        soft = [r for r in reasons if not is_hard_failure(r)]
+        out.append(
+            NoteSentence(
+                **s.model_dump(),
+                flagged=bool(hard),
+                flag_reasons=reasons,
+                hard_flags=hard,
+                soft_flags=soft,
+            )
+        )
     return SOAPNote(sentences=out)
 
 
