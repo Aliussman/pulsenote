@@ -44,6 +44,7 @@ def collect_sentences(rows: list[dict]):
         "baseline": defaultdict(list),
         "grounded_all": defaultdict(list),
         "grounded_unflagged": defaultdict(list),
+        "grounded_unflagged_strict": defaultdict(list),
     }
     for r in rows:
         enc = r["encounter_id"]
@@ -53,9 +54,12 @@ def collect_sentences(rows: list[dict]):
             # Mark the encounter as present even if every sentence ends up flagged.
             variants["grounded_all"].setdefault(enc, [])
             variants["grounded_unflagged"].setdefault(enc, [])
+            variants["grounded_unflagged_strict"].setdefault(enc, [])
             variants["grounded_all"][enc].append(r["text"])
             if not r["flagged"]:
                 variants["grounded_unflagged"][enc].append(r["text"])
+            if not r.get("reasons"):
+                variants["grounded_unflagged_strict"][enc].append(r["text"])
     return variants
 
 
