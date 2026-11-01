@@ -54,7 +54,7 @@ def run(encounters: list[dict], call_llm: LLMCall):
         turns = [Turn(**t) for t in enc["turns"]]
         print(f"[{idx}/{len(encounters)}] Evaluating '{enc['id']}' ({len(turns)} turns)...", flush=True)
 
-        print("  - Baseline note...", end=" ", flush=True)
+        print("  - Baseline note (thinking & generating)...", end=" ", flush=True)
         try:
             start = time.perf_counter()
             raw = generate_baseline(turns, call_llm)
@@ -68,7 +68,7 @@ def run(encounters: list[dict], call_llm: LLMCall):
             for s in raw.sentences:
                 rows.append(make_row("baseline", "posthoc", enc["id"], s, post_hoc_check(s.text, s.section, turns)))
 
-        print("  - Grounded note...", end=" ", flush=True)
+        print("  - Grounded note (thinking & generating)...", end=" ", flush=True)
         try:
             start = time.perf_counter()
             note = generate_note(turns, call_llm)

@@ -28,7 +28,7 @@ def make_anthropic_call(max_tokens: int = 2000):
     return call
 
 
-def make_gemini_call(max_tokens: int = 2000):
+def make_gemini_call(max_tokens: int = 4000):
     from google import genai  # pip install google-genai; reads GEMINI_API_KEY from environment
     from google.genai import types
 
@@ -45,35 +45,26 @@ def make_gemini_call(max_tokens: int = 2000):
     def call(system: str, user: str) -> str:
         last_err = None
         for model_name in candidates:
-            # First attempt with thinking_budget=0 for instant execution (<3s), fallback if unsupported
-            for disable_thinking in [True, False]:
-                try:
-                    kwargs = {
-                        "system_instruction": system,
-                        "temperature": float(temperature) if temperature is not None else None,
-                        "max_output_tokens": max_tokens,
-                        "response_mime_type": "application/json",
-                    }
-                    if disable_thinking:
-                        kwargs["thinking_config"] = types.ThinkingConfig(thinking_budget=0)
-
-                    config = types.GenerateContentConfig(**kwargs)
-                    resp = client.models.generate_content(
-                        model=model_name,
-                        contents=user,
-                        config=config,
-                    )
-                    if resp.text:
-                        return resp.text
-                except Exception as e:
-                    last_err = e
-                    # If thinking_config is not supported by this model, retry without it
-                    if "thinking" in str(e).lower():
-                        continue
-                    # If model is not found on user's tier, fallback to next candidate
-                    if "404" in str(e) or "NOT_FOUND" in str(e) or "not found" in str(e).lower():
-                        break
-                    raise e
+            try:
+                config = types.GenerateContentConfig(
+                    system_instruction=system,
+                    temperature=float(temperature) if temperature is not None else None,
+                    max_output_tokens=max_tokens,
+                    response_mime_type="application/json",
+                )
+                resp = client.models.generate_content(
+                    model=model_name,
+                    contents=user,
+                    config=config,
+                )
+                if resp.text:
+                    return resp.text
+            except Exception as e:
+                last_err = e
+                # If model is not found on user's tier, fallback to next candidate
+                if "404" in str(e) or "NOT_FOUND" in str(e) or "not found" in str(e).lower():
+                    continue
+                raise e
         raise RuntimeError(f"Gemini API generation failed. Last error: {last_err}")
 
     return call
