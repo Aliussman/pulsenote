@@ -1,0 +1,587 @@
+{
+  "day1_consultation01": {
+    "presenting_complaint": "I've been having really bad diarrhea for the last 3 days",
+    "note": "3/7 hx of diarrhea, mainly watery. No blood in stool. Opening bowels x6/day. Associated LLQ pain - crampy, intermittent, nil radiation.  Also vomiting - mainly bilous. No blood in vomit. Fever on first day, nil since. Has been feeling lethargic and weak since. \n\nTakeaway 4/7 ago - Chinese restaurant. Wife and children also unwell with vomiting, but no diarrhea. No other unwell contacts. \n\nPMH: Asthma\nDH: Inhalers\nSH: works as an accountant. Lives with wife and children. Affecting his ADLs as has to be near toilet often. \nNil smoking/etOH hx\n\nImp: gastroenteritis \n\nPlan:\nConservative management - rest, push fluids, paracetamol if feverish. Recommend OTC diarolyte. To review in 3-5d if symptoms not improving. To see earlier if feeling more unwell. \n",
+    "highlights": [
+      "3/7 hx of diarrhea",
+      "LLQ pain",
+      "Fever",
+      "gastroenteritis",
+      "Conservative management"
+    ]
+  },
+  "day1_consultation02": {
+    "presenting_complaint": "I have sore, red skin",
+    "note": "4/7 hx of dry itchy skin, mainly on chest and back. Skin is also sore and cracked. No bleeding or discharge. No spread elsewhere. Not aware of any triggers. Used steroid cream OTC last night with minimal effect. Pt has also tried antihistamines. \nSystemically well otherwise - no fevers, no vomiting, no SOB/cough. No bowel sx. \n\nPMH: Eczema, Asthma \nDHx: Nil regular\nNKDA\nSH: lives with flatmates, works as a pharmaceutical manager. Non-smoker, social EtOH. \nICE: pt thinks might be related to eczema. No concerns\n\nImp: flare up of eczema\n\nPlan:\n1.\tSteroid cream - Betnovate BD\n2.\tEmollients - cetraben - use up to QDS\n3.\tTrial antihistamines\n4.\tKeep trigger diary \n5.\tReview in 10-14d if symptoms no better, or earlier if any concerns/worsening sx\n",
+    "highlights": [
+      "4/7 hx of dry itchy skin",
+      "Eczema",
+      "Asthma",
+      "Steroid cream",
+      "Emmolients"
+    ]
+  },
+  "day1_consultation03": {
+    "presenting_complaint": "I have terrible headache",
+    "note": "Headache on left side. Started few hours ago, gradual onset. Throbbing in nature. Nil radiating. \nHad visual aura before onset of headaches - zigzag lines in field of vision. Also associated photophobia and blurred vision. Feels nauseous and has vomited twice today. Also reports some neck pain. Nil neck stiffness. \nNo speech disturbances\nNo limb weakness or numbness\nNo coordination/balance issues\nNo recent head injury \nNo fever\nNo rashes \n\nSimilar episode 2/52 ago - resolved with analgesia. Pt worried about brain Ca. \n\nPMH: nil\nDH: microgynon \nNKDA\nFH: mother - migraine \nSH: lives alone, works in fashion industry. Feeling stressed ++. Nil mood sx. Nil smoking/etOH hx\n\nImp: migraine\n\nPlan:\n1.\tChange COCP to POP\n2.\tKeep headache diary \n3.\tRegular paracetamol/NSAIDs\n4.\tReview in 1w to discuss prophylactic Rx, or earlier if worsening sx (headaches, vomiting, vision sx) or any concerns\n",
+    "highlights": [
+      "Headache",
+      "Throbbing",
+      "visual aura",
+      "photophobia",
+      "microgynon",
+      "migraine"
+    ]
+  },
+  "day1_consultation04": {
+    "presenting_complaint": "I don't feel well, I have a cough and runny nose",
+    "note": "4/7 hx of generally unwell, mainly sore throat, runny nose, fatigue, myalgia and general joint pain. Sore throat is improving. Also has nasal congestion. Now developed a cough -mainly dry, constant. Night sweats for the past 4/7. Initially had fever, but now settling with paracetamol/ibuprofen. \nNo chest pain. Feels more SOB on exertion. \nAssociated headaches - generalized, intermittent. No visual sx/photophobia. No nausea/vomiting. No bowel or urinary sx. Drinking fluids, reduced appetite. No rashes\n\nPMH: Nil \nDH: nil \nNKDA\nFH: Grandmother - type 2 diabetes\nSH: lives alone, works as an accountant. Occasional smoker/etOH. Finding work slightly stressful. No mood sx. \n\nImp: viral URTI/influenza \n\nPlan:\n1.\tConservative mx - rest, push fluids, regular paracetamol/ibuprofen, monitor temp\n2.\tReview in 5-7d INB\n3.\tDiscussed red flag sx (SOB, chest pain, fevers)- if present, for urgent review with Dr \n",
+    "highlights": [
+      "sore throat",
+      "fatigue",
+      "myalgia",
+      "cough",
+      "viral URTI/influenza"
+    ]
+  },
+  "day1_consultation05": {
+    "presenting_complaint": "Lower abdominal pain",
+    "note": "2/7 ago developed lower abdo pain/suprapubic pain, gradual onset, burning pain, constant, progressively worsening\nNo bowel sx. \nUrinary sx - noticed some pink coloured urine, no frank haematuria, nil dysuria.  \nSome nausea, no vomiting\nFeeling hot and sweaty\nCurrently sexually active with regular partner. Last STD 6/12 ago. Unprotected SI 2/7 ago. \nLMP 2/52 ago \n\nNo chest pain/SOB/palpitations\nNo headches/visual sx\n\nPMH: nil\nPSH: nil \nDH: implanon , otherwise nil\nFH: nil \nSH: roomshare with 2 flatmates, works as an accountant. Nil smoking, social EtOH \n\nImp: ?UTI. also need to exclude pregnancy \n\nPlan:\n1.\tPregnancy test\n2.\tUrine dip and MSU\n3.\tRx empirically with Abx for UTI\n4.\tRegular paracetamol for pain \n5.\tReview in 24-48 hours if sx not improving, or earlier if worsening sx (fever, abdo pain, vomiting)\n",
+    "highlights": [
+      "abdo pain/suprapubic pain",
+      "burning",
+      "Feeling hot and sweaty",
+      "UTI",
+      "Abx"
+    ]
+  },
+  "day1_consultation06": {
+    "presenting_complaint": "hard to breathe",
+    "note": "2/5 hx of SOB, worsening over the past 2/7. Feeling more SOB on minimal exertion, nil SOB at rest. No chest pain/palpitations. Assoc cough - mainly dry. No fevers. Has also noticed ankle odema bilaterally over past few days extending to shins. \nDiagnosed with heart failure previously and currently on diuretics. \nUrinary - Polyuria, nil else\n\nPMH: Heart failure, ?unstable angina \nDH: furosemide, aspirin, bisoprolol, simvastatin\nNKDA\nFH - father died of MI early 60s , mother - osteoporosis \nSH: lives alone, 2 cats , works part time as a lorry driver. Ex-smoker - a pack/d for 25 years. No etOH\n\nImp: exacerbation of heart failure\n\nPlan:\n1.\tIncrease furosemide BD\n2.\tBlood tests, inc U+Es, FBC, BNP\n3.\tArrange echo \n4.\tReview in 7d, or earlier if worsening sx (chest pain, SOB, dizziness, etc)\n",
+    "highlights": [
+      "2/5 hx of SOB",
+      "No chest pain/palpitations",
+      "cough",
+      "ankle odema bilaterally",
+      "Heart failure",
+      "exacerbation of heart failure"
+    ]
+  },
+  "day1_consultation07": {
+    "presenting_complaint": "I have a cough and cold",
+    "note": "5/7 hx of generally unwell with cough and cold sx. Mainly dry cough. No chest pain. Feeling more SOB. \nFeeling hot/cold and sweaty. No fevers. \nSore throat and blocked ears. Also myalgia and arthralgia - mainly stiffness in joints. \nNo unwell contacts\nNo nausea/vomiting\nNo bowel symptoms\n\n\nPMH: obesity, diabetes - type 2 , hypertension\nDH: metformin, lisinopril , aspirin, \nNKDA\nSH: lives with wife, works in factory/manufacturing, smoking socially, etOH - >14 units/week \n\nImp: viral URTI/? LRTI\n\nPlan:\n1.\tConservative mx - rest, fluids, regular paracetamol \n2.\tDelayed script for amoxicillin abx - to start in 24-48 hours if sx not improving\n3.\tReview in 1/52 INB, or earlier if worsening sx (chest pain, SOB, fevers)\n",
+    "highlights": [
+      "cough",
+      "SOB",
+      "Sore throat and blocked ears",
+      "myalgia",
+      "viral URTI/? LRTI"
+    ]
+  },
+  "day1_consultation08": {
+    "presenting_complaint": "I have dry, itchy skin",
+    "note": "3/7 hx of dry itchy skin, mainly on the hands and palms. No spread elsewhere. No bleeding/discharge. No cracked skin. Sx started after going swimming. No prev skin problems. \nNo fevers. No vomiting. \nAppetite maintained, nil nausea/vomiting \nNil bowel/urinary sx \n\nPMH: Lactose intolerance\nDH: microgynon\nNKDA\nFH:  Father - asthma, Mother - hayfever \nSH: - lives alone, nil smoker/etOH/recreational drugs , works as primary school teacher. Recent stress ++\n\nImp: dermatitis\n\nPlan:\n1.\tSteroid cream BD\n2.\tEmollients - regular use QDS\n3.\tAntihistamines \n4.\tReview sx in 1/52, or earlier if worsening sx/any concerns\n",
+    "highlights": [
+      "3/7 hx of dry itchy skin",
+      "Lactose intolerance",
+      "Father - asthma",
+      "Mother - hayfever",
+      "dermatitis"
+    ]
+  },
+  "day1_consultation09": {
+    "presenting_complaint": "It hurts when I pee",
+    "note": "3/7 hx of dysuria and suprapubic pain. Nil frequency. Brief episode of haematuria, now resolved. Foul smelling.\nAbdo pain - cramping, nil radiating \nNil nausea/vomiting. Nil fever. Nil bowel sx\nCurrently sexually active - with regular partner for 2/12. No previous STD screen. Nil PV discharge. LMP 2/52 ago. \n\nPMH: IBS\nDH: Nil regular \nAllergic to clindamycin \nFH: Nil regular \nSH: lives in a flat with friends, student in Biology, nil smoking, social EtOH at weekends\n\nImp: UTI/cystitis \n\nPlan:\n1.\tNitrofurantoin abx for 3/7\n2.\tPush fluids\n3.\tTrial cranberry juice \n4.\tPregnancy test to exclude pregnancy \n5.\tReview in 3d if no better, or earlier if worsening sx (fevers, back pain, vomiting, more unwell)\n",
+    "highlights": [
+      "dysuria",
+      "suprapubic pain",
+      "haematuria",
+      "IBS",
+      "UTI/cystitis"
+    ]
+  },
+  "day1_consultation10": {
+    "presenting_complaint": "It hurts when I pee",
+    "note": "1/52 hx of dysuria, frequency and suprapubic pain. Noticed urine today was pink, nil frank haematuria. \nSuprapubic pain on PU - aching pain, nil radiating \nNil nausea/vomiting \nNil fevers \nNil new bowel sx \nCurrently sexually active - long-term partner. Nil PV discharge. LMP 2/52 \nE+D well \n\nPMH: IBS\nDH: COCP, mebeverine \nAllergic to clindamycin \nFH: nil\nSH: lives in student halls, nil smoking, social EtOH\n\nImp: UTI\n\nPlan:\n1.\tUrine dip and MSU\n2.\tStart abx - nitrofurantoin abx for 3/7 \n3.\tPush fluids \n4.\tSimple analgesia\n5.\tReview in 1/52 INB, or earlier if worsening sx (fever, back pain, vomiting)\n",
+    "highlights": [
+      "dysuria",
+      "frequency",
+      "suprapubic pain",
+      "IBS",
+      "UTI"
+    ]
+  },
+  "day1_consultation11": {
+    "presenting_complaint": "pouring diarrhoea from my bottom",
+    "note": "3/7 hx of diarrhea - watery stools, opening bowels every hour. No blood in stools. Assoc crampy abdo pain - central, intermittent, severity 6/10. Feels nauseous, has vomited occasionally. Feeling feverish, hot/cold\nNil urinary sx - passing less urine . no weight loss. \nBrother also had similar sx - improving \nTolerating oral intake \n\nPMH: nil\nDH: nil regular \nNKDA\nFH: father - colon Ca \nSH: lives with sister and mum. Works in office. Smokes socially, EtOH - socially \n\nImp: gastroenteritis \n\nPlan:\n1.\tPush fluids \n2.\tOTC diarolyte \n3.\tEncourage soft diet\n4.\tRegular paracetamol \n5.\tReview in 48 hours, or earlier if worsening sx\n\n",
+    "highlights": [
+      "diarrhea",
+      "crampy abdo pain",
+      "vomited",
+      "feverish",
+      "hot/cold",
+      "father - colon Ca",
+      "gastroenteritis"
+    ]
+  },
+  "day1_consultation12": {
+    "presenting_complaint": "I've been having really bad diarrhoea for the last 3 days",
+    "note": "3/7 hx ago developed vomiting. Has now developed diarrhea - 5-6x/day. Watery/loose stools. No blood in stools. No abdo pain. \nReduced oral intake. Not drinking sufficient fluids. Feels dehydrated. Appetite reduced. \nNo fever/temp, but feels warm. Feels weak. No headaches/muscle pain. \nUnaware of triggers. No unwell contacts \n\nPMH: asthma \nDH: salbutamol PRN \nNKDA\nFH: father - HTN, died of bowel Ca. mother - diabetes Type 2\nSH: lives alone , software engineer. Nil smoking, social EtOH\n\nImp: gastroenteritis \n\nPlan:\n1.\tSupportive mx - rest, fluids\n2.\tOTC diarolyte \n3.\tRegular paracetamol\n4.\tReview in 3-5d INB, or earlier if worsening sx (diarrhea, vomiting, abdo pain, reduced oral intake)\n",
+    "highlights": [
+      "vomiting",
+      "diarrhea",
+      "No fever/temp",
+      "gastroenteritis"
+    ]
+  },
+  "day1_consultation13": {
+    "presenting_complaint": "I've had a blinding headache for a few days",
+    "note": "3/7 hx developed headache - all over of my head and mainly over right eye. Constant, severity 8/10, dull ache with associated sharp pain, gradual onset. Progressively worsening. Has tried ibuprofen with limited relief. \nNo visual sx\nVisual aura prior to headaches. Some photophobia. \nFeels nauseous, no vomiting\nNo neck pain/stiffness\nNo speech disturbances \nNo arm or leg weakness\nNo head injury \nNo fevers\nNo rashes \n\nPMH: Nil \nDH: Nil\nNKDA\nFH: mother and sister - migraines\nSH: lives with housemates, works in IT, wears glasses, denies stress. Socially smoke/EtOH \n\nICE: ?related to stress/dehydration. Concerned about migraines. \n\nImp: migraines \n\nPlan:\n1.\tParacetamol/NSAIDs regular \n2.\tHeadache diary\n3.\tReview in 1/52 - discuss prophylactic Rx if necessary\n4.\tPatient aware of red flag sx - knows to seek urgent medical attention if present \n",
+    "highlights": [
+      "headache",
+      "Visual aura",
+      "photophobia",
+      "nauseous",
+      "mother and sister - migraines",
+      "migraines"
+    ]
+  },
+  "day1_consultation14": {
+    "presenting_complaint": "I have a cough and cold",
+    "note": "5/7 hx of cough and runny nose. Dry cough, keeps pt up at night. Runny nose, no ear pain, no sore throat. \nNo SOB/chest pain\nFeeling tired, weak and myalgia. \nFeeling shivery, hot/cold, ?fever \nNo nausea/vomiting \nAppetite maintained. \nInitial diarrhea - but now resolved \nNil urinary symptoms\nNo rashes \n\nPMH: Type 2 diabetes, HTN\nDH: metformin, lisinopril \nNKDA\nFH: Father - type 2 diabetes \nSH: lives with partner, works IT, denies stress. Ex-smoker - stopped 6/12 ago. Social EtOH <14 units/week\n\nImp: viral URTI \n\nPlan:\n1.\tSupportive mx - bed rest, fluids, regular paracetamol\n2.\tReview 5/7 if no better, or earlier if worsening sx (fever, SOB, chest pain)\n",
+    "highlights": [
+      "cough",
+      "runny nose",
+      "myalgia",
+      "Type 2 diabetes",
+      "viral URTI"
+    ]
+  },
+  "day1_consultation15": {
+    "presenting_complaint": "I have sore, cracked skin on my hands",
+    "note": "3-4/12 hx of sore and cracked skin on my hands - mainly palms. Occasionally itchy and bleeding on scratching. No pain \nWorks as a cleaner and does not always wear gloves - possible trigger\nNo fever\nNo bowel/urinary sx\nAppetite maintained \n\nPMH: Type 2 diabetes\nDH: metformin \nNKDA\nFH: Type 2 diabetes, \nSH: works as a housekeeper, recently changed jobs 4/12 ago, works in a hotel. \nNil smoking\nMinimal etOH\n\nHas tried E45 cream and antihistamines with minimal relief \n\nImp: contact dermatitis \n\nPlan:\n1.\tSteroid cream BD\n2.\tEmollients - regular use \n3.\tAvoid trigger, wear cleaning gloves\n4.\tReview in 10-14d INB, or earlier if worsening sx\n",
+    "highlights": [
+      "sore and cracked skin",
+      "itchy",
+      "cleaner",
+      "Type 2 diabetes",
+      "contact dermatitis"
+    ]
+  },
+  "day2_consultation01": {
+    "presenting_complaint": "I don't hear as well as I used to",
+    "note": "History: \nHx of difficulty hearing left ear for 6 weeks with tinnitus and slight nausea/ dizziness. \nOne previous similar episode in the past- resolved spontaneously.\nNo discharge/ fever/ itchiness/ pain\nDoesn't use cotton wool buds\nNo Pmhx of note\nEx: Looks well, not in pain.\nImp: need to exclude impacted wax in ear canal first\nPln: for face to face GP appointment in 5 days to examine ear\nPt to read about tinnitus in the meantime via following link: www.patient.co.uk/tinnitus\nIf any problems in interim to ring us back\nPt happy with and understands plan\n",
+    "highlights": [
+      "difficulty hearing",
+      "tinnitus",
+      "need to exclude impacted wax",
+      "examine ear"
+    ]
+  },
+  "day2_consultation02": {
+    "presenting_complaint": "I have a strange swelling on my elbow",
+    "note": "Hx: 1 week history of spontaneous elbow swelling left. Not painful. No trauma. \nNo FH of rheumatological disease- NB pt says he has been old he has OA previously by doctors- ? need to confirm this\nWorks in a desk job\nNot happened before\nOtherwise well- \nPMHx: nil of note\nFH: nil of note\nDH: not on any medication, allergic to peanuts\nSH: exercises regularly, active\nEx: looks well, not in pain. Mild erythema and minimal swelling (if any) around olecranon process left elbow\nImp: possible bursitis\nPlan: for NSAIDs- usual advice re SE\nFor rheum bloods: esr, crp, fbc, rheum factor and urate\nReview thereafter in person/ via video\nTo contact us back in interim if any deterioration/concerns- pt warned re symptoms of septic arthritis\n",
+    "highlights": [
+      "elbow swelling",
+      "No trauma",
+      "allergic to peanuts",
+      "looks well",
+      "possible bursitis",
+      "for NSAIDs",
+      "bloods"
+    ]
+  },
+  "day2_consultation03": {
+    "presenting_complaint": "I can't hear very well and my face is a bit numb",
+    "note": "Hx: 1 week history of left side difficulty hearing and facial numbness\nNo dysphagia, dysarthria, no unilateral weakness/numbness in the rest of the body, no visual disturbances \nNo ear pain, ear discharge, fever, itchiness or cotton bud use.\nSlight tinnitus at times in this period- not continuous\nNumbness and difficulty hearing present now \nPmhx: labyrinthitis, heart burn, nasal polyps\nDH: Rennies PRN OTC, nasal spray PRN (pt not sure of name)\nAllergies: latex allergy\nNo FH of note\nEx: no facial asymmetry, looks well, normal facial expressions and movements\nImp: ? Bell's Palsy- need to rule out any other focal neurology\nPlan: for face to face review today for neurological examination and ear examination\nPt to ring support line for GP F2f slot\nPt understands and is happy with plan\n",
+    "highlights": [
+      "difficulty hearing",
+      "facial numbness",
+      "tinnitus",
+      "latex allergy",
+      "no facial assymetry"
+    ]
+  },
+  "day2_consultation04": {
+    "presenting_complaint": "I feel breathless",
+    "note": "1 day hx of SOB, slight pleuritic pain (right side), feeling warm (not measured temperature), 2 episodes haemoptysis and palpitations.\nNo recent long haul flights\nNo FH or PMHx of DVT/Pes\nHas been feeling TATT/ fatigue for the last few weeks preceding these symptoms\nPmhx: SLE\nDH: on methotrexate\nNo allergies\nSH lives alone, has cat, works in an office\nEx: pulse around 66, normal CRT, throat inspection normal, pt cant feel any LNs in neck, not SOB, looks well\nImp: probable LRTI, possibly secondary to immunosuppression\nPlan: needs F2f gp assessment today to listen to chest and check BP/pulse/ temp\nMay also need blood tests to check immune status in view of methotrexate\n",
+    "highlights": [
+      ""
+    ]
+  },
+  "day2_consultation05": {
+    "presenting_complaint": "My asthma is not responding to my inhalers",
+    "note": "(the above consultation reason doesn't correlate with the patient's presentation)\nHx: episodes of unilateral right hand numbness/ pins and needles, with some right leg weakness and noticeable gait disturbances, ongoing for 1.5 months\noccurring with increasing frequency- initially once a week, now more often, occurring daily\n symptoms not present now\nno dysphagia, no dysphasia\nno Pmhx of CVA/TIA\nFather had CVA- appears to have had carotid endarterectomy\nNon smoker, normal blood tests for diabetes/ cholesterol when checked a few years ago\nPMHx and FH: otherwise nil of note\nDH PT IS TAKING Aspirin daily on his own accord due to his FH\nSH: pt is a medical doctor, plastic surgeon, lives with wife\nImp: TIAs- despite young age (need to exclude any systemic disease, eg antiphospholipid syndrome, that could be cause)\nPlan: needs to be seen urgently in TIA clinic- will fax referral now. Pt to contact them via PALS/ clinic no to ensure f/u\nIf any prolonged symptoms occur- to attend A/E\n",
+    "highlights": [
+      ""
+    ]
+  },
+  "day2_consultation06": {
+    "presenting_complaint": "I\u2019m having difficulty breathing",
+    "note": "Worried about difficulty breathing and lip swelling, also localized rash\nNo PMHx of anaphylaxis, no use of epipen in past\nHas had anxiety in past- felt panicked now\nNo Fh of note\n SH: software engineer, has cat at home\nEx: Now: no lip swelling seen, speaking normally, no airways compromise. No rash seen on arm\nImp: localized inflammatory reaction to insect bite, no evidence of acute anaphylactic reaction or cellulitis\nPlan: for OTC antihistamines\n Warned re red flags sings/ symptoms- if these occur to get urgent medical review\nNo need for allergy testing on a one-off episode\nTo ring back if any concerns/ anxiety- may need more reassurance\nPt has had a bee/wasp bite a few minutes prior to appointment\nWorried about difficulty breathing and lip swelling, also localized rash\nNo PMHx of anaphylaxis, no use of epipen in past\nHas had anxiety in past- felt panicked now\nNo Fh of note\n SH: software engineer, has cat at home\nEx: Now: no lip swelling seen, speaking normally, no airways compromise. No rash seen on arm\nImp: localized inflammatory reaction to insect bite, no evidence of acute anaphylactic reaction or cellulitis\nPlan: for OTC antihistamines\n Warned re red flags sings/ symptoms- if these occur to get urgent medical review\nNo need for allergy testing on a one-off episode\nTo ring back if any concerns/ anxiety- may need more reassurance\n",
+    "highlights": [
+      "bee/wasp bite",
+      "No PMHx of anaphylaxis",
+      "anxiety in past",
+      "no airways compromise",
+      "localized inflammatory reaction",
+      "for OTC antihistamines"
+    ]
+  },
+  "day2_consultation07": {
+    "presenting_complaint": "I'm having chest discomfort",
+    "note": "Onset of chest pain earlier today during gardening (mild physical exertion)\nCentral chest, radiation to shoulder and neck\nAssociated nausea, sweatiness, palpitations\nPAIN STILL PRESENT NOW\nNo previous similar episodes\nRisk factors: chronic smoker, FH of IHD, Hypertension, overweight, moderate alcohol intake\nDH: (mild) allergy to aspirin\n(forgot to ask about other medication- LAS need to clarify)\nSH: lives alone\nEx: haemodynamically stable now, at rest, seated, well perfused via video inspection, not SOB\nImp: acute cardiac event- needs urgent ECG + trop T\nLAS blue light called, front door open so they can access if he collapses\nStayed on line till LAS arrived, handed over to them\nExplained above\n",
+    "highlights": [
+      "chest pain",
+      "chronic smoker",
+      "FH of IHD",
+      "Hypertension",
+      "overweight",
+      "allergy to aspirin",
+      "haemodynamically stable",
+      "acute cardiac event",
+      "LAS blue light called"
+    ]
+  },
+  "day2_consultation08": {
+    "presenting_complaint": "I've been feeling very hot and sweaty for the past week",
+    "note": "Hx of fever for a week with associated sweatiness, body/muscle aches, nausea, fatigue, night sweats, hot/cold episodes\nDrinking less cf normal\n Taking ibuprofen and paracetamol otc- not helping, helps with temp slightly\nNo cough, sore throat, runny nose, ear pain.\nNo diarrhea, no neck stiffness, no headache (no more than usual- normal headache on top of head through looking at screen). No rash, no joint swelling (ongoing back pain), no dysuria or frequency.\nRecent foreign travel- returned from Vietnam, took malaria prevention daily- cant remember medication, present there for a few weeks, rural and urban tourism, trekking and cycling.\nPmhx: nil of note, back pain- under physiotherapy, working diagnosis ? muscular/ posture\nFh: father has MI at age 68\nDH: on cerazette\nNil allergies, hayfever\nSH: works as a nurse, UTD with hep B etc, non smoker, moderate alcohol intake, moderate physical exercise\nImp: PUO, need to exclude malaria\nPlan: for f2f appointment with GP today\nThereafter, for blood tests including crp, esr, thick and thin blood films (possibly routine, possibly via a/e- depending on second GP's assessment)\n",
+    "highlights": [
+      "fever",
+      "sweatiness",
+      "muscle aches",
+      "nausea",
+      "fatigue",
+      "night sweats",
+      "Recent foreign travel",
+      "cerazette",
+      "Nil allergies",
+      "hayfever",
+      "nurse",
+      "non smoker",
+      "PUO",
+      "need to exclude malaria"
+    ]
+  },
+  "day2_consultation09": {
+    "presenting_complaint": "I can't move my left arm",
+    "note": "Hx:  Difficulty moving left arm, occurred upon waking this morning\nFeels no pain, but still can't move it\nNo previous similar episodes\nSlept as per normal last night\nNo discolouration in hand, arm doesn't feel cold\nSymptoms limited to left arm, not in left leg\nTingling present on left side of face over the same period (1 hour)\nPatient has not noticed any facial asymmetry\nDifficulty swallowing water- dribbled water\nSpeech seems \u2018harder' or \u2018slow'\nNo-one at home with patient\nPmhx: T2dm, HTN\nDH: metformin, losartan, amlodipine\nAllergic to penicillin\nFH: father hs \u2018heart disease'\nSH: lives alone, ex smoker, mild- moderate alcohol intake.\nImp: ? CVA\nLAS called- blue light, pt to keep front door open, will stay on line till LAS arrives and hand over.\n",
+    "highlights": [
+      "Difficulty moving left arm",
+      "Tingling present on left side of face",
+      "Difficulty swallowing water",
+      "Speech seems \u2018harder' or \u2018slow'",
+      "? CVA",
+      "LAS called"
+    ]
+  },
+  "day2_consultation10": {
+    "presenting_complaint": "I've got a really bad headache",
+    "note": "Hx: Has had headache upon waking from this morning on left side  head- pain woke pt up at 530am\nHeadache still present now\n Has had hx of headaches less severe and in front of the head in past\nNo neck stiffness, no fever\nSome sensitivity to bright lights now, no nausea now\nFelt dizzy this morning,  but not now\nNo FH of migraines\nWork is stressful, late nights at work- ongoing for a few months. Mood is stable-  pmhx of anxiety for 2 years, on sertraline. Doesn't feel anxious right now- gets this at work at times\nNo thoughts about self harm\nHeadache is better  when lying down. \nPt has taken paracetamol- not helped\nPmhx: nil, has not had BP checked\nFH: mother has anxiety\nDH: sertraline\nNkda\nSH: live with partner\nNon smoker\nHss cat\nGood exercise, reasonable diet\nImp: tension type headache +/- migraine\nPlan: for ibuprofen first line as per SIGN 2018 migraine guidelines\n1.5-2 litres water hydration daily\n To sleep 7-8 hours minimum daily\nConsider time off- to self certify for a few days to see if this helps\nSelf referral to IAPTs\nReview in a week\nIf any red flag symptoms as per www.patient.co.uk/ headache, to ring back sooner\nPatient understands and is happy with plan\n",
+    "highlights": [
+      "headache",
+      "left side head",
+      "Some sensitivity to bright lights",
+      "anxiety",
+      "on sertraline",
+      "tension type headache",
+      "ibuprofen"
+    ]
+  },
+  "day3_consultation01": {
+    "presenting_complaint": "lips swelling after eating a sandwich",
+    "note": "History: you are having lip swelling for the past 1 hr\nIt started after eating a prawn soup\nYou initially had some weird feeling around your lips \nThe swelling started after half an hour \nNow you are complaining of your throat closing \nYour chest is tight at the moment with difficulty breathing \nExamination : during the consultation, it looked like you were having some problems breathing and your lips appeared to be increasingly swelling\nPast medical history : you suffer from asthma \nYou have had an injection as a child for a peanut allergy \nMedication: you are currently on salbutamol inhalers \nTreatment: your Mom was around and I have advised that you use an antihistamine straight away. I have advised Mom to call the ambulance as a 999 call as we are suspecting an anaphylactic reaction\nAfter discharge from hospital please book a review with the doctor to consider prescribing an epipen\n",
+    "highlights": [
+      "lip swelling",
+      "asthma",
+      "peanut allergy",
+      "anaphylactic reaction"
+    ]
+  },
+  "day3_consultation02": {
+    "presenting_complaint": "feeling hot and having severe headache",
+    "note": "You are having a headache for the past 4 days \nYou have been taking paracetamol and ibuprofen but no relief \nYou have just returned from Thailand a week ago and a friend of your is also unwell \nYou have had mosquito bites \nYou have a rash all over your body but this disappears when a glass is placed ( blanching)\nThere is no pain while you move your neck \nThere is no pain while looking at the light \nThere is no weakness of the muscles \nThere is no pins and needles \nYou do not have vomiting \nThere is no no cough, cold or ear pain\nThere is no bleeding spots over the skin \nYou have some generalized muscle aches \nPast medical history None\nNo allergies \nPlan : you have been advised to book an urgent appointment to see a doctor in the next few hours\nIf this is not possible you will need to go to A & E . WE will need to r/o more serious conditions like malaria, Dengue and meningitis \n",
+    "highlights": [
+      "headache",
+      "mosquito bites",
+      "No allergies"
+    ]
+  },
+  "day3_consultation03": {
+    "presenting_complaint": "I don't have much appetite or energy lately",
+    "note": "History : having lack of energy for the past 3 months \nYou are also having loss of appetite \nYou are lacking motivation \nYou are complaining of breathlessness and some times associated with palpitations \nThere is no chest pain \nYou are not depressed or stressed \nYour bowels are normal \nYou feel nauseous most of the time \nThere is no vomiting \nYou are also experiencing some weight loss in the past 6 months about a stone \nThere is no history of acid reflux \nPast medical history: you suffer from underactive thyroid \nMedications: you have not been using the thyroxine for a while since you changed practice . You do not remember the last time you had your last set of bloods\nPlan: you have been advised to contact support to help you to organize your blood test. This will look at aneamia, thyoids, liver, kidney and vitamin levels \nYou will need to book in for another appointment after you receive a text message from Babylon. \nSafety netting: If you develop chest pain with the palpitations, change in bowel habits you will need to contact us urgently\n",
+    "highlights": [
+      "loss of appetite",
+      "breathlessness",
+      "weight loss in the past 6 months about a stone",
+      "underactive thyroid"
+    ]
+  },
+  "day3_consultation04": {
+    "presenting_complaint": "my chest feels very tight",
+    "note": "History: Having breathlessness for 3-4 days \nHaving to use the blue inhalers twice a day \nYou normally use it only as and when \nYou are also on the clenil and taking it everyday 2 puff twice a day \nYou are having a cough but no sputum \nThere is some wheezing \nMedical history : you had asthma since your childhood\nYou suffer from eczema . your last asthma attack was 3 years ago \nYou have never needed anitibiotics or steroids \nYou have never been hospitalized because of your asthma \nYour normal peak flow reading is 380\nYou don't have any allergies \nMedication : you also use hydrocortisone and cetraban for eczema\nPlan : you have been advised to increase you brown inhaler to 4 puffs twice daily and can use the blue inhalers upto every 2-4 hrs \nYou will need your chest reviewed by a doctor in the next 2 days \nIf you were to get increasingly breathless with the treatment that has been advised and not seen a doctor yet, please go to A & E\n",
+    "highlights": [
+      "breathlessness",
+      "asthma",
+      "eczema",
+      "peak flow reading is 380"
+    ]
+  },
+  "day3_consultation05": {
+    "presenting_complaint": "I've been feeling dizzy",
+    "note": "History : having dizziness for the past few hours \nYou had sometime similar a month ago but only lasted 10 minutes \nYou feel as though you are in a boat \nThere is no recent viral illness \nThere is a buzzing noise in your ears \nThere is no hearing problems \nNo ear discharge or ear pain \nYou feel nauseous but not been sick \nThere is no weakness of the arms and legs \nPast medical history #\nYou have premature ovarian failure and take HRT\nThere is no allergies \nPlan we will prescribe some stemitil for symptom relief . Most likely disgnosis is labrynthitis\nIf you will need to book a pace to face appointment to have your ears checked . If you develop any weakness of arms and legs, vomiting . Please go to A & E\n",
+    "highlights": [
+      "dizziness",
+      "premature ovarian failure",
+      "HRT",
+      "labrynthitis"
+    ]
+  },
+  "day3_consultation06": {
+    "presenting_complaint": "I'm having difficulty breathing",
+    "note": "History : breathing difficulty for past 20 minutes after being bitten by wasp \nThere is some blotching rash seen \ntingling feeling around your lips \nno closing of the throat feeling \nno previous similar history \nPast medical history:\nEczema \nAllergic to penicillin\nPlan : advised to start on antihistamines straight away. It might be just urticaria ( Hives)Call the ambulance to r/o possible anaphylactic reaction \n",
+    "highlights": [
+      "Eczema",
+      "Allergic to penicillin",
+      "Hives",
+      "anaphylactic reaction"
+    ]
+  },
+  "day3_consultation07": {
+    "presenting_complaint": "I have sore red skin",
+    "note": "History : \nRed sore rash for the past few days \nAll over the chest hands and arms \nWorse especially in the inside of the arms \nThere is no scratch marks \nNo thickened skin\nRash is dry and itchy\nNo fever and joint pains\nUsed hydrocortisone and cetirizine not better\nPMH : asthma , eczema\nMedication: diprobase, dermol , hydrocortisone, salbutamol\nFH Hypothyroidism \nNo allergies \nPlan : advised will prescribe fexofenatidine and Betnovate for eczema. Need to use steroid cream sparingly . Explained one finger tip enough to cover the palms and back of your hands. \nIf your symptoms are getting worse or there is an allergic reaction please speak with doctor urgently. If your symptoms are not better in the next 2 weeks please book another appointment with the doctor.\n",
+    "highlights": [
+      "asthma",
+      "eczema",
+      "FH Hypothyroidism",
+      "No allergies"
+    ]
+  },
+  "day3_consultation08": {
+    "presenting_complaint": "I have a cough and a cold",
+    "note": "History : \nCough and cold for 5 days \nCough is dry, no sputum , no blood\nNo wheeze \nNo breathlessness \nUsed paracetamol \nDiabetic and high blood pressure since 5-6 years\nMedication: metformin, lisinopril\nSugar levels and BP normal today \nDiagnosis: Upper respiratory tract infection\nPlan : . advised to use night and day nurse. If there is breathlessness, wheezying or cough more than 3 weeks to call back\n",
+    "highlights": [
+      "Sugar levels and BP normal today",
+      "Upper respiratory tract infection"
+    ]
+  },
+  "day3_consultation09": {
+    "presenting_complaint": "I have pain in my jaw",
+    "note": "Numbness of the left arm for 2 weeks \nMild weakness on holding things and playing the piano \nNo neck pain \nVisual disturbace in the left peripheral field lasting 20 minutes 2 weeks ago \nyou recently started some boxing lessons \nhad vomiting over a month ago for 2 weeks , started after a party \nnumbness over the left second, third and fourth finger \nno fits \nno weakness elsewhere, gait is normal\nMedication: ibuprofen, Vitamin D , iron tablets , melatonin\nFH : Dad - hypothyroidism\nMOM- diabetes , high cholesterol and high BP\nPlan : urgent neurology review \nr/o MS \nIf there is progressing weakness of the arms and legs, vomiting, visual disturbances, fits you will need to go to A & E\n",
+    "highlights": [
+      "Dad - hypothyroidism",
+      "MOM- diabetes high cholesterol and high BP",
+      "r/o MS"
+    ]
+  },
+  "day3_consultation10": {
+    "presenting_complaint": "I have really bad diarrhea",
+    "note": "Diarrhoea for 3 days \nAlso associated abdominal pain \nNo mucous, no blood \nVomiting once \nStill eating and drinking \nDiarrhea like water 4-5 times a day \nNo fever \nLoss od appetite \nDid not eat out \nNo foreign travel \nNo dehydration on examination \nPMH : asthma \nFH: Dad died of bowel cancer 10 years, HTN\nMedication ? Lapriso\nNo allergies \nDiagnosis: Gastroenteritis\nPlan : advised soft diet , drink plenty . Start with crackers, soups and mash . Then can build on with mash and vegetable. Can use yoghurts as probiotics and will help build the gut. If the diarhoea goes on for more than a week or there is blood , we would need a stool sample. \nIf there is diarrhea more than 8 episodes, you may get dehydrated please book an appointment.\n",
+    "highlights": [
+      "Diarrhoea",
+      "PMH : asthma",
+      "Dad died of bowel cancer 10 years HTN",
+      "Gastroenteritis"
+    ]
+  },
+  "day4_consultation01": {
+    "presenting_complaint": "I'm having chest discomfort",
+    "note": "PC: acute onset left sided chest discomfort / pressure, feels like someone sitting on his chest 7/10, radiating to the left shoulder and arm.\n1-2 hours in duration, acute onset, 1st presentation started while gardening.\nNo radiation to the head. \n\u2105 nausea no vomiting since presentation\nSOBAR\n\nHPC. longer term hx of reduced ADLs due to SOBOE, walking up hills / stairs with no chest discomfort. \n\nPMHx - high cholesterol and high blood pressure. \n\n\nDHx - allergies aspirin.\n\nSHx - lives with wife at home, able to walk up stairs until previously\n\nDDx - MI, PE, GORD\n\nPlan - called ambulance ?? MI for further investigation and assessment.\n",
+    "highlights": [
+      ""
+    ]
+  },
+  "day4_consultation02": {
+    "presenting_complaint": "I'm feeling hot and have severe headaches",
+    "note": "PC. Headaches, loss of appetite, tingling, feel hot, palpitations,  acute onset, at random times of the day while at work (lawyer)\n\nHPC: \nPC started when started new job (lawer, high stress, works in front of a computer)\nHeadaches:\n-\tNo pre aura, \n-\tFrontal\n-\tNo radiation\n-\tSome nausea  no vomiting,\n-\tNo pmhx of headache.\n\nReduced appetite, with unintentional weight loss, loss of 5lbs \nPins and needles in both arms, no radiation to legs, maintains motor and sense, no loss of function\nFevers with headaches \nPalpitations with mild SOBOE and SOBAR.\n\n\nSymptoms occur at random times of the day while at work, with no pre-symptoms, sometimes together, sometimes individually.\n\nPMHx , hypothyroid. \n\nDHx allergies - nil\nThyroxine. \n\nSHx lawer , stressful job.\n\nDDx ??hypothyroid?\n\nPlans : requires further examination and blood tests.\n",
+    "highlights": [
+      ""
+    ]
+  },
+  "day4_consultation03": {
+    "presenting_complaint": "I'm feeling short of breath",
+    "note": "PC SOBAR, c section 2-3 weeks ago\n\nHPC;\nSOBAR while watching tv, acute onset.  Cough 1/7 previously, unproductive.\nNo fever, no chills, non positional.\nNo chest pain, no pain on inspiration\n\nC section 2-3 weeks ago. No complications, baby well.  No symptoms.\nNo of blood thinners.\n\n\nPMHx nill\nDhx. allergies to ibuprofen \n\n\nOex HR via telephone roughly 120bpm . tachy, regular\n\n\nFHx,\nMother hx of clots on legs.\n\nDDx: PE\n\nPlan : Further examination and investigation in acute setting.\n",
+    "highlights": [
+      ""
+    ]
+  },
+  "day4_consultation04": {
+    "presenting_complaint": "I'm wheezy",
+    "note": "PC : sobar pmhx of childhood asthma and hayfever.\n\nHPC. 2 day history of wheezing and SOBAR, after cleaning dusty environment\nNo chest pain. No nausea,no vomiting, no problems e+d\nSOB worse at night\nNow having problems speaking in full sentences\n\n\nPMH: As above.\n\nDhx : allergy nils no regular medications. \n\nDDx : acute exacerbation of asthma, ?? allergy\n\nPlan : antihistamine and further examination and investigation. \n",
+    "highlights": [
+      ""
+    ]
+  },
+  "day4_consultation05": {
+    "presenting_complaint": "I've had bad diarrhea for 3 days",
+    "note": "PC; diarrhea and central abdominal pain for 3/7. Now unable to go to work due to frequency of bowel movements. No fevers\n\nHPC:\nDiarrhea +++ 5-6 per day (more) only fluid no blood, feels as if there incomplete evacuation.\n\n\u2105 abdominal pain for since presentation, no radiation, mild to moderate tenderness, and cramping, E+D'ing causing nausea. Feeling of \u201cgas\u201d\n\nSome vomiting, now unable to tolerate fluids and solids.  Ate this morning but vomited immediately. Feels and looks dehydrated.\n\nNo problems with breathing, no chest pain, no headache. \n\nDHx : NKDA. \n\nFHx : father has history of stomach Ca.\n\nDDx : gastroenteritis\n\nPlan: fluids, paracetamol, advised if symptoms do not improve to visit the gp surgery. \n",
+    "highlights": [
+      ""
+    ]
+  },
+  "day4_consultation06": {
+    "presenting_complaint": "my chest hurts and it's been hard to breathe",
+    "note": "Name and DOB confirmed\nPC: presenting with headache - significant \nSx. started this morning\nAssociated symptoms - dizzy / blurry vision - sudden onset headache - severity score - 6/10\nNew headache\nHeadache over left side of head \nVision blurry - funny lines\nHas tried paracetamol 3 hours ago- no improvement\nStill having visual problems - some improvement\nLooking at screens making sx. Worse\nWhen moving sx. Worse\nHas felt nauseous - and vomited x2\nNo neurological symptoms\n\nUnlikely to be pregnant\n\nWorried re: brain cancer or a stroke - wondering if needs to go to a&e\n\nPmh: renal stones\n\nDhx: nil regular,\nNKDA\n\nFhx: mother - migraines, Hypothyroidism\n\nVideo assessment - appeared well - in a brightly lit environment - does not appear photophobic\n\nPlan - 1) ibuprofen + sugary drink + anti sickness to try until appointment\nLikely migraine however need to consider more serious differentials\nFor review face to face as 1st onset of headache - to be seen today at earliest - earliest appointment available - will need neurological assessment - also to assess for neck stiffness and fever and rash \n",
+    "highlights": [
+      ""
+    ]
+  },
+  "day4_consultation07": {
+    "presenting_complaint": "I have a cold",
+    "note": "Name and DOB confirmed. \nFeeling unwell for 8 days. Started as a sore throat, then developed a cough, Dry. No sputum. Non productive. No blood. No chest pain. \nMild SOB \nNot at rest. Not concerning or holding him back. \nSlight fever symptoms. \nGradually improving. \nNo Asthma\nNo sig PHMx. \nReduced appatitie. No unintentional weight loss. \nNo sig travel history. \nNon smoker.\n\nNo Sig drug history\nFhx - Mother Lung Ca nil else. \nNKDA\nShx - No asbestos exposure. \n\nLooks well\n\nTime off worse cert - But can self certify\nSafety netted - If worsening symotoms esp SOB (sudden change) needs review. \nExpect to improve and be better in 5 days. If no better for further medical reveiw at that time. \n",
+    "highlights": [
+      ""
+    ]
+  },
+  "day4_consultation08": {
+    "presenting_complaint": "lately, I haven't had much appetite or energy",
+    "note": "Confirmed name \nDOB confrimed. \n\n\n8 weeks. \nNot able to get up in the morning \nNo energy during the day. \nNot eating \nDifficulty sleeping. \nMood is Distracted difficulty focusing. \nLower mood recently \nDecreased sex drive. \nNo suicidal ideation \n\nNew job - 2 months ago. \n\nICE - would like to get back to how he was. \n\n\nMarried - \n\nPMHx - Hypothyroidism. \n\nDHx - Thyroxine.\n\nNKDA \n\nShx - \n\nFhx \nFather - suicide. \nMother well \nNo brothers or sisters. \n\nImp- depression. Hypothyroidism. (Low T3/4) \n\nPlan \nTSH, FBC, \nExamination \nGP review. \n",
+    "highlights": [
+      ""
+    ]
+  },
+  "day4_consultation09": {
+    "presenting_complaint": "I have pain in my jaw",
+    "note": "Confirmed name\nDOB\n\nTight chest. \n3 hours\nSlight SOB\nSlight wheezy. \nSlight cough. \nSlight cold last week. Still symotoms of cold and cough has stayed. \nNon productive. \nCough - worse at night. \n\n-\tWhen young - asthma exacerbation aged 16yrs. \n\nPMHx - Asthma. \nHayfever \nDust allergy. \n\nMedications \nVentolin - \nClenil modulate - \n\nNKDA\n\nFhx - Mother - Excema. \nFather Asthma\n\nICE - Inhalers \n\nImp- Asthma exacerbation. \n\nPlan \nFurther salbutamol, Clinil \nWith spacer. \nRead label - S/e warned. \n\nPred - 40mg 5 days. \nS/e warned mood changes, hyperglycemia, nausea, \n\nSafety netted - If worsening SOB or concerns seek further medical attention. \nConfirmed name \nDOB\n\nTight chest. \n3 hours\nSlight SOB\nSlight wheezy. \nSlight cough. \nSlight cold last week. Still symotoms of cold and cough has stayed. \nNon productive. \nCough - worse at night. \n\n-\tWhen young - asthma exacerbation aged 16yrs. \n\nPMHx - Asthma. \nHayfever \nDust allergy. \n\nMedications \nVentolin - \nClenil modulate - \n\nNKDA\n\nFhx - Mother - Excema. \nFather Asthma\n\nICE - Inhalers \n\nImp- Asthma exacerbation. \n\nPlan \nFurther salbutamol, Clinil \nWith spacer. \nRead label - S/e warned. \n\nPred - 40mg 5 days. \nS/e warned mood changes, hyperglycemia, nausea, \n\nSafety netted - If worsening SOB or concerns seek further medical attention. \n",
+    "highlights": [
+      ""
+    ]
+  },
+  "day4_consultation10": {
+    "presenting_complaint": "I have really bad diarrhea",
+    "note": "Name confirmed. \n\n2 days \nFeeling sick \nNo vomiting \nAche - Lower tummy. \nHot and sweaty \nDrinks lots of water - Polyuria. \nNo urgency \nNo dysuria. \n\nConstipated 1 weeks. \n\nPain described as - Lower abdo, aching\nConstant. \n\nSexually active - Implant. \n\nSpotting\nLMP 3.5 weeks ago. \n\nRegulalr boyfriend. \n\nPMhx - Amox \n\nNil Meds. \nShx - Non smoker. \n\nFhx -Brther Type 1 dm.  \n\nImp- Simple constipation, PID, STI, UTI \n\nPlan - Needs further examination and Ix. \nPregnancy test, U+E, \n",
+    "highlights": [
+      ""
+    ]
+  },
+  "day5_consultation01": {
+    "presenting_complaint": "I have a headache",
+    "note": "Left sided headache since yesterday morning. Intermittent. Non positional. Not woken her up. No altered smell/taste.  E&D normally. No prodromal illness, no viral symptoms, sore ears/coryzal sx.  Doesn't feel feverish but hasn't checked temperature. No N&V. No tingling/numbness/weakness/rash. Worse with light but vision not altered. Taken paracetamol only. Period stopped last week.\nNo hx headaches.\nPMH: Nil significant\nDH: Microgynon - no SEs, BP was normal when checked for last prescription ? when.\nFH: Mother has hypertension and migraines.\nSH: Lives with flatmates, alcohol - few glasses wine at weekends, non smoker.\nSome stress at work recently. \nImp: ? Tension headache/first episode migraine. No features meningitic illness but is worse with light.\n Plan: Advised to get BP and temp checked and to call straight back if worsening/persistent headache/fever/rash/new symptoms. Advised to start regular ibuprofen with food. To have a review if regular headaches. \n",
+    "highlights": [
+      "Left sided headache",
+      "Intermittent",
+      "Non positional",
+      "Doesn't feel feverish",
+      "No tingling/numbness/weakness/rash",
+      "Worse with light but vision not altered"
+    ]
+  },
+  "day5_consultation02": {
+    "presenting_complaint": "It hurts when I pee",
+    "note": "PC: Dysuria\nHPC: 6/7 hx dysuria, burning stinging sensation when PUs. No problem with actually passing urine. Strong odour. E&D normally. No new PV discharge. No back/loin pain. Not feverish but not checked temp.No obvious trigger, no hx dehydration/frequent SI. \nNo PHx urine infections/similar sx. \nNo recent change in BH/blood in stool.\nPMH: IBS\nFH: Nil\nDH: Mebeverine 200mg TDS. NKDA.\n\nSH: Lives with friends. Works as support worker. Non smoker. Drinks 1 unit/week.\nImp: Likely UTI.\nPlan: Nitrofurantoin 3/7 course. \nAdvised patient to contact us if fever/back pain/persistent symptoms or if recurrent episodes of similar symptoms occurs. \n",
+    "highlights": [
+      "dysuria",
+      "Strong odour",
+      "No back/loin pain",
+      "Not feverish"
+    ]
+  },
+  "day5_consultation03": {
+    "presenting_complaint": "I'm feeling very anxious",
+    "note": "PC: Anxiety symptoms\nHPC: 2/12 hx feeling anxious all the time. Seems to have started when started new job. Different industry, pressures from boss. Dreads work every morning. Initial insomnia ++ 3hrs + EMW. Often has only 3-4 hrs sleep. Tired in the day. Low energy. Eating pattern normal but more chocolate. Anhedonia in work and outside. Previously enjoyed running, tennis, socialising. Now still sees friends but often avoids. \nAssociated palpitations, only started with anxiety sx. Can feel irregular and chest discomfort. Rapid beat, lasts approx 2-10 mins.\nNo panic attacks, not missed work.\nOther anxiety provoking things include public transport.\nLow mood most of the time but denies any suicidal ideation. \n\nPMH: Nil Past Psych hx/significant anxiety.\nFHx: Mum has had depression.\n\nSH: Lives with parents. Supportive. Drinks Fri/sat, not sure of amount but sometimes overdoes it. Smokes occ, no illicit drugs.\n\nImp: Work related anxiety. Insomnia.\n\nPlan: Advised self referral to NHS talking therapies. In meantime advised to access online CBT: attached info.\nIf anxiety/mood symptoms worse or unable to cope with work to contact us for further discussion.\nAdvised blood test as initial investigation for palpitations. Patient advised to book via support team. \n",
+    "highlights": [
+      "Anxiety symptoms",
+      "insomnia",
+      "Associated palpitations",
+      "Low mood most of the time but denies any suicidal ideation",
+      "Work related anxiety"
+    ]
+  },
+  "day5_consultation04": {
+    "presenting_complaint": "Lower stomach pain",
+    "note": "PC: Abdominal pain. HPC: Periumbilical pain, constant getting worse. Severity 8/10. Has had some light PV bleeding. No dysuria/frequency but some difficulty PUing. BO daily, normal stool. Constipation for a week last week. LMP 2 weeks ago. No other PV discharge. E&D ok. Not checked temp. Does not feel feverish. Not feeling faint. No DIB/shoulder tip pain. Nausea. No vomiting/diarrhoea. Last foreign travel 1 yr ago. \nImplanon 1 yr ago. \nPMH: Nil significant\nDH: Nil. Allergic to amoxicillin\nSH; Teacher, has been able to work as usual. Lives with parents. No smoker/alcohol/drugs.\nImp: Abdominal pain ? cause. Needs to check preg test today and contact us immediately if pos. Urgent examination booked with Dr. To get in touch before if pain worse/new sx. \n",
+    "highlights": [
+      "Periumbilical pain",
+      "light PV bleeding",
+      "difficulty PUing",
+      "LMP 2 weeks ago"
+    ]
+  },
+  "day5_consultation05": {
+    "presenting_complaint": "My tummy hurts",
+    "note": "PC: Abdo pain\nHPC: 2/7 hx lower abdominal pain, central location. Has noticed some blood in the urine. Has check temp - 37. No back pain. Feels sweaty. More thirsty than normal, drinking well. No dysuria/freq. Constipated last week, now BO normally. No blood in stool. Last BO 2 hrs ago. No N&V, no dyspepsia. \n\nPMH : Nil \nDH: Nil. Allergic to amoxicillin.\nFMH: Mum had breast cancer, now in remission. \nSH: Lives with parents. Non smoker. No drugs. Drinks 1 beer x 4/week.\n\nImp: ? UTI.\nPlan: Advised 3/7 course Abx. Will pick up from pharmacy. To start asap. If develops temperature/persistent/worsening pain to call back or if recurrent similar sx. \n",
+    "highlights": [
+      "lower abdominal pain",
+      "blood in the urine",
+      "temp - 37",
+      "No back pain",
+      "thirsty"
+    ]
+  },
+  "day5_consultation06": {
+    "presenting_complaint": "Diarrhoea",
+    "note": "PC: Diarrhoea\nHPC: 3/7 hx diarrhoea. Watery stools. Urgency. No blood in stool. Periumbilical cramps, comes in waves. Worse when needs to open bowels. Very regular BO, today already 4 x by midday.\nVomiting, last vomited 1 hr ago. Doesn't feel like she is holding down fluid.\nStill PUing ok. Last 1 hr ago. Not sure of colour.\nBH normally regular. 1 x day.\nNo foreign travel. \n\n.\nHas been taking ORT regularly, difficulty keeping down.\nNo rash. Feels hot but hasn't checked temperature.\nLMP 2/52 ago. No regular SI. Not using contraception. \nHas been at work til today. Now working from home.\n\nPMH:Nil. DH: Vitamins.\nSH: Lives with brother and mother. Non smoker. Drinks 1 pint a week.\nWorks as graphic designer. \n\nImp: Gastroenteritis ?Viral/?food poisoning. \nPlan: As ongoing, fever needs stool culture sent to exclude bacterial origin. Advised to continue taking small sips ORT constantly. Booked for urgent appointment to assess hydration status. If feels worse in meantime, abdo pain, unwell to contact us to arrange urgent A&E assessment.\n",
+    "highlights": [
+      "3/7 hx diarrhoea",
+      "No blood in stool",
+      "Vomiting",
+      "Still PUing ok",
+      "Last 1 hr ago"
+    ]
+  },
+  "day5_consultation07": {
+    "presenting_complaint": "Cough and a cold",
+    "note": "PC: Cough and cold.\nHPC: 4-5 day hx runny nose, dry cough. No sputum/haemoptysis. No epistaxis/sinus pain. Feels hot, hasn't measured temperature. No SOB/inspiratory pain/wheeze. Aches and pains. No vomiting. E&D ok. PUing ok. \nNo hx chest problems/recurrent chest infections/wt loss.\nThinks last BP was fine, can't remember when last BP/DM check up was. Doesn't check blood sugars/urine at home. \nNo increased thirst/urinary freq.\nTaking 2-3 lemsips a day which eases sx.\n\nPMH: Hypertension\nT2 DM\n\nDH: Lisinopril \nMetformin\n\nHeight- 5ft 5in\nWeight - 65kg\n\nSH: Non smoker, odd sherry. Lives with partner and dog. Office manager.\n\nImp: Viral bronchitis.\n\nPlan: Advised continue lemsips but no other paracetamol containing products. Avoid cough syrup but can take if unable to sleep at night. \nMay take 1-2 weeks to settle and cough can persist for up to a month but to contact us if symptoms not worse/fever persists - check with thermometer/coughing up phlegm/blood in sputum/nose bleeds.\n",
+    "highlights": [
+      "No sputum/haemoptysis",
+      "No SOB/inspiratory pain/wheeze",
+      "T2 DM",
+      "Non smoker"
+    ]
+  },
+  "day5_consultation08": {
+    "presenting_complaint": "I'm wheezy",
+    "note": "PC: Wheeze\n\nHPC: 2-3 hx wheeze. No fever, has checked temp - 37. Cold symptoms. Not coughing up sputum, no haemoptysis/CP. Not night time waking. Not exercising at the moment. Sometimes can't complete sentences but no SOB at rest, no problems walking upstairs. More wheezy walking to work. Doesn't have peak flow meter at home. Has missed a few days of work.\nHx asthma as a child, took inhalers ? what. Had hospital admissions and missed school. No ITU. Stopped medication 3-4 years ago but sometimes takes salbutamol still every few weeks. Needs salbutamol when exercises.\n\nPMH Asthma, Hayfever\n\nDH Salbutamol NKDA\n\nSH: Non smoker. 1U alcohol every 2-3 days. Lives with partner. Works as engineer.\n\nImp: Exacerbation asthma\n\nPlan: Continue to monitor temperature and speak to us if spiking temperatures.\nCollect prescription of peak flow meter and spacer. Pharmacist can advise on usage. Record PEFR twice daily, first on waking and at night. Increase salbutamol with spacer to 2-4 puffs 4hrly and arrange a review with us next week. May need to add in another inhaler. If wheeze not settling/getting worse in meantime if feels unwell for urgent appointment. \n",
+    "highlights": [
+      "Wheeze",
+      "No fever",
+      "Not coughing up sputum",
+      "Sometimes can't complete sentences but no SOB at rest",
+      "Stopped medication 3-4 years ago but sometimes takes salbutamol still every few weeks"
+    ]
+  },
+  "day5_consultation09": {
+    "presenting_complaint": "Tired all the time",
+    "note": "PC: Tired all the time.\n\nHPC: Tired and feeling run down for last 6 weeks. Last felt well at xmas. Seemed to start after return from holiday in the States. Did lots of walking in shorts in Yosemite, didn't notice bite. Well when on hol. Felt unwell on return. Initially had red circular rash on back of calf mid-end Feb.  Lasted few weeks and faded. Had fever, sore throat at that time. Reduced appetite, no wt loss, \n\nSE: GI - Dec app, no change in BH, no blood in stool, no dyspepsia.\nNeuro: General headache/no visual disturbance/altered sens/weakness.Yosemite Park. \nRS: No cough/sputum/CP/SOB. No coryzal sx/sore throat.\nNot exercising due to lack of energy\nLS: Aching shoulder/legs/back. No joint swelling.\nNo other rashes noted.\n\nNo sx depression.\n\nPMH: Asthma, hayfever\n\nDH: Has bd inhaler ? ICS, does not take salbutamol regularly. Cetirizine OD\nOcc.Lives with wife. Non smoker. Occ alcohol.\n\nImp: 6/52 hx fatigue and hx circular rash on calf.\n\nPlan: Needs screening bloods for TATT including Lyme serology.\n\nFU 1 week later with GP.\n10.  13:30-13:50\n\t\t\u201cI have a blinding headache\u201d\nNote: PC : Headache\n\nHPC: 3/7 hx headache. Starts on waking up. Over right eye. Seeing lights in front of eyes. Can be worse when stands up not when bends over/cough/sneeze. Vision not disturbed. No nausea/vomiting. No altered taste/smell. Worse in the light. No rash. No fever. No coryzal symptoms. Not woken up in the night. No tingling/numbness/weakness. \nWell before this episode. Has been lacking in energy but no wt loss. \nSeverity 5-8/10. Taking ibuprofen, eases slightly but not resolving. \n\nHas had some generalised headaches before but not bad and associated symptoms/altered vision.\nPMH: Nil\nDH: Mercilon. BP last checked 1 yr ago was normal.\n\nFMHx: Mum has migraine.\n\nSH: Non smoker. No illicit drugs, 3 beers/week. Works from home.\n\nImp: Likely migraine but as ongoing and persistent needs neurological examination to exclude other pathology. Advised regular paracetamol and naproxen with food (will prescribe). If gets worse in meantime contact us straightaway or go to A&E is severe/unrelenting.\n",
+    "highlights": [
+      "Tired",
+      "Did lots of walking in shorts in Yosemite",
+      "red circular rash",
+      "fever",
+      "sore throat",
+      "Aching shoulder/legs/back"
+    ]
+  },
+  "day5_consultation10": {
+    "presenting_complaint": "I have a blinding headache",
+    "note": "PC : Headache\n\nHPC: 3/7 hx headache. Starts on waking up. Over right eye. Seeing lights in front of eyes. Can be worse when stands up not when bends over/cough/sneeze. Vision not disturbed. No nausea/vomiting. No altered taste/smell. Worse in the light. No rash. No fever. No coryzal symptoms. Not woken up in the night. No tingling/numbness/weakness. \nWell before this episode. Has been lacking in energy but no wt loss. \nSeverity 5-8/10. Taking ibuprofen, eases slightly but not resolving. \n\nHas had some generalised headaches before but not bad and associated symptoms/altered vision.\nPMH: Nil\nDH: Mercilon. BP last checked 1 yr ago was normal.\n\nFMHx: Mum has migraine.\n\nSH: Non smoker. No illicit drugs, 3 beers/week. Works from home.\n\nImp: Likely migraine but as ongoing and persistent needs neurological examination to exclude other pathology. Advised regular paracetamol and naproxen with food (will prescribe). If gets worse in meantime contact us straightaway or go to A&E is severe/unrelenting.\n",
+    "highlights": [
+      "Starts on waking up",
+      "Over right eye",
+      "Seeing lights in front of eyes",
+      "Worse in the light",
+      "No rash",
+      "No fever",
+      "Not woken up in the night"
+    ]
+  },
+  "day5_consultation11": {
+    "presenting_complaint": "I have a pouring diarrhea",
+    "note": "PC: R knee pain\n\nHPC: 2/52 R knee pain. Training for marathon. Currently up to 7-8 miles few times a week. Gym few x week. Had to stop running at 20 min point due to pain this week. \nPain in front of knee and right side. No specific area tenderness. Has noticed puffiness of knee after exercise, used ice and this settled completely. No giving way/locking. No problems going up/downstairs or on normal walking. \nFROM. \nGenerally feels pain is getting worse. \nHas had previous ice hockey injury and bruising afterwards.\nNo other jt pains, no general unwell/fever.\nHas had tingling R side forefoot which settled down. Slight ankle swelling, indentation socks. No change in temp/colour.\nNo problems walking hard floors/pain in sole.\n\nPMH:  LASIK, ? kidney stones.\n\nDHx: Vit D, melatonin, ibuprofen. Xanax sometimes . \n\nSH: Has occ joint. \n\nPlan: Advised replace ibuprofen with naproxen which I will prescribe. Continue using ice as much as possible and reduce exercise. Do not continue to run with pain. No hx GI sx/asthma. Advise I will refer for physio for assessment and ongoing Rx. If persistent swelling/heat/redness/locking to see Dr asap.\n",
+    "highlights": [
+      "Training for marathon",
+      "puffiness of knee after exercise",
+      "No giving way/locking",
+      "FROM",
+      "tingling R side forefoot",
+      "If persistent swelling/heat/redness/locking to see Dr asap"
+    ]
+  },
+  "day5_consultation12": {
+    "presenting_complaint": "Headache",
+    "note": "PC: Headache\n\nHPC L sided posterior headache. Started mid morning. 8/10 severity. No visual disturbance/visual floaters/tingling/numbness/weakness/nausea/vomiting/fever/neck stiffness. \nNo worse cough/sneeze/bending. Did not wake her up in the night, slept ok . E&D fine. Finding it hard to concentrate on work.\n\nNo headaches in the past. \nNo change in diet/liestyle/increased stress.\n\nDH: Nil\n\nFMH: Mother hypertension\n\nSH: Lives with partner. Designer. \n\nImp: New onset headache.\n\nPlan: Advised prescribed naproxen to take instead of ibuprofen. Can take alongside paracetmol. If pain not settling/worse or new symptoms to contact dr asap. If recurring episodes of same to have further assessment with GP.\n",
+    "highlights": [
+      ""
+    ]
+  }
+}
