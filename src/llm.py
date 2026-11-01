@@ -5,6 +5,7 @@ Set PULSENOTE_TEMPERATURE (for example 0) if your model supports it and you want
 """
 
 import os
+import time
 
 
 def make_anthropic_call(max_tokens: int = 2000):
@@ -45,27 +46,34 @@ def make_gemini_call(max_tokens: int = 4000):
     def call(system: str, user: str) -> str:
         last_err = None
         for model_name in candidates:
-            try:
-                config = types.GenerateContentConfig(
-                    system_instruction=system,
-                    temperature=float(temperature) if temperature is not None else None,
-                    max_output_tokens=max_tokens,
-                    response_mime_type="application/json",
-                )
-                resp = client.models.generate_content(
-                    model=model_name,
-                    contents=user,
-                    config=config,
-                )
-                if resp.text:
-                    return resp.text
-            except Exception as e:
-                last_err = e
-                # If model is not found on user's tier, fallback to next candidate
-                if "404" in str(e) or "NOT_FOUND" in str(e) or "not found" in str(e).lower():
-                    continue
-                raise e
-        raise RuntimeError(f"Gemini API generation failed. Last error: {last_err}")
+            for attempt in range(2):
+                try:
+                    config = types.GenerateContentConfig(
+                        system_instruction=system,
+                        temperature=float(temperature) if temperature is not None else None,
+                        max_output_tokens=max_tokens,
+                        response_mime_type="application/json",
+                    )
+                    resp = client.models.generate_content(
+                        model=model_name,
+                        contents=user,
+                        config=config,
+                    )
+                    if resp.text:
+                        return resp.text
+                except Exception as e:
+                    last_err = e
+                    err_str = str(e).lower()
+                    # If high demand (503) or rate limit (429), back off and retry or fail over
+                    if "503" in err_str or "unavailable" in err_str or "high demand" in err_str:
+                        time.sleep(3 * (attempt + 1))
+                        continue
+                    if "429" in err_str or "resource_exhausted" in err_str:
+                        time.sleep(4 * (attempt + 1))
+                        continue
+                    # If model not found or other client error, try next candidate model
+                    break
+        raise RuntimeError(f"Gemini API generation failed across candidate models. Last error: {last_err}")
 
     return call
 
