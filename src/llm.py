@@ -34,12 +34,12 @@ def make_gemini_call(max_tokens: int = 8000):
     from google.genai import types
 
     client = genai.Client()
-    preferred_model = os.environ.get("PULSENOTE_MODEL", "gemini-2.0-flash")
+    preferred_model = os.environ.get("PULSENOTE_MODEL", "gemini-3.5-flash")
     temperature = os.environ.get("PULSENOTE_TEMPERATURE", "0.0")
 
-    # Order of candidate models with high daily free limits (1,500 requests/day)
+    # Order of candidate models that are active on Google GenAI API
     candidates = [preferred_model]
-    for m in ["gemini-2.0-flash", "gemini-2.5-flash", "gemini-2.5-flash-lite"]:
+    for m in ["gemini-3.5-flash", "gemini-3.5-flash-lite", "gemini-flash-latest"]:
         if m not in candidates:
             candidates.append(m)
 
@@ -82,7 +82,7 @@ def make_gemini_call(max_tokens: int = 8000):
     return call
 
 
-def get_llm_call(max_tokens: int = 2000):
+def get_llm_call(max_tokens: int = 8000):
     """Automatically select provider based on PULSENOTE_PROVIDER or available API keys."""
     provider = os.environ.get("PULSENOTE_PROVIDER", "").lower()
     if provider == "anthropic" or (not provider and "ANTHROPIC_API_KEY" in os.environ and "GEMINI_API_KEY" not in os.environ):
