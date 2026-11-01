@@ -83,7 +83,7 @@ def main():
 
     summary = summarize(rescored, latencies, failures)
     summary["validator_commit"] = commit_hash
-    summary["validator_version"] = "validator-v1"
+    summary["validator_version"] = "validator-v2"
     (out_dir / "summary.json").write_text(json.dumps(summary, indent=2))
 
     from eval.run_eval import build_review_sample, build_stratified_sample

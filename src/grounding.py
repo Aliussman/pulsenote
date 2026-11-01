@@ -10,26 +10,10 @@ from collections import Counter
 from difflib import SequenceMatcher
 
 from .schemas import NoteSentence, RawNote, RawSentence, SOAPNote, Turn
+from .textnorm import content_words, has_negation, normalize, numbers
 
 CLINICIAN_LABELS = {"doctor", "clinician", "physician", "dr", "gp", "nurse"}
 
-TENS_WORDS = {
-    "twenty": 20, "thirty": 30, "forty": 40, "fifty": 50,
-    "sixty": 60, "seventy": 70, "eighty": 80, "ninety": 90,
-}
-
-ONES_WORDS = {
-    "zero": 0, "one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6,
-    "seven": 7, "eight": 8, "nine": 9, "ten": 10, "eleven": 11, "twelve": 12,
-    "thirteen": 13, "fourteen": 14, "fifteen": 15, "sixteen": 16, "seventeen": 17,
-    "eighteen": 18, "nineteen": 19,
-}
-
-NEGATION_CUES = {
-    "no", "not", "denies", "denied", "denying", "without", "never", "none",
-    "negative", "nothing", "inability", "unable", "against", "cannot", "cant",
-    "avoid", "avoids", "unlikely",
-}
 
 HARD_REASON_CODES = {
     "quote_not_in_turn",
@@ -48,66 +32,13 @@ def is_hard_failure(reason: str) -> bool:
     """True if reason represents a factual distortion (invented number, dropped negation, fake quote, wrong speaker)."""
     return reason.split(":")[0] in HARD_REASON_CODES
 
-STOPWORDS = {
-    "the", "and", "for", "with", "that", "this", "has", "have", "had", "was", "were", "are",
-    "his", "her", "she", "him", "from", "into", "than", "then", "also", "will", "been",
-    "patient", "reports", "reported", "states", "stated", "noted", "presents", "presenting",
-    "history", "doctor", "clinician", "plan", "per",
-}
-
 # Minimum share of a sentence's content words that must appear in the cited turns.
 MIN_OVERLAP = {"S": 0.5, "O": 0.5, "A": 0.4, "P": 0.4}
 
-NUM_RE = re.compile(r"\d+(?:\.\d+)?")
 
 
-def normalize(text: str) -> str:
-    text = text.lower().replace("\u2019", "'")
-    text = re.sub(r"n't\b", " not", text)
-    text = re.sub(r"(?<!\d)\.|\.(?!\d)", " ", text)  # drop periods, keep decimals
-    text = re.sub(r"[^a-z0-9.\s]", " ", text)
-    tokens = text.split()
-    out = []
-    i = 0
-    while i < len(tokens):
-        tok = tokens[i]
-        if tok in TENS_WORDS and i + 1 < len(tokens) and tokens[i + 1] in ONES_WORDS:
-            val = TENS_WORDS[tok] + ONES_WORDS[tokens[i + 1]]
-            out.append(str(val))
-            i += 2
-        elif tok in TENS_WORDS:
-            out.append(str(TENS_WORDS[tok]))
-            i += 1
-        elif tok in ONES_WORDS:
-            out.append(str(ONES_WORDS[tok]))
-            i += 1
-        else:
-            out.append(tok)
-            i += 1
-    return " ".join(out)
 
 
-def stem(tok: str) -> str:
-    for suffix in ("ing", "ed", "es", "s"):
-        if tok.endswith(suffix) and len(tok) - len(suffix) >= 3:
-            return tok[: -len(suffix)]
-    return tok
-
-
-def content_words(text: str) -> set[str]:
-    return {
-        stem(t)
-        for t in normalize(text).split()
-        if t not in STOPWORDS and not t.replace(".", "").isdigit() and len(t) > 2
-    }
-
-
-def numbers(text: str) -> set[str]:
-    return set(NUM_RE.findall(normalize(text)))
-
-
-def has_negation(text: str) -> bool:
-    return bool(set(normalize(text).split()) & NEGATION_CUES)
 
 
 def quote_matches(quote: str, turn_text: str, threshold: float = 0.9) -> bool:
