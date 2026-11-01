@@ -75,9 +75,18 @@ def main():
         for r in rescored:
             f.write(json.dumps(r) + "\n")
 
+    import subprocess
+    try:
+        commit_hash = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
+    except Exception:
+        commit_hash = "unknown"
+
     summary = summarize(rescored, latencies, failures)
+    summary["validator_commit"] = commit_hash
+    summary["validator_version"] = "validator-v1"
     (out_dir / "summary.json").write_text(json.dumps(summary, indent=2))
 
+    print(f"Rescored under frozen validator {summary['validator_version']} ({commit_hash[:7]}):")
     print(format_table(summary))
 
 
