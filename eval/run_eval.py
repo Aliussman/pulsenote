@@ -120,6 +120,50 @@ def build_review_sample(rows: list[dict], per_system: int = 50, seed: int = 0):
     return review, key
 
 
+def build_stratified_sample(rows: list[dict], seed: int = 0):
+    """Stratified sample oversampling hard-flagged and soft-flagged sentences for validator audit."""
+    rng = random.Random(seed)
+    pools = {
+        "baseline": [r for r in rows if r["system"] == "baseline" and r["check"] == "posthoc"],
+        "grounded": [r for r in rows if r["system"] == "grounded" and r["check"] == "citation"],
+    }
+    picked = []
+    for system, pool in pools.items():
+        hard = [r for r in pool if r.get("hard_reasons")]
+        soft = [r for r in pool if not r.get("hard_reasons") and r.get("reasons")]
+        clean = [r for r in pool if not r.get("reasons")]
+
+        n_hard = min(len(hard), 25)
+        n_soft = min(len(soft), 25)
+        n_clean = min(len(clean), 50)
+
+        picked += [(system, r, "hard") for r in rng.sample(hard, n_hard)]
+        picked += [(system, r, "soft") for r in rng.sample(soft, n_soft)]
+        picked += [(system, r, "clean") for r in rng.sample(clean, n_clean)]
+
+    rng.shuffle(picked)
+    review, key = [], {}
+    for i, (system, r, stratum) in enumerate(picked):
+        item_id = f"item_{i:03d}"
+        key[item_id] = {
+            "system": system,
+            "flagged": r["flagged"],
+            "stratum": stratum,
+            "reasons": r["reasons"],
+        }
+        review.append(
+            {
+                "item_id": item_id,
+                "encounter_id": r["encounter_id"],
+                "section": r["section"],
+                "text": r["text"],
+                "human_label": None,
+                "missing_or_wrong_detail": "",
+            }
+        )
+    return review, key
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--data", required=True)

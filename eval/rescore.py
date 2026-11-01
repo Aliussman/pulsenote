@@ -86,6 +86,19 @@ def main():
     summary["validator_version"] = "validator-v1"
     (out_dir / "summary.json").write_text(json.dumps(summary, indent=2))
 
+    from eval.run_eval import build_review_sample, build_stratified_sample
+    review, key = build_review_sample(rescored)
+    with open(out_dir / "review_sample.jsonl", "w") as f:
+        for item in review:
+            f.write(json.dumps(item) + "\n")
+    (out_dir / "review_key.json").write_text(json.dumps(key, indent=2))
+
+    strat_review, strat_key = build_stratified_sample(rescored)
+    with open(out_dir / "review_sample_stratified.jsonl", "w") as f:
+        for item in strat_review:
+            f.write(json.dumps(item) + "\n")
+    (out_dir / "review_key_stratified.json").write_text(json.dumps(strat_key, indent=2))
+
     print(f"Rescored under frozen validator {summary['validator_version']} ({commit_hash[:7]}):")
     print(format_table(summary))
 
