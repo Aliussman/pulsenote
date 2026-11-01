@@ -33,36 +33,38 @@ def make_gemini_call(max_tokens: int = 2000):
     from google.genai import types
 
     client = genai.Client()
-    model = os.environ.get("PULSENOTE_MODEL", "gemini-3.8-flash")
+    preferred_model = os.environ.get("PULSENOTE_MODEL", "gemini-2.5-flash")
     temperature = os.environ.get("PULSENOTE_TEMPERATURE")
 
-    def call(system: str, user: str) -> str:
-        gen_config = {}
-        if temperature is not None:
-            gen_config["temperature"] = float(temperature)
-        if max_tokens is not None:
-            gen_config["max_output_tokens"] = max_tokens
+    # Order of candidate models to try (preferred first)
+    candidates = [preferred_model]
+    for m in ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-3.8-flash"]:
+        if m not in candidates:
+            candidates.append(m)
 
-        try:
-            interaction = client.interactions.create(
-                model=model,
-                input=user,
-                system_instruction=system,
-                generation_config=gen_config if gen_config else None,
-            )
-            return interaction.output_text or ""
-        except Exception:
-            config = types.GenerateContentConfig(
-                system_instruction=system,
-                temperature=float(temperature) if temperature is not None else None,
-                max_output_tokens=max_tokens,
-            )
-            resp = client.models.generate_content(
-                model=model,
-                contents=user,
-                config=config,
-            )
-            return resp.text or ""
+    def call(system: str, user: str) -> str:
+        last_err = None
+        for model_name in candidates:
+            try:
+                config = types.GenerateContentConfig(
+                    system_instruction=system,
+                    temperature=float(temperature) if temperature is not None else None,
+                    max_output_tokens=max_tokens,
+                )
+                resp = client.models.generate_content(
+                    model=model_name,
+                    contents=user,
+                    config=config,
+                )
+                if resp.text:
+                    return resp.text
+            except Exception as e:
+                last_err = e
+                # If model is not found on user's tier, fallback to the next candidate
+                if "404" in str(e) or "NOT_FOUND" in str(e) or "not found" in str(e).lower():
+                    continue
+                raise e
+        raise RuntimeError(f"Gemini API generation failed. Last error: {last_err}")
 
     return call
 

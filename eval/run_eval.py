@@ -47,27 +47,34 @@ def run(encounters: list[dict], call_llm: LLMCall):
     latencies: dict[str, list[float]] = {"baseline": [], "grounded": []}
     failures = {"baseline": 0, "grounded": 0}
 
-    for enc in encounters:
+    for idx, enc in enumerate(encounters, 1):
         turns = [Turn(**t) for t in enc["turns"]]
+        print(f"[{idx}/{len(encounters)}] Evaluating '{enc['id']}' ({len(turns)} turns)...", flush=True)
 
+        print("  - Baseline note...", end=" ", flush=True)
         try:
             start = time.perf_counter()
             raw = generate_baseline(turns, call_llm)
-            latencies["baseline"].append(time.perf_counter() - start)
+            elapsed = time.perf_counter() - start
+            latencies["baseline"].append(elapsed)
+            print(f"done ({elapsed:.1f}s, {len(raw.sentences)} sentences)", flush=True)
         except Exception as e:
             failures["baseline"] += 1
-            print(f"[baseline] {enc['id']} failed: {e}")
+            print(f"FAILED ({e})", flush=True)
         else:
             for s in raw.sentences:
                 rows.append(make_row("baseline", "posthoc", enc["id"], s, post_hoc_check(s.text, s.section, turns)))
 
+        print("  - Grounded note...", end=" ", flush=True)
         try:
             start = time.perf_counter()
             note = generate_note(turns, call_llm)
-            latencies["grounded"].append(time.perf_counter() - start)
+            elapsed = time.perf_counter() - start
+            latencies["grounded"].append(elapsed)
+            print(f"done ({elapsed:.1f}s, {len(note.sentences)} sentences)", flush=True)
         except Exception as e:
             failures["grounded"] += 1
-            print(f"[grounded] {enc['id']} failed: {e}")
+            print(f"FAILED ({e})", flush=True)
         else:
             for s in note.sentences:
                 rows.append(make_row("grounded", "citation", enc["id"], s, s.flag_reasons))
