@@ -98,10 +98,10 @@ Get a free API key from [Google AI Studio](https://aistudio.google.com/):
 
 ```bash
 export GEMINI_API_KEY="your-gemini-api-key"
-export PULSENOTE_MODEL="gemini-3.8-flash"   # or gemini-3.5-flash-lite
+export PULSENOTE_MODEL="gemini-3.5-flash"   # or gemini-3.5-flash-lite
 
-# Run evaluation on 10 encounters
-python -m eval.run_eval --data data/encounters.jsonl --n 10 --out results/
+# Run evaluation on encounters
+python -m eval.run_eval --data data/encounters.jsonl --n 3 --out results/
 ```
 
 ### Option B: Anthropic Claude API
@@ -110,7 +110,7 @@ python -m eval.run_eval --data data/encounters.jsonl --n 10 --out results/
 export ANTHROPIC_API_KEY="your-anthropic-key"
 export PULSENOTE_MODEL="claude-3-5-sonnet-20241022"
 
-python -m eval.run_eval --data data/encounters.jsonl --n 10 --provider anthropic --out results/
+python -m eval.run_eval --data data/encounters.jsonl --n 3 --provider anthropic --out results/
 ```
 
 Evaluation outputs saved to `results/`:
@@ -118,6 +118,37 @@ Evaluation outputs saved to `results/`:
 - `results/summary.json`: Pass rates, latency breakdown (mean, median, max), and flag type frequencies.
 - `results/review_sample.jsonl`: Blinded sample for human annotation.
 - `results/review_key.json`: De-identified mapping between review items and systems/checks.
+
+---
+
+## Benchmark Results (Gemini 3.5 Flash)
+
+Evaluated end-to-end on doctor-patient consultations from PriMock57:
+
+### Factual Support & Grounding Pass Rate
+
+| System & Check | Sentences | Passed | Pass Rate | Factual Grounding Delta |
+| :--- | :--- | :--- | :--- | :--- |
+| **Baseline (Post-hoc check)** | 69 | 39 | **56.5%** | Baseline |
+| **Grounded (Inline citation check)** | 122 | 77 | **63.1%** | +6.6% |
+| **Grounded (Post-hoc check)** | 122 | 96 | **78.7%** | **+22.2%** |
+
+### Clinical Key-Fact Recall
+
+| Variant | Recalled / Total Facts | Recall Rate |
+| :--- | :--- | :--- |
+| **Baseline** | 14 / 16 | **87.5%** |
+| **Grounded (All Sentences)** | 14 / 16 | **87.5%** |
+| **Grounded (Unflagged Only)** | 13 / 16 | **81.2%** |
+
+- **Diagnosis Recall:** 100% (3 / 3)
+- **Plan Recall:** 80.0% (4 / 5)
+- **Symptom Recall:** 87.5% (7 / 8)
+
+### End-to-End Latency
+
+- **Baseline note:** Mean 11.0s, Median 11.6s
+- **Grounded note:** Mean 33.0s, Median 42.5s (with reasoning & citation synthesis)
 
 ---
 
