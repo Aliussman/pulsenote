@@ -21,11 +21,14 @@ from src.posthoc import post_hoc_check
 from src.schemas import Turn
 
 
-def load_encounters(path: str, n: int | None = None, seed: int = 0) -> list[dict]:
+def load_encounters(path: str, n: int | None = None, seed: int | None = None) -> list[dict]:
     with open(path) as f:
         encounters = [json.loads(line) for line in f if line.strip()]
     if n is not None and n < len(encounters):
-        encounters = random.Random(seed).sample(encounters, n)
+        if seed is not None:
+            encounters = random.Random(seed).sample(encounters, n)
+        else:
+            encounters = encounters[:n]
     return encounters
 
 
@@ -116,7 +119,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--data", required=True)
     parser.add_argument("--n", type=int, default=10)
-    parser.add_argument("--seed", type=int, default=0)
+    parser.add_argument("--seed", type=int, default=None, help="Random seed for sampling (default: sequential)")
     parser.add_argument("--out", default="results")
     parser.add_argument("--provider", choices=["gemini", "anthropic"], default=None, help="LLM provider (default: auto-detected or gemini)")
     args = parser.parse_args()
