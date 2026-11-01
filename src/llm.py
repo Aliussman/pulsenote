@@ -29,17 +29,17 @@ def make_anthropic_call(max_tokens: int = 2000):
     return call
 
 
-def make_gemini_call(max_tokens: int = 4000):
+def make_gemini_call(max_tokens: int = 8000):
     from google import genai  # pip install google-genai; reads GEMINI_API_KEY from environment
     from google.genai import types
 
     client = genai.Client()
-    preferred_model = os.environ.get("PULSENOTE_MODEL", "gemini-2.5-flash")
+    preferred_model = os.environ.get("PULSENOTE_MODEL", "gemini-2.0-flash")
     temperature = os.environ.get("PULSENOTE_TEMPERATURE", "0.0")
 
-    # Order of candidate models to try (preferred first)
+    # Order of candidate models with high daily free limits (1,500 requests/day)
     candidates = [preferred_model]
-    for m in ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-3.8-flash"]:
+    for m in ["gemini-2.0-flash", "gemini-2.5-flash", "gemini-2.5-flash-lite"]:
         if m not in candidates:
             candidates.append(m)
 
@@ -64,14 +64,18 @@ def make_gemini_call(max_tokens: int = 4000):
                 except Exception as e:
                     last_err = e
                     err_str = str(e).lower()
-                    # If high demand (503) or rate limit (429), back off and retry or fail over
+                    # If daily quota exceeded on this specific model, immediately switch to the next candidate model
+                    if "per day limit" in err_str or "daily" in err_str or "quota exceeded" in err_str:
+                        print(f" [quota reached on {model_name}, switching to next model...] ", end="", flush=True)
+                        break
+                    # If temporary 503 high demand or rate limit, brief backoff
                     if "503" in err_str or "unavailable" in err_str or "high demand" in err_str:
-                        time.sleep(3 * (attempt + 1))
+                        time.sleep(4 * (attempt + 1))
                         continue
                     if "429" in err_str or "resource_exhausted" in err_str:
                         time.sleep(4 * (attempt + 1))
                         continue
-                    # If model not found or other client error, try next candidate model
+                    # For 404 or other errors, break immediately to try the next model candidate
                     break
         raise RuntimeError(f"Gemini API generation failed across candidate models. Last error: {last_err}")
 
