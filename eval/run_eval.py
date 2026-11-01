@@ -111,12 +111,20 @@ def main():
     parser.add_argument("--n", type=int, default=10)
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--out", default="results")
+    parser.add_argument("--provider", choices=["gemini", "anthropic"], default=None, help="LLM provider (default: auto-detected or gemini)")
     args = parser.parse_args()
 
-    from src.llm import make_anthropic_call
+    from src.llm import get_llm_call, make_anthropic_call, make_gemini_call
+
+    if args.provider == "anthropic":
+        call_llm = make_anthropic_call()
+    elif args.provider == "gemini":
+        call_llm = make_gemini_call()
+    else:
+        call_llm = get_llm_call()
 
     encounters = load_encounters(args.data, args.n, args.seed)
-    rows, latencies, failures = run(encounters, make_anthropic_call())
+    rows, latencies, failures = run(encounters, call_llm)
 
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)

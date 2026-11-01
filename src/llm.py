@@ -11,7 +11,7 @@ def make_anthropic_call(max_tokens: int = 2000):
     import anthropic  # pip install anthropic; reads ANTHROPIC_API_KEY from the environment
 
     client = anthropic.Anthropic()
-    model = os.environ["PULSENOTE_MODEL"]
+    model = os.environ.get("PULSENOTE_MODEL", "claude-3-5-sonnet-20241022")
     temperature = os.environ.get("PULSENOTE_TEMPERATURE")
 
     def call(system: str, user: str) -> str:
@@ -26,3 +26,51 @@ def make_anthropic_call(max_tokens: int = 2000):
         return msg.content[0].text
 
     return call
+
+
+def make_gemini_call(max_tokens: int = 2000):
+    from google import genai  # pip install google-genai; reads GEMINI_API_KEY from environment
+    from google.genai import types
+
+    client = genai.Client()
+    model = os.environ.get("PULSENOTE_MODEL", "gemini-3.8-flash")
+    temperature = os.environ.get("PULSENOTE_TEMPERATURE")
+
+    def call(system: str, user: str) -> str:
+        gen_config = {}
+        if temperature is not None:
+            gen_config["temperature"] = float(temperature)
+        if max_tokens is not None:
+            gen_config["max_output_tokens"] = max_tokens
+
+        try:
+            interaction = client.interactions.create(
+                model=model,
+                input=user,
+                system_instruction=system,
+                generation_config=gen_config if gen_config else None,
+            )
+            return interaction.output_text or ""
+        except Exception:
+            config = types.GenerateContentConfig(
+                system_instruction=system,
+                temperature=float(temperature) if temperature is not None else None,
+                max_output_tokens=max_tokens,
+            )
+            resp = client.models.generate_content(
+                model=model,
+                contents=user,
+                config=config,
+            )
+            return resp.text or ""
+
+    return call
+
+
+def get_llm_call(max_tokens: int = 2000):
+    """Automatically select provider based on PULSENOTE_PROVIDER or available API keys."""
+    provider = os.environ.get("PULSENOTE_PROVIDER", "").lower()
+    if provider == "anthropic" or (not provider and "ANTHROPIC_API_KEY" in os.environ and "GEMINI_API_KEY" not in os.environ):
+        return make_anthropic_call(max_tokens=max_tokens)
+    return make_gemini_call(max_tokens=max_tokens)
+

@@ -13,10 +13,22 @@ python -m pytest -q          # all tests use a fake model, no API key needed
 
 ## Run the evaluation
 
-```
-export ANTHROPIC_API_KEY=...
-export PULSENOTE_MODEL=<exact model name>
+### Option A: Google Gemini API (Recommended & Free Tier)
+
+Get a free Gemini API key from [Google AI Studio](https://aistudio.google.com/):
+
+```bash
+export GEMINI_API_KEY="your-gemini-api-key"
+export PULSENOTE_MODEL="gemini-3.8-flash"   # or gemini-3.5-flash-lite
 python -m eval.run_eval --data data/encounters.jsonl --n 10 --out results/
+```
+
+### Option B: Anthropic Claude API
+
+```bash
+export ANTHROPIC_API_KEY="your-anthropic-key"
+export PULSENOTE_MODEL="claude-3-5-sonnet-20241022"
+python -m eval.run_eval --data data/encounters.jsonl --n 10 --provider anthropic --out results/
 ```
 
 Data format: one JSON object per line, see `data/encounters.example.jsonl`.
