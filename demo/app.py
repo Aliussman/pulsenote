@@ -1,4 +1,4 @@
-"""PulseNote: Interactive Clinical Provenance & Auditor Dashboard.
+"""PulseNote: Clinical Provenance & Ambient Auditor Dashboard.
 
 Zero external dependencies: runs with standard library Python http.server.
 Usage:
@@ -61,7 +61,6 @@ def load_encounters():
 
 def load_precomputed_results():
     results = {}
-    # Load from results_eval (20 held-out) first, then fallback to results (dev set)
     for p in [ROOT_DIR / "results_eval" / "per_sentence.jsonl", ROOT_DIR / "results" / "per_sentence.jsonl"]:
         if p.exists():
             with open(p) as f:
@@ -72,7 +71,6 @@ def load_precomputed_results():
                         if eid not in results:
                             results[eid] = {"baseline": [], "grounded": []}
                         if row["system"] == "baseline" and row["check"] == "posthoc":
-                            # deduplicate by text
                             if not any(x["text"] == row["text"] for x in results[eid]["baseline"]):
                                 results[eid]["baseline"].append(row)
                         elif row["system"] == "grounded" and row["check"] == "citation":
@@ -90,10 +88,7 @@ HTML_PAGE = """<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PulseNote: Clinical Provenance & Ambient Auditor</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <title>PulseNote — Clinical Documentation Provenance & Verification</title>
   <style>
     :root {
       --bg: #f8fafc;
@@ -105,657 +100,782 @@ HTML_PAGE = """<!DOCTYPE html>
       --text-muted: #64748b;
       --text-subtle: #94a3b8;
       --primary: #0284c7;
-      --primary-light: #e0f2fe;
-      --primary-hover: #0369a1;
-      --doctor-bg: #e0f2fe;
+      --primary-subtle: #f0f9ff;
+      --primary-border: #bae6fd;
+      --doctor-bg: #f0f9ff;
       --doctor-text: #0369a1;
       --doctor-border: #bae6fd;
-      --patient-bg: #ecfdf5;
-      --patient-text: #047857;
-      --patient-border: #a7f3d0;
-      --flag-hard-bg: #ffe4e6;
-      --flag-hard-text: #be123c;
-      --flag-hard-border: #fecdd3;
-      --flag-soft-bg: #fef3c7;
-      --flag-soft-text: #b45309;
-      --flag-soft-border: #fde68a;
-      --pass-bg: #ecfdf5;
-      --pass-text: #059669;
-      --pass-border: #a7f3d0;
-      --highlight: #fef08a;
+      --patient-bg: #f0fdf4;
+      --patient-text: #15803d;
+      --patient-border: #bbf7d0;
+      --danger-bg: #fff1f2;
+      --danger-text: #e11d48;
+      --danger-border: #fecdd3;
+      --warning-bg: #fffbeb;
+      --warning-text: #d97706;
+      --warning-border: #fde68a;
+      --success-bg: #f0fdf4;
+      --success-text: #16a34a;
+      --success-border: #bbf7d0;
+      --highlight-bg: #fef08a;
       --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-      --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
-      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+      --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     }
 
     [data-theme="dark"] {
-      --bg: #0b1120;
-      --surface: #1e293b;
-      --surface-subtle: #0f172a;
-      --border: #334155;
-      --border-strong: #475569;
+      --bg: #090d16;
+      --surface: #131c2e;
+      --surface-subtle: #0d1525;
+      --border: #223049;
+      --border-strong: #334464;
       --text: #f8fafc;
       --text-muted: #94a3b8;
       --text-subtle: #64748b;
       --primary: #38bdf8;
-      --primary-light: rgba(56, 189, 248, 0.15);
-      --primary-hover: #7dd3fc;
-      --doctor-bg: rgba(56, 189, 248, 0.15);
+      --primary-subtle: rgba(56, 189, 248, 0.12);
+      --primary-border: rgba(56, 189, 248, 0.28);
+      --doctor-bg: rgba(56, 189, 248, 0.12);
       --doctor-text: #38bdf8;
-      --doctor-border: rgba(56, 189, 248, 0.3);
-      --patient-bg: rgba(52, 211, 153, 0.15);
+      --doctor-border: rgba(56, 189, 248, 0.28);
+      --patient-bg: rgba(52, 211, 153, 0.12);
       --patient-text: #34d399;
-      --patient-border: rgba(52, 211, 153, 0.3);
-      --flag-hard-bg: rgba(244, 63, 94, 0.2);
-      --flag-hard-text: #fb7185;
-      --flag-hard-border: rgba(244, 63, 94, 0.4);
-      --flag-soft-bg: rgba(251, 191, 36, 0.2);
-      --flag-soft-text: #fcd34d;
-      --flag-soft-border: rgba(251, 191, 36, 0.4);
-      --pass-bg: rgba(16, 185, 129, 0.15);
-      --pass-text: #34d399;
-      --pass-border: rgba(16, 185, 129, 0.3);
-      --highlight: rgba(234, 179, 8, 0.35);
+      --patient-border: rgba(52, 211, 153, 0.28);
+      --danger-bg: rgba(244, 63, 94, 0.14);
+      --danger-text: #fb7185;
+      --danger-border: rgba(244, 63, 94, 0.35);
+      --warning-bg: rgba(245, 158, 11, 0.14);
+      --warning-text: #fbbf24;
+      --warning-border: rgba(245, 158, 11, 0.35);
+      --success-bg: rgba(16, 185, 129, 0.14);
+      --success-text: #34d399;
+      --success-border: rgba(16, 185, 129, 0.35);
+      --highlight-bg: rgba(234, 179, 8, 0.28);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    html, body {
+      height: 100%;
+      width: 100%;
+      font-family: var(--font-sans);
       background: var(--bg);
       color: var(--text);
       line-height: 1.5;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
       overflow: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* TOP NAVBAR */
-    header {
+    /* ICONS (Pure SVG) */
+    .icon {
+      display: inline-block;
+      width: 15px;
+      height: 15px;
+      stroke-width: 2;
+      stroke: currentColor;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      vertical-align: middle;
+      flex-shrink: 0;
+    }
+
+    /* TOP APPLICATION BAR */
+    header.app-header {
+      height: 54px;
       background: var(--surface);
       border-bottom: 1px solid var(--border);
-      padding: 10px 24px;
+      padding: 0 18px;
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      align-items: center;
       gap: 16px;
-      z-index: 20;
-      box-shadow: var(--shadow-sm);
+      z-index: 30;
+      flex-shrink: 0;
     }
-    .brand {
+    .brand-cluster {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
-    .brand-icon {
-      width: 32px;
-      height: 32px;
+    .brand-mark {
+      width: 28px;
+      height: 28px;
       background: var(--primary);
-      border-radius: 8px;
+      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
       color: #fff;
-      font-weight: 700;
-      font-size: 1.1rem;
     }
-    .brand-name {
-      font-size: 1.15rem;
+    .brand-title {
+      font-size: 0.98rem;
       font-weight: 700;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.01em;
       color: var(--text);
     }
-    .brand-tag {
-      font-size: 0.72rem;
+    .brand-version-pill {
+      font-size: 0.68rem;
       font-weight: 600;
-      background: var(--primary-light);
-      color: var(--primary);
-      padding: 2px 8px;
-      border-radius: 999px;
-      text-transform: uppercase;
       letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: var(--primary-subtle);
+      color: var(--primary);
+      border: 1px solid var(--primary-border);
     }
 
-    /* STATS BANNER */
-    .stat-banner {
+    /* BENCHMARK STRIP */
+    .benchmark-strip {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 16px;
       background: var(--surface-subtle);
       border: 1px solid var(--border);
-      padding: 4px 14px;
-      border-radius: 8px;
-      font-size: 0.8rem;
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 0.78rem;
     }
-    .stat-metric {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .stat-val { font-weight: 700; color: var(--text); }
-    .stat-lbl { color: var(--text-muted); }
-    .stat-delta {
-      color: #059669;
+    .b-item { display: flex; align-items: center; gap: 5px; }
+    .b-label { color: var(--text-muted); }
+    .b-value { font-weight: 600; color: var(--text); }
+    .b-delta {
       font-weight: 700;
-      background: var(--pass-bg);
+      color: var(--success-text);
+      background: var(--success-bg);
+      border: 1px solid var(--success-border);
       padding: 1px 6px;
       border-radius: 4px;
     }
 
-    /* CONTROLS */
-    .controls {
+    /* ACTIONS & NAVIGATION */
+    .action-cluster {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
     .btn {
       background: var(--surface);
       color: var(--text);
       border: 1px solid var(--border);
-      padding: 7px 12px;
+      padding: 6px 11px;
       border-radius: 6px;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 500;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      transition: all 0.15s;
+      transition: background 0.12s, border-color 0.12s, box-shadow 0.12s;
+      white-space: nowrap;
     }
-    .btn:hover { background: var(--surface-subtle); border-color: var(--border-strong); }
-    .btn.primary { background: var(--primary); color: #fff; border-color: var(--primary); }
-    .btn.primary:hover { background: var(--primary-hover); }
-    select.nav-select {
+    .btn:hover {
+      background: var(--surface-subtle);
+      border-color: var(--border-strong);
+    }
+    .btn.primary {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+    .btn.primary:hover {
+      filter: brightness(0.95);
+    }
+    .select-dropdown {
       background: var(--surface);
       color: var(--text);
       border: 1px solid var(--border);
-      padding: 7px 12px;
+      padding: 6px 12px;
       border-radius: 6px;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 500;
       cursor: pointer;
-      max-width: 380px;
+      max-width: 340px;
+      outline: none;
+    }
+    .select-dropdown:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px var(--primary-subtle);
     }
 
-    /* MAIN THREE-PANE LAYOUT */
-    .workspace {
+    /* WORKSPACE: STRICT 3-COLUMN LAYOUT */
+    main.app-workspace {
       display: grid;
-      grid-template-columns: 380px 1fr 380px;
-      flex: 1;
+      grid-template-columns: 360px 1fr 380px;
+      height: calc(100% - 54px);
+      width: 100%;
       overflow: hidden;
       background: var(--bg);
     }
-    .pane {
-      background: var(--surface);
-      border-right: 1px solid var(--border);
+    .panel {
+      min-width: 0;
+      min-height: 0;
       display: flex;
       flex-direction: column;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
       overflow: hidden;
     }
-    .pane:last-child { border-right: none; }
-    .pane-header {
-      padding: 12px 16px;
+    .panel:last-child {
+      border-right: none;
+    }
+
+    /* PANEL HEADERS */
+    .panel-header {
+      height: 46px;
+      padding: 0 16px;
       background: var(--surface);
       border-bottom: 1px solid var(--border);
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       gap: 8px;
+      flex-shrink: 0;
     }
-    .pane-title {
-      font-size: 0.9rem;
+    .panel-title {
+      font-size: 0.82rem;
       font-weight: 700;
-      color: var(--text);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-muted);
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
     }
-    .pane-body {
+    .panel-body {
       flex: 1;
       overflow-y: auto;
-      padding: 16px;
+      overflow-x: hidden;
+      padding: 14px 16px;
       scroll-behavior: smooth;
     }
 
-    /* TRANSCRIPT PANE */
-    .search-box {
+    /* PANE 1: DIALOGUE TRANSCRIPT */
+    .search-input-wrap {
+      position: relative;
+      margin-bottom: 12px;
+    }
+    .search-input-wrap .search-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-subtle);
+      pointer-events: none;
+    }
+    .transcript-search {
       width: 100%;
-      padding: 8px 12px;
+      padding: 7px 10px 7px 32px;
       background: var(--surface-subtle);
       border: 1px solid var(--border);
       border-radius: 6px;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       color: var(--text);
-      margin-bottom: 12px;
+      outline: none;
+      transition: border-color 0.15s, background 0.15s;
     }
-    .search-box:focus { outline: none; border-color: var(--primary); background: var(--surface); }
-    .turn-card {
-      padding: 10px 12px;
-      margin-bottom: 8px;
-      border-radius: 8px;
+    .transcript-search:focus {
+      background: var(--surface);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px var(--primary-subtle);
+    }
+
+    .turn-row {
+      padding: 9px 11px;
+      margin-bottom: 7px;
+      border-radius: 6px;
       background: var(--surface-subtle);
       border: 1px solid transparent;
-      font-size: 0.88rem;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-      position: relative;
+      font-size: 0.83rem;
+      transition: background 0.15s, border-color 0.15s, transform 0.15s;
     }
-    .turn-card:hover {
+    .turn-row:hover {
       border-color: var(--border-strong);
-      box-shadow: var(--shadow-sm);
     }
-    .turn-card.highlighted {
+    .turn-row.highlighted {
       background: #fef9c3 !important;
       border-color: #facc15 !important;
-      box-shadow: 0 0 0 2px rgba(234, 179, 8, 0.3), var(--shadow-md) !important;
-      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
     }
-    [data-theme="dark"] .turn-card.highlighted {
-      background: rgba(234, 179, 8, 0.2) !important;
-      border-color: #eab308 !important;
+    [data-theme="dark"] .turn-row.highlighted {
+      background: rgba(234, 179, 8, 0.18) !important;
+      border-color: rgba(234, 179, 8, 0.5) !important;
     }
-    .turn-header {
+    .turn-row-meta {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 4px;
     }
-    .turn-pill {
-      font-size: 0.72rem;
+    .role-badge {
+      font-size: 0.68rem;
       font-weight: 700;
-      padding: 2px 7px;
-      border-radius: 4px;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
-      letter-spacing: 0.03em;
+      padding: 2px 6px;
+      border-radius: 3px;
     }
-    .turn-pill.Doctor { background: var(--doctor-bg); color: var(--doctor-text); border: 1px solid var(--doctor-border); }
-    .turn-pill.Patient { background: var(--patient-bg); color: var(--patient-text); border: 1px solid var(--patient-border); }
-    .turn-id-badge {
-      font-family: 'JetBrains Mono', monospace;
+    .role-badge.Doctor {
+      background: var(--doctor-bg);
+      color: var(--doctor-text);
+      border: 1px solid var(--doctor-border);
+    }
+    .role-badge.Patient {
+      background: var(--patient-bg);
+      color: var(--patient-text);
+      border: 1px solid var(--patient-border);
+    }
+    .turn-number {
+      font-family: var(--font-mono);
       font-size: 0.72rem;
-      color: var(--text-muted);
+      color: var(--text-subtle);
       font-weight: 500;
     }
+    .turn-text {
+      color: var(--text);
+      line-height: 1.45;
+      word-break: break-word;
+    }
     .turn-text mark {
-      background: var(--highlight);
+      background: var(--highlight-bg);
       color: inherit;
       padding: 1px 3px;
-      border-radius: 3px;
+      border-radius: 2px;
       font-weight: 600;
     }
 
-    /* NOTE DOCUMENT VIEW */
-    .note-container {
-      max-width: 760px;
+    /* PANE 2: SOAP DOCUMENT */
+    .document-viewport {
+      background: var(--bg);
+      padding: 16px 20px;
+    }
+    .clinical-card {
+      max-width: 820px;
       margin: 0 auto;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 10px;
-      box-shadow: var(--shadow);
-      padding: 24px 28px;
-    }
-    .encounter-meta-banner {
-      background: var(--surface-subtle);
-      border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 12px 16px;
-      margin-bottom: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
     }
-    .chief-complaint { font-weight: 600; font-size: 0.95rem; color: var(--text); }
-    .impression-pill {
-      background: var(--primary-light);
+    .chart-banner {
+      padding: 14px 18px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .chart-patient-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .chart-tag-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+    .chart-complaint {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .chart-impression-pill {
+      background: var(--primary-subtle);
       color: var(--primary);
+      border: 1px solid var(--primary-border);
       padding: 3px 10px;
       border-radius: 999px;
-      font-size: 0.8rem;
+      font-size: 0.76rem;
       font-weight: 600;
+      white-space: nowrap;
     }
-    .filter-tabs {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 16px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border);
-    }
-    .filter-tab {
+
+    /* SEGMENTED FILTER TOOLBAR */
+    .filter-bar {
+      padding: 8px 18px;
       background: var(--surface-subtle);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .seg-btn {
+      background: transparent;
       color: var(--text-muted);
-      border: 1px solid var(--border);
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-size: 0.78rem;
+      border: none;
+      padding: 4px 9px;
+      border-radius: 4px;
+      font-size: 0.76rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: background 0.12s, color 0.12s;
     }
-    .filter-tab.active {
-      background: var(--text);
-      color: var(--surface);
-      border-color: var(--text);
+    .seg-btn:hover {
+      background: rgba(0, 0, 0, 0.05);
+      color: var(--text);
     }
-    .soap-section {
+    .seg-btn.active {
+      background: var(--surface);
+      color: var(--text);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* SOAP SECTIONS */
+    .note-content-area {
+      padding: 18px;
+    }
+    .soap-block {
       margin-bottom: 22px;
     }
-    .soap-heading {
-      font-size: 0.85rem;
+    .soap-block:last-child {
+      margin-bottom: 0;
+    }
+    .soap-sec-title {
+      font-size: 0.76rem;
       font-weight: 800;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--primary);
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       margin-bottom: 10px;
       padding-bottom: 4px;
       border-bottom: 1px solid var(--border);
     }
-    .claim-item {
-      padding: 10px 14px;
-      margin-bottom: 8px;
-      border-radius: 8px;
+    .claim-row {
+      padding: 8px 12px;
+      margin-bottom: 7px;
+      border-radius: 6px;
       background: var(--surface);
       border: 1px solid var(--border);
       cursor: pointer;
-      transition: all 0.18s ease;
-      position: relative;
+      transition: border-color 0.14s, background 0.14s;
     }
-    .claim-item:hover {
+    .claim-row:hover {
       border-color: var(--primary);
-      background: var(--primary-light);
-      box-shadow: var(--shadow-sm);
+      background: var(--primary-subtle);
     }
-    .claim-item.active-claim {
+    .claim-row.active {
       border-color: var(--primary);
-      background: var(--primary-light);
-      box-shadow: 0 0 0 2px var(--primary), var(--shadow-sm);
+      background: var(--primary-subtle);
+      box-shadow: 0 0 0 2px var(--primary-border);
     }
-    .claim-item.has-hard-failure {
-      border-left: 4px solid var(--flag-hard-text);
-      background: var(--flag-hard-bg);
+    .claim-row.flagged {
+      border-left: 3px solid var(--danger-text);
+      background: var(--danger-bg);
     }
-    .claim-text {
-      font-size: 0.92rem;
+    .claim-narrative {
+      font-size: 0.88rem;
       color: var(--text);
-      line-height: 1.5;
+      line-height: 1.48;
       margin-bottom: 6px;
     }
-    .claim-meta-row {
+    .claim-pills {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
-    .citation-pill {
+    .cite-pill {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 4px;
       background: var(--surface);
       border: 1px solid var(--border-strong);
-      padding: 3px 8px;
-      border-radius: 6px;
-      font-size: 0.75rem;
-      font-family: 'JetBrains Mono', monospace;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
       color: var(--text);
-      font-weight: 500;
-      transition: all 0.15s;
+      cursor: pointer;
+      transition: all 0.12s;
     }
-    .citation-pill:hover {
+    .cite-pill:hover {
       background: var(--primary);
       color: #fff;
       border-color: var(--primary);
     }
-    .pill-alert {
+    .status-tag {
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      padding: 2px 7px;
+      padding: 2px 6px;
       border-radius: 4px;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 600;
+      letter-spacing: 0.02em;
     }
-    .pill-alert.hard {
-      background: var(--flag-hard-bg);
-      color: var(--flag-hard-text);
-      border: 1px solid var(--flag-hard-border);
+    .status-tag.verified {
+      background: var(--success-bg);
+      color: var(--success-text);
+      border: 1px solid var(--success-border);
     }
-    .pill-alert.soft {
-      background: var(--flag-soft-bg);
-      color: var(--flag-soft-text);
-      border: 1px solid var(--flag-soft-border);
-    }
-    .pill-alert.pass {
-      background: var(--pass-bg);
-      color: var(--pass-text);
-      border: 1px solid var(--pass-border);
+    .status-tag.discrepancy {
+      background: var(--danger-bg);
+      color: var(--danger-text);
+      border: 1px solid var(--danger-border);
     }
 
-    /* INSPECTOR PANE */
-    .inspector-card {
+    /* PANE 3: PROVENANCE INSPECTOR */
+    .inspector-panel-body {
+      padding: 16px;
+    }
+    .empty-state {
+      text-align: center;
+      color: var(--text-muted);
+      padding: 48px 16px;
+    }
+    .empty-icon {
+      width: 40px;
+      height: 40px;
+      stroke: var(--text-subtle);
+      margin-bottom: 12px;
+    }
+    .audit-card {
       background: var(--surface-subtle);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 14px;
-      margin-bottom: 14px;
+      border-radius: 6px;
+      padding: 12px;
+      margin-bottom: 12px;
     }
-    .inspector-title {
-      font-size: 0.8rem;
-      text-transform: uppercase;
+    .audit-card-title {
+      font-size: 0.72rem;
       font-weight: 700;
-      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
       color: var(--text-muted);
       margin-bottom: 8px;
       display: flex;
       justify-content: space-between;
+      align-items: center;
     }
-    .audit-rule {
-      padding: 8px 10px;
-      border-radius: 6px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      margin-bottom: 6px;
-      font-size: 0.82rem;
-    }
-    .audit-rule-header {
-      display: flex;
-      justify-content: space-between;
-      font-weight: 600;
-      margin-bottom: 3px;
-    }
-    .audit-status {
-      font-size: 0.75rem;
-      font-weight: 700;
-    }
-    .audit-status.ok { color: var(--pass-text); }
-    .audit-status.fail { color: var(--flag-hard-text); }
-    .quote-box {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.82rem;
+    .verbatim-box {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
       background: var(--surface);
       border: 1px solid var(--border);
       border-left: 3px solid var(--primary);
-      padding: 8px 12px;
+      padding: 7px 10px;
       border-radius: 4px;
-      margin-top: 6px;
       color: var(--text);
+      line-height: 1.45;
+    }
+    .rule-item {
+      padding: 8px 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      margin-bottom: 6px;
+      font-size: 0.78rem;
+    }
+    .rule-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+    .rule-flag {
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+    .rule-flag.pass { color: var(--success-text); }
+    .rule-flag.fail { color: var(--danger-text); }
+    .rule-desc {
+      font-size: 0.73rem;
+      color: var(--text-muted);
     }
 
-    /* LIVE PLAYGROUND MODAL */
+    /* MODAL: LIVE AUDITOR */
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.6);
-      backdrop-filter: blur(4px);
+      background: rgba(15, 23, 42, 0.55);
+      backdrop-filter: blur(3px);
       display: none;
       align-items: center;
       justify-content: center;
-      z-index: 50;
+      z-index: 100;
     }
-    .modal {
+    .modal-sheet {
       background: var(--surface);
-      border-radius: 12px;
       border: 1px solid var(--border);
-      box-shadow: var(--shadow-lg);
+      border-radius: 8px;
+      box-shadow: var(--shadow-md);
       width: 90%;
-      max-width: 640px;
-      padding: 24px;
+      max-width: 580px;
+      padding: 22px;
+      max-height: 90vh;
+      overflow-y: auto;
     }
     .modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
-    }
-    .form-group {
       margin-bottom: 14px;
     }
-    .form-group label {
+    .field-group {
+      margin-bottom: 12px;
+    }
+    .field-group label {
       display: block;
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       font-weight: 600;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
       color: var(--text);
     }
-    .form-input, .form-textarea, .form-select {
+    .field-input, .field-select, .field-textarea {
       width: 100%;
-      padding: 8px 12px;
-      border-radius: 6px;
+      padding: 7px 10px;
+      border-radius: 5px;
       border: 1px solid var(--border);
       background: var(--surface-subtle);
       color: var(--text);
-      font-size: 0.88rem;
+      font-size: 0.83rem;
+      outline: none;
     }
-    .form-textarea { resize: vertical; min-height: 70px; }
-    .playground-result {
-      margin-top: 16px;
-      padding: 12px;
-      border-radius: 8px;
-      background: var(--surface-subtle);
-      border: 1px solid var(--border);
-      font-size: 0.85rem;
+    .field-input:focus, .field-select:focus, .field-textarea:focus {
+      background: var(--surface);
+      border-color: var(--primary);
     }
   </style>
 </head>
 <body>
 
-  <!-- TOP HEADER -->
-  <header>
-    <div class="brand">
-      <div class="brand-icon">⚡</div>
-      <div>
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <span class="brand-name">PulseNote</span>
-          <span class="brand-tag">Validator-v2 Live</span>
-        </div>
+  <!-- TOP APP HEADER -->
+  <header class="app-header">
+    <div class="brand-cluster">
+      <div class="brand-mark">
+        <svg class="icon" style="width: 17px; height: 17px;" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
       </div>
+      <span class="brand-title">PulseNote</span>
+      <span class="brand-version-pill">v2 Frozen</span>
     </div>
 
-    <!-- STATS STRIP -->
-    <div class="stat-banner">
-      <div class="stat-metric">
-        <span class="stat-lbl">Held-Out Set:</span>
-        <span class="stat-val">20 Consultations (1,015 Claims)</span>
+    <!-- BENCHMARK STRIP -->
+    <div class="benchmark-strip">
+      <div class="b-item">
+        <span class="b-label">Held-Out Set:</span>
+        <span class="b-value">20 Encounters (1,015 Claims)</span>
       </div>
-      <div style="width: 1px; height: 16px; background: var(--border);"></div>
-      <div class="stat-metric">
-        <span class="stat-lbl">Grounded Hard Errors:</span>
-        <span class="stat-val" style="color: var(--pass-text);">3.6%</span>
-        <span class="stat-lbl">[2.4% - 5.3%]</span>
+      <div style="width: 1px; height: 14px; background: var(--border);"></div>
+      <div class="b-item">
+        <span class="b-label">Grounded Errors:</span>
+        <span class="b-value" style="color: var(--success-text);">3.6%</span>
+        <span class="b-label">[2.4% - 5.3%]</span>
       </div>
-      <div style="width: 1px; height: 16px; background: var(--border);"></div>
-      <div class="stat-metric">
-        <span class="stat-lbl">Baseline Hard Errors:</span>
-        <span class="stat-val" style="color: var(--flag-hard-text);">7.0%</span>
-        <span class="stat-lbl">[4.8% - 10.2%]</span>
+      <div style="width: 1px; height: 14px; background: var(--border);"></div>
+      <div class="b-item">
+        <span class="b-label">Baseline Errors:</span>
+        <span class="b-value" style="color: var(--danger-text);">7.0%</span>
+        <span class="b-label">[4.8% - 10.2%]</span>
       </div>
-      <div class="stat-delta">-48.6% Relative Risk</div>
+      <span class="b-delta">-48.6% Relative Risk</span>
     </div>
 
     <!-- CONTROLS -->
-    <div class="controls">
-      <button class="btn" onclick="prevEncounter()" title="Previous encounter">←</button>
-      <select id="enc-select" class="nav-select" onchange="loadEncounter(this.value)">
+    <div class="action-cluster">
+      <button class="btn" onclick="prevEncounter()" title="Previous encounter">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <select id="enc-select" class="select-dropdown" onchange="loadEncounter(this.value)">
         <!-- Populated via API -->
       </select>
-      <button class="btn" onclick="nextEncounter()" title="Next encounter">→</button>
-      <button class="btn primary" onclick="openPlayground()">🧪 Live Auditor</button>
-      <button class="btn" onclick="toggleTheme()" id="theme-btn">🌙</button>
+      <button class="btn" onclick="nextEncounter()" title="Next encounter">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <button class="btn primary" onclick="openPlayground()">
+        <svg class="icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        Audit Playground
+      </button>
+      <button class="btn" onclick="toggleTheme()" id="theme-btn" title="Toggle color theme">
+        <svg class="icon" id="theme-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+      </button>
     </div>
   </header>
 
-  <!-- WORKSPACE -->
-  <main class="workspace">
+  <!-- MAIN 3-COLUMN WORKSPACE -->
+  <main class="app-workspace">
 
-    <!-- LEFT PANE: TRANSCRIPT -->
-    <section class="pane" style="width: 400px;">
-      <div class="pane-header">
-        <div class="pane-title">
-          <span>🎙️ Consultation Transcript</span>
+    <!-- COLUMN 1: TRANSCRIPT -->
+    <section class="panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+          Consultation Dialogue
         </div>
-        <span id="transcript-count" style="font-size: 0.78rem; font-weight: 600; color: var(--text-muted);">0 turns</span>
+        <span id="turn-stat" style="font-size: 0.73rem; color: var(--text-muted); font-weight: 600;">0 turns</span>
       </div>
-      <div class="pane-body">
-        <input type="text" id="turn-filter" class="search-box" placeholder="🔍 Search dialogue turns..." oninput="filterTurns(this.value)">
-        <div id="transcript-list">
-          <!-- Turns rendered dynamically -->
+      <div class="panel-body">
+        <div class="search-input-wrap">
+          <svg class="icon search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="turn-search" class="transcript-search" placeholder="Filter dialogue text..." oninput="filterTurns(this.value)">
         </div>
-      </div>
-    </section>
-
-    <!-- CENTER PANE: SOAP NOTE DOCUMENT -->
-    <section class="pane" style="background: var(--bg);">
-      <div class="pane-header">
-        <div class="pane-title">
-          <span>📋 Clinical SOAP Document</span>
-        </div>
-        <div style="display: flex; gap: 8px;">
-          <button id="view-grounded-btn" class="btn primary" style="padding: 4px 10px; font-size: 0.78rem;" onclick="setViewMode('grounded')">Grounded (Citations)</button>
-          <button id="view-baseline-btn" class="btn" style="padding: 4px 10px; font-size: 0.78rem;" onclick="setViewMode('baseline')">Baseline (Ungrounded)</button>
-        </div>
-      </div>
-      <div class="pane-body">
-        <div class="note-container">
-          <!-- Metadata Banner -->
-          <div class="encounter-meta-banner">
-            <div>
-              <div style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Presenting Complaint</div>
-              <div class="chief-complaint" id="meta-complaint">—</div>
-            </div>
-            <div>
-              <span class="impression-pill" id="meta-impression">—</span>
-            </div>
-          </div>
-
-          <!-- Filter Toolbar -->
-          <div class="filter-tabs">
-            <button class="filter-tab active" onclick="setClaimFilter('all')">All Claims (<span id="count-all">0</span>)</button>
-            <button class="filter-tab" onclick="setClaimFilter('disputed')">⚠️ Discrepancies Only (<span id="count-disputed">0</span>)</button>
-            <button class="filter-tab" onclick="setClaimFilter('verified')">✓ Verified Only (<span id="count-verified">0</span>)</button>
-          </div>
-
-          <!-- SOAP Note Sections -->
-          <div id="soap-content">
-            <!-- Sections rendered dynamically -->
-          </div>
+        <div id="transcript-container">
+          <!-- Turns rendered here -->
         </div>
       </div>
     </section>
 
-    <!-- RIGHT PANE: EVIDENCE & PROVENANCE INSPECTOR -->
-    <section class="pane" style="width: 380px;">
-      <div class="pane-header">
-        <div class="pane-title">
-          <span>🔬 Provenance Inspector</span>
+    <!-- COLUMN 2: CLINICAL SOAP DOCUMENT -->
+    <section class="panel document-viewport">
+      <div class="clinical-card">
+        <!-- Patient Banner -->
+        <div class="chart-banner">
+          <div class="chart-patient-info">
+            <span class="chart-tag-label">Presenting Complaint</span>
+            <span class="chart-complaint" id="meta-complaint">—</span>
+          </div>
+          <div>
+            <span class="chart-impression-pill" id="meta-impression">—</span>
+          </div>
         </div>
-        <span id="inspect-status" class="pill-alert pass" style="display: none;">Verified</span>
+
+        <!-- Filter & Pipeline Toolbar -->
+        <div class="filter-bar">
+          <div style="display: flex; gap: 4px;">
+            <button class="seg-btn active" onclick="setClaimFilter('all')">All Claims (<span id="count-all">0</span>)</button>
+            <button class="seg-btn" onclick="setClaimFilter('flagged')">Flagged Discrepancies (<span id="count-flagged">0</span>)</button>
+            <button class="seg-btn" onclick="setClaimFilter('clean')">Clean (<span id="count-clean">0</span>)</button>
+          </div>
+          <div style="margin-left: auto; display: flex; gap: 6px;">
+            <button id="mode-grounded" class="btn primary" style="padding: 3px 8px; font-size: 0.72rem;" onclick="setMode('grounded')">Grounded (Citations)</button>
+            <button id="mode-baseline" class="btn" style="padding: 3px 8px; font-size: 0.72rem;" onclick="setMode('baseline')">Baseline (Ungrounded)</button>
+          </div>
+        </div>
+
+        <!-- Note Body -->
+        <div class="note-content-area" id="note-body">
+          <!-- Sections rendered here -->
+        </div>
       </div>
-      <div class="pane-body" id="inspector-body">
-        <div style="text-align: center; color: var(--text-muted); padding: 40px 10px;">
-          <div style="font-size: 2.2rem; margin-bottom: 12px;">👆</div>
-          <p style="font-weight: 600; font-size: 0.9rem; margin-bottom: 4px;">Select any clinical claim</p>
-          <p style="font-size: 0.8rem;">Click a sentence in the note to inspect its verbatim quote alignment, number consistency, and clinical authority audit.</p>
+    </section>
+
+    <!-- COLUMN 3: PROVENANCE INSPECTOR -->
+    <section class="panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          Provenance Verification
+        </div>
+        <span id="inspect-badge" class="status-tag verified" style="display: none;">Verified</span>
+      </div>
+      <div class="panel-body inspector-panel-body" id="inspector-body">
+        <div class="empty-state">
+          <svg class="empty-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          <div style="font-size: 0.84rem; font-weight: 600; margin-bottom: 4px; color: var(--text);">No claim selected</div>
+          <div style="font-size: 0.76rem; color: var(--text-muted);">Click any sentence in the clinical note to inspect exact quote fidelity, quantity checks, and authority rules.</div>
         </div>
       </div>
     </section>
@@ -764,81 +884,83 @@ HTML_PAGE = """<!DOCTYPE html>
 
   <!-- LIVE AUDITOR PLAYGROUND MODAL -->
   <div class="modal-backdrop" id="playground-modal" onclick="closePlayground(event)">
-    <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-sheet" onclick="event.stopPropagation()">
       <div class="modal-header">
-        <h3 style="font-size: 1.1rem; font-weight: 700;">🧪 Real-Time Claim Auditor</h3>
-        <button class="btn" onclick="closePlayground()">✕</button>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <svg class="icon" style="color: var(--primary);" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          <span style="font-size: 0.95rem; font-weight: 700;">Deterministic Rule Auditor</span>
+        </div>
+        <button class="btn" style="padding: 2px 6px;" onclick="closePlayground()">✕</button>
       </div>
-      <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 14px;">
-        Test how the deterministic verification engine scores any custom clinical claim against dialogue evidence.
+      <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 14px;">
+        Test how PulseNote's validator heuristically scores any clinical assertion against source conversation turns.
       </p>
 
-      <div class="form-group">
-        <label>Clinical Sentence</label>
-        <input type="text" id="play-sentence" class="form-input" placeholder="e.g. The patient denies headache, fever, or vomiting.">
+      <div class="field-group">
+        <label>Clinical Assertion</label>
+        <input type="text" id="play-sentence" class="field-input" placeholder="e.g. The patient denies headache, fever, or vomiting.">
       </div>
 
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-        <div class="form-group">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <div class="field-group">
           <label>SOAP Section</label>
-          <select id="play-section" class="form-select">
+          <select id="play-section" class="field-select">
             <option value="S">Subjective (S)</option>
             <option value="O">Objective (O)</option>
             <option value="A">Assessment (A)</option>
             <option value="P">Plan (P)</option>
           </select>
         </div>
-        <div class="form-group">
-          <label>Cited Turn ID</label>
-          <select id="play-turn" class="form-select">
-            <!-- Dynamically populated from active encounter -->
+        <div class="field-group">
+          <label>Cited Dialogue Turn</label>
+          <select id="play-turn" class="field-select">
+            <!-- Dynamically populated -->
           </select>
         </div>
       </div>
 
-      <div class="form-group">
-        <label>Verbatim Quoted Snippet</label>
-        <input type="text" id="play-quote" class="form-input" placeholder="e.g. no fever, no vomiting">
+      <div class="field-group">
+        <label>Verbatim Quoted Excerpt</label>
+        <input type="text" id="play-quote" class="field-input" placeholder="e.g. no fever, no vomiting">
       </div>
 
-      <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px;">
+      <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px;">
         <button class="btn" onclick="closePlayground()">Cancel</button>
         <button class="btn primary" onclick="runPlaygroundAudit()">Audit Claim</button>
       </div>
 
-      <div id="playground-output" style="display: none;"></div>
+      <div id="play-result" style="display: none; margin-top: 14px;"></div>
     </div>
   </div>
 
   <script>
-    let encountersList = [];
-    let currentEncounterId = null;
+    let encounters = [];
+    let currentId = null;
     let currentData = null;
-    let currentView = 'grounded';
+    let currentMode = 'grounded';
     let currentFilter = 'all';
-    let activeClaimIndex = null;
 
     async function init() {
       const resp = await fetch('/api/encounters');
-      encountersList = await resp.json();
+      encounters = await resp.json();
       const select = document.getElementById('enc-select');
       select.innerHTML = '';
 
-      encountersList.forEach((e, idx) => {
+      encounters.forEach(e => {
         const opt = document.createElement('option');
         opt.value = e.id;
-        const impText = e.impression ? ` · ${e.impression}` : '';
-        opt.textContent = `${e.id}${impText} (${e.turn_count} turns)`;
+        const imp = e.impression ? ` · ${e.impression}` : '';
+        opt.textContent = `${e.id}${imp} (${e.turn_count} turns)`;
         select.appendChild(opt);
       });
 
-      if (encountersList.length > 0) {
-        loadEncounter(encountersList[0].id);
+      if (encounters.length > 0) {
+        loadEncounter(encounters[0].id);
       }
     }
 
     async function loadEncounter(id) {
-      currentEncounterId = id;
+      currentId = id;
       document.getElementById('enc-select').value = id;
       const resp = await fetch(`/api/encounter?id=${encodeURIComponent(id)}`);
       currentData = await resp.json();
@@ -848,236 +970,235 @@ HTML_PAGE = """<!DOCTYPE html>
 
       populatePlaygroundTurns();
       renderTranscript();
-      renderSOAPNote();
+      renderNote();
       clearInspector();
     }
 
     function prevEncounter() {
-      const idx = encountersList.findIndex(e => e.id === currentEncounterId);
-      if (idx > 0) loadEncounter(encountersList[idx - 1].id);
+      const idx = encounters.findIndex(e => e.id === currentId);
+      if (idx > 0) loadEncounter(encounters[idx - 1].id);
     }
 
     function nextEncounter() {
-      const idx = encountersList.findIndex(e => e.id === currentEncounterId);
-      if (idx < encountersList.length - 1) loadEncounter(encountersList[idx + 1].id);
+      const idx = encounters.findIndex(e => e.id === currentId);
+      if (idx < encounters.length - 1) loadEncounter(encounters[idx + 1].id);
     }
 
-    function setViewMode(mode) {
-      currentView = mode;
-      document.getElementById('view-grounded-btn').classList.toggle('primary', mode === 'grounded');
-      document.getElementById('view-baseline-btn').classList.toggle('primary', mode === 'baseline');
-      renderSOAPNote();
+    function setMode(mode) {
+      currentMode = mode;
+      document.getElementById('mode-grounded').classList.toggle('primary', mode === 'grounded');
+      document.getElementById('mode-baseline').classList.toggle('primary', mode === 'baseline');
+      renderNote();
       clearInspector();
     }
 
     function setClaimFilter(filter) {
       currentFilter = filter;
-      document.querySelectorAll('.filter-tab').forEach((tab, i) => {
-        tab.classList.toggle('active', (i === 0 && filter === 'all') || (i === 1 && filter === 'disputed') || (i === 2 && filter === 'verified'));
+      document.querySelectorAll('.seg-btn').forEach((btn, i) => {
+        btn.classList.toggle('active', (i === 0 && filter === 'all') || (i === 1 && filter === 'flagged') || (i === 2 && filter === 'clean'));
       });
-      renderSOAPNote();
+      renderNote();
     }
 
-    function renderTranscript(filterQuery = '') {
-      const container = document.getElementById('transcript-list');
+    function renderTranscript(filterText = '') {
+      const container = document.getElementById('transcript-container');
       container.innerHTML = '';
-      const q = filterQuery.toLowerCase().trim();
-      let matchCount = 0;
+      const q = filterText.toLowerCase().trim();
+      let shown = 0;
 
       currentData.turns.forEach(t => {
         if (q && !t.text.toLowerCase().includes(q) && !t.speaker.toLowerCase().includes(q)) return;
-        matchCount++;
+        shown++;
 
-        const div = document.createElement('div');
-        div.className = 'turn-card';
-        div.id = `turn-${t.id}`;
-        div.innerHTML = `
-          <div class="turn-header">
-            <span class="turn-pill ${t.speaker}">${t.speaker}</span>
-            <span class="turn-id-badge">Turn ${t.id}</span>
+        const row = document.createElement('div');
+        row.className = 'turn-row';
+        row.id = `turn-${t.id}`;
+        row.innerHTML = `
+          <div class="turn-row-meta">
+            <span class="role-badge ${t.speaker}">${t.speaker}</span>
+            <span class="turn-number">T${t.id}</span>
           </div>
           <div class="turn-text">${escapeHtml(t.text)}</div>
         `;
-        container.appendChild(div);
+        container.appendChild(row);
       });
 
-      document.getElementById('transcript-count').textContent = `${matchCount} / ${currentData.turns.length} turns`;
+      document.getElementById('turn-stat').textContent = `${shown} / ${currentData.turns.length} turns`;
     }
 
-    function filterTurns(query) {
-      renderTranscript(query);
+    function filterTurns(q) {
+      renderTranscript(q);
     }
 
-    function renderSOAPNote() {
-      const container = document.getElementById('soap-content');
+    function renderNote() {
+      const container = document.getElementById('note-body');
       container.innerHTML = '';
-      const sentences = currentView === 'grounded' ? currentData.grounded : currentData.baseline;
+      const sentences = currentMode === 'grounded' ? currentData.grounded : currentData.baseline;
 
-      const totalCount = sentences.length;
-      const disputedCount = sentences.filter(s => s.flagged).length;
-      const verifiedCount = totalCount - disputedCount;
+      const total = sentences.length;
+      const flaggedCount = sentences.filter(s => s.flagged).length;
+      const cleanCount = total - flaggedCount;
 
-      document.getElementById('count-all').textContent = totalCount;
-      document.getElementById('count-disputed').textContent = disputedCount;
-      document.getElementById('count-verified').textContent = verifiedCount;
+      document.getElementById('count-all').textContent = total;
+      document.getElementById('count-flagged').textContent = flaggedCount;
+      document.getElementById('count-clean').textContent = cleanCount;
 
       let filtered = sentences;
-      if (currentFilter === 'disputed') filtered = sentences.filter(s => s.flagged);
-      if (currentFilter === 'verified') filtered = sentences.filter(s => !s.flagged);
+      if (currentFilter === 'flagged') filtered = sentences.filter(s => s.flagged);
+      if (currentFilter === 'clean') filtered = sentences.filter(s => !s.flagged);
 
       if (filtered.length === 0) {
-        container.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 30px;">No claims matching filter criteria.</div>`;
+        container.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 28px; font-size: 0.85rem;">No claims matching the active filter.</div>`;
         return;
       }
 
-      const sectionOrder = [
-        { code: 'S', title: 'Subjective (S)', icon: '🗣️' },
-        { code: 'O', title: 'Objective (O)', icon: '🩺' },
-        { code: 'A', title: 'Assessment (A)', icon: '🧠' },
-        { code: 'P', title: 'Plan (P)', icon: '📝' },
+      const sections = [
+        { code: 'S', title: 'Subjective' },
+        { code: 'O', title: 'Objective' },
+        { code: 'A', title: 'Assessment' },
+        { code: 'P', title: 'Plan' },
       ];
 
-      sectionOrder.forEach(sec => {
-        const secClaims = filtered.filter(s => s.section.toUpperCase() === sec.code);
-        if (secClaims.length === 0) return;
+      sections.forEach(sec => {
+        const claims = filtered.filter(s => s.section.toUpperCase() === sec.code);
+        if (claims.length === 0) return;
 
-        const secDiv = document.createElement('div');
-        secDiv.className = 'soap-section';
-        secDiv.innerHTML = `<div class="soap-heading"><span>${sec.icon}</span> <span>${sec.title}</span></div>`;
+        const block = document.createElement('div');
+        block.className = 'soap-block';
+        block.innerHTML = `<div class="soap-sec-title"><span>${sec.code} · ${sec.title}</span></div>`;
 
-        secClaims.forEach((claim, idx) => {
-          const item = document.createElement('div');
-          const isHard = claim.flagged;
-          item.className = `claim-item ${isHard ? 'has-hard-failure' : ''}`;
-          item.id = `claim-${sec.code}-${idx}`;
+        claims.forEach(c => {
+          const row = document.createElement('div');
+          row.className = `claim-row ${c.flagged ? 'flagged' : ''}`;
 
-          let pillsHtml = '';
-          if (claim.support && claim.support.length > 0) {
-            pillsHtml += claim.support.map(sup => `
-              <span class="citation-pill" onclick="event.stopPropagation(); jumpToTurn(${sup.turn_id}, '${escapeAttr(sup.quote)}')">
-                📍 T${sup.turn_id}: "${escapeHtml(sup.quote || '')}"
+          let pills = '';
+          if (c.support && c.support.length > 0) {
+            pills += c.support.map(sup => `
+              <span class="cite-pill" onclick="event.stopPropagation(); jumpToTurn(${sup.turn_id}, '${escapeAttr(sup.quote)}')">
+                <svg class="icon" style="width: 11px; height: 11px;" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                T${sup.turn_id}
               </span>
             `).join(' ');
           }
 
-          if (claim.flagged) {
-            pillsHtml += claim.hard_reasons.map(r => `
-              <span class="pill-alert hard">⚠️ ${humanizeReason(r)}</span>
+          if (c.flagged) {
+            pills += c.hard_reasons.map(r => `
+              <span class="status-tag discrepancy">⚠️ ${humanizeCode(r)}</span>
             `).join(' ');
           } else {
-            pillsHtml += `<span class="pill-alert pass">✓ Verified</span>`;
+            pills += `<span class="status-tag verified">✓ Verified</span>`;
           }
 
-          item.innerHTML = `
-            <div class="claim-text">${escapeHtml(claim.text)}</div>
-            <div class="claim-meta-row">${pillsHtml}</div>
+          row.innerHTML = `
+            <div class="claim-narrative">${escapeHtml(c.text)}</div>
+            <div class="claim-pills">${pills}</div>
           `;
 
-          item.onclick = () => selectClaim(claim, item);
-          secDiv.appendChild(item);
+          row.onclick = () => selectClaim(c, row);
+          block.appendChild(row);
         });
 
-        container.appendChild(secDiv);
+        container.appendChild(block);
       });
     }
 
-    function selectClaim(claim, element) {
-      document.querySelectorAll('.claim-item').forEach(el => el.classList.remove('active-claim'));
-      if (element) element.classList.add('active-claim');
+    function selectClaim(c, rowEl) {
+      document.querySelectorAll('.claim-row').forEach(el => el.classList.remove('active'));
+      if (rowEl) rowEl.classList.add('active');
 
-      renderInspector(claim);
+      renderInspector(c);
 
-      if (claim.support && claim.support.length > 0) {
-        jumpToTurn(claim.support[0].turn_id, claim.support[0].quote);
+      if (c.support && c.support.length > 0) {
+        jumpToTurn(c.support[0].turn_id, c.support[0].quote);
       }
     }
 
-    function renderInspector(claim) {
+    function renderInspector(c) {
       const container = document.getElementById('inspector-body');
-      const statusPill = document.getElementById('inspect-status');
-      statusPill.style.display = 'inline-block';
-      statusPill.className = `pill-alert ${claim.flagged ? 'hard' : 'pass'}`;
-      statusPill.textContent = claim.flagged ? 'Discrepancy' : 'Verified';
+      const badge = document.getElementById('inspect-badge');
+      badge.style.display = 'inline-flex';
+      badge.className = `status-tag ${c.flagged ? 'discrepancy' : 'verified'}`;
+      badge.textContent = c.flagged ? 'Discrepancy' : 'Verified';
 
-      let supportBox = '';
-      if (claim.support && claim.support.length > 0) {
-        supportBox = claim.support.map(sup => `
-          <div class="inspector-card">
-            <div class="inspector-title">
-              <span>Cited Evidence (Turn ${sup.turn_id})</span>
-              <button class="btn" style="padding: 2px 6px; font-size: 0.72rem;" onclick="jumpToTurn(${sup.turn_id}, '${escapeAttr(sup.quote)}')">Focus ↗</button>
+      let supportHtml = '';
+      if (c.support && c.support.length > 0) {
+        supportHtml = c.support.map(sup => `
+          <div class="audit-card">
+            <div class="audit-card-title">
+              <span>Cited Dialogue (Turn ${sup.turn_id})</span>
+              <button class="btn" style="padding: 1px 6px; font-size: 0.68rem;" onclick="jumpToTurn(${sup.turn_id}, '${escapeAttr(sup.quote)}')">Focus Turn ↗</button>
             </div>
-            <div class="quote-box">"${escapeHtml(sup.quote)}"</div>
+            <div class="verbatim-box">"${escapeHtml(sup.quote)}"</div>
           </div>
         `).join('');
       } else {
-        supportBox = `
-          <div class="inspector-card" style="background: var(--flag-hard-bg); border-color: var(--flag-hard-border);">
-            <div class="inspector-title" style="color: var(--flag-hard-text);">Missing Turn Evidence</div>
-            <p style="font-size: 0.8rem;">No explicit citation was produced by the generator for this claim.</p>
+        supportHtml = `
+          <div class="audit-card" style="border-color: var(--danger-border); background: var(--danger-bg);">
+            <div class="audit-card-title" style="color: var(--danger-text);">Missing Dialogue Citation</div>
+            <div style="font-size: 0.75rem; color: var(--danger-text);">No turn citation was output for this claim.</div>
           </div>
         `;
       }
 
-      const hardReasons = claim.hard_reasons || [];
-      const hasNumberError = hardReasons.some(r => r.startsWith('numbers_not_in_source'));
-      const hasNegationError = hardReasons.some(r => r.includes('negation'));
-      const hasQuoteError = hardReasons.some(r => r.startsWith('quote_not_in_turn'));
-      const hasClinicianError = hardReasons.some(r => r.startsWith('assessment_or_plan_not_from_clinician'));
+      const hard = c.hard_reasons || [];
+      const quoteFail = hard.some(r => r.startsWith('quote_not_in_turn'));
+      const numFail = hard.some(r => r.startsWith('numbers_not_in_source'));
+      const negFail = hard.some(r => r.includes('negation'));
+      const authFail = hard.some(r => r.startsWith('assessment_or_plan_not_from_clinician'));
 
       container.innerHTML = `
-        <div class="inspector-card">
-          <div class="inspector-title">Active Clinical Claim</div>
-          <div style="font-size: 0.9rem; font-weight: 600; line-height: 1.4; color: var(--text);">
-            ${escapeHtml(claim.text)}
+        <div class="audit-card">
+          <div class="audit-card-title">Selected Clinical Statement</div>
+          <div style="font-size: 0.85rem; font-weight: 600; line-height: 1.4; color: var(--text);">
+            ${escapeHtml(c.text)}
           </div>
-          <div style="margin-top: 8px; font-size: 0.75rem; color: var(--text-muted);">
-            Section: <strong>${claim.section}</strong> · System: <strong>${claim.system}</strong> (${claim.check})
+          <div style="margin-top: 6px; font-size: 0.72rem; color: var(--text-muted);">
+            Section: <strong>${c.section}</strong> · Source: <strong>${c.system}</strong> (${c.check})
           </div>
         </div>
 
-        ${supportBox}
+        ${supportHtml}
 
-        <div class="inspector-card">
-          <div class="inspector-title">Deterministic Rule Audit</div>
+        <div class="audit-card">
+          <div class="audit-card-title">Deterministic Verification Matrix</div>
 
-          <div class="audit-rule">
-            <div class="audit-rule-header">
-              <span>1. Quote Alignment</span>
-              <span class="audit-status ${hasQuoteError ? 'fail' : 'ok'}">${hasQuoteError ? 'FAILED' : 'PASS'}</span>
+          <div class="rule-item">
+            <div class="rule-header">
+              <span>1. Quote Verbatim Alignment</span>
+              <span class="rule-flag ${quoteFail ? 'fail' : 'pass'}">${quoteFail ? 'DISCREPANCY' : 'PASS'}</span>
             </div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);">
-              ${hasQuoteError ? 'Verbatim quote was not found in cited turn text (SequenceMatcher &lt; 0.90).' : 'Verbatim quote cleanly verifies against cited turn speech.'}
+            <div class="rule-desc">
+              ${quoteFail ? 'Quoted text does not match dialogue turn (SequenceMatcher ratio &lt; 0.90).' : 'Verbatim quotation verified cleanly against cited turn text.'}
             </div>
           </div>
 
-          <div class="audit-rule">
-            <div class="audit-rule-header">
-              <span>2. Quantities & Dosages</span>
-              <span class="audit-status ${hasNumberError ? 'fail' : 'ok'}">${hasNumberError ? 'FAILED' : 'PASS'}</span>
+          <div class="rule-item">
+            <div class="rule-header">
+              <span>2. Quantity & Dose Consistency</span>
+              <span class="rule-flag ${numFail ? 'fail' : 'pass'}">${numFail ? 'DISCREPANCY' : 'PASS'}</span>
             </div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);">
-              ${hasNumberError ? 'Claim introduced quantities/durations absent from cited evidence.' : 'All extracted numbers match source dialogue tokens.'}
-            </div>
-          </div>
-
-          <div class="audit-rule">
-            <div class="audit-rule-header">
-              <span>3. Negation Polarity</span>
-              <span class="audit-status ${hasNegationError ? 'fail' : 'ok'}">${hasNegationError ? 'FAILED' : 'PASS'}</span>
-            </div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);">
-              ${hasNegationError ? 'Discrepancy in negation cues (dropped negation or unsupported denial).' : 'Negation polarity matches evidence accurately.'}
+            <div class="rule-desc">
+              ${numFail ? 'Assertion contains numbers, dosages, or durations absent from cited turn.' : 'All extracted numbers match evidence dialogue tokens.'}
             </div>
           </div>
 
-          <div class="audit-rule">
-            <div class="audit-rule-header">
-              <span>4. Clinical Authority</span>
-              <span class="audit-status ${hasClinicianError ? 'fail' : 'ok'}">${hasClinicianError ? 'FAILED' : 'PASS'}</span>
+          <div class="rule-item">
+            <div class="rule-header">
+              <span>3. Negation Polarity Check</span>
+              <span class="rule-flag ${negFail ? 'fail' : 'pass'}">${negFail ? 'DISCREPANCY' : 'PASS'}</span>
             </div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);">
-              ${hasClinicianError ? 'Assessment/Plan claim cites patient statements without clinician confirmation.' : 'Clinical decision authored by clinician turn.'}
+            <div class="rule-desc">
+              ${negFail ? 'Polarity inconsistency: dropped negation or ungrounded denial clause.' : 'Negative/affirmative polarity strictly matches quoted evidence.'}
+            </div>
+          </div>
+
+          <div class="rule-item">
+            <div class="rule-header">
+              <span>4. Clinician Speaker Authority</span>
+              <span class="rule-flag ${authFail ? 'fail' : 'pass'}">${authFail ? 'DISCREPANCY' : 'PASS'}</span>
+            </div>
+            <div class="rule-desc">
+              ${authFail ? 'Assessment/Plan assertion cites patient speech without clinician confirmation.' : 'Clinical diagnostic/plan decision authored by clinician turn.'}
             </div>
           </div>
         </div>
@@ -1085,18 +1206,18 @@ HTML_PAGE = """<!DOCTYPE html>
     }
 
     function clearInspector() {
+      document.getElementById('inspect-badge').style.display = 'none';
       document.getElementById('inspector-body').innerHTML = `
-        <div style="text-align: center; color: var(--text-muted); padding: 40px 10px;">
-          <div style="font-size: 2.2rem; margin-bottom: 12px;">👆</div>
-          <p style="font-weight: 600; font-size: 0.9rem; margin-bottom: 4px;">Select any clinical claim</p>
-          <p style="font-size: 0.8rem;">Click a sentence in the note to inspect its verbatim quote alignment, number consistency, and clinical authority audit.</p>
+        <div class="empty-state">
+          <svg class="empty-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          <div style="font-size: 0.84rem; font-weight: 600; margin-bottom: 4px; color: var(--text);">No claim selected</div>
+          <div style="font-size: 0.76rem; color: var(--text-muted);">Click any sentence in the clinical note to inspect exact quote fidelity, quantity checks, and authority rules.</div>
         </div>
       `;
-      document.getElementById('inspect-status').style.display = 'none';
     }
 
     function jumpToTurn(turnId, quote) {
-      document.querySelectorAll('.turn-card').forEach(el => {
+      document.querySelectorAll('.turn-row').forEach(el => {
         el.classList.remove('highlighted');
         const textDiv = el.querySelector('.turn-text');
         if (textDiv) textDiv.innerHTML = escapeHtml(textDiv.textContent);
@@ -1127,7 +1248,7 @@ HTML_PAGE = """<!DOCTYPE html>
       currentData.turns.forEach(t => {
         const opt = document.createElement('option');
         opt.value = t.id;
-        opt.textContent = `Turn ${t.id} (${t.speaker}): ${t.text.substring(0, 50)}...`;
+        opt.textContent = `T${t.id} (${t.speaker}): ${t.text.substring(0, 48)}...`;
         select.appendChild(opt);
       });
     }
@@ -1149,12 +1270,12 @@ HTML_PAGE = """<!DOCTYPE html>
       const quote = document.getElementById('play-quote').value.trim();
 
       if (!sentence) {
-        alert('Please enter a clinical sentence');
+        alert('Please enter a clinical assertion.');
         return;
       }
 
       const payload = {
-        encounter_id: currentEncounterId,
+        encounter_id: currentId,
         sentence: sentence,
         section: section,
         turn_id: turnId,
@@ -1166,41 +1287,42 @@ HTML_PAGE = """<!DOCTYPE html>
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
-      const result = await resp.json();
+      const res = await resp.json();
 
-      const out = document.getElementById('playground-output');
+      const out = document.getElementById('play-result');
       out.style.display = 'block';
-      out.className = `playground-result ${result.flagged ? 'has-hard-failure' : ''}`;
 
-      let reasonsHtml = result.reasons.length > 0
-        ? result.reasons.map(r => `<div>⚠️ <strong>${humanizeReason(r)}</strong> (<code>${r}</code>)</div>`).join('')
-        : '<div style="color: var(--pass-text); font-weight: 600;">✓ Claim passed all deterministic validation rules cleanly!</div>';
+      const isDiscrepancy = res.flagged;
+      let reasons = res.reasons.length > 0
+        ? res.reasons.map(r => `<div style="margin-top: 3px;">• <strong>${humanizeCode(r)}</strong> (<code>${r}</code>)</div>`).join('')
+        : '<div style="color: var(--success-text); font-weight: 600;">✓ Claim cleanly passed all deterministic validation rules.</div>';
 
       out.innerHTML = `
-        <div style="font-weight: 700; margin-bottom: 6px; display: flex; justify-content: space-between;">
-          <span>Audit Verdict:</span>
-          <span class="pill-alert ${result.flagged ? 'hard' : 'pass'}">${result.flagged ? 'Discrepancy Flagged' : 'Clean Pass'}</span>
+        <div class="audit-card" style="border-color: ${isDiscrepancy ? 'var(--danger-border)' : 'var(--success-border)'}; background: ${isDiscrepancy ? 'var(--danger-bg)' : 'var(--success-bg)'};">
+          <div class="audit-card-title" style="color: ${isDiscrepancy ? 'var(--danger-text)' : 'var(--success-text)'};">
+            <span>Audit Result: ${isDiscrepancy ? 'DISCREPANCY' : 'CLEAN PASS'}</span>
+          </div>
+          <div style="font-size: 0.78rem;">${reasons}</div>
         </div>
-        ${reasonsHtml}
       `;
     }
 
-    function humanizeReason(reason) {
+    function humanizeCode(reason) {
       const code = reason.split(':')[0];
       const arg = reason.split(':')[1] || '';
       switch (code) {
         case 'numbers_not_in_source':
-          return `Uncited Number/Duration: "${arg}" not spoken in cited turn`;
+          return `Uncited Number/Duration: "${arg}" not in evidence`;
         case 'quote_not_in_turn':
           return `Quote Mismatch in Turn ${arg}`;
         case 'possible_dropped_negation':
-          return `Dropped Negation (evidence was negative, note asserted affirmative)`;
+          return `Dropped Negation (evidence was negative)`;
         case 'negation_not_in_quote':
-          return `Uncited Negation (note denies symptom without negative quote clause)`;
+          return `Uncited Denial clause absent in quote`;
         case 'assessment_or_plan_not_from_clinician':
-          return `Clinician Authority Violation (Plan statement cited patient)`;
+          return `Clinician Authority Violation in ${arg || 'Plan'}`;
         case 'no_matching_turn':
-          return `Factual Hallucination: No supporting dialogue turn exists`;
+          return `Factual Hallucination: No dialogue turn found`;
         case 'low_overlap':
           return `Low Lexical Overlap (${arg})`;
         default:
@@ -1223,7 +1345,6 @@ HTML_PAGE = """<!DOCTYPE html>
     function toggleTheme() {
       const isDark = document.body.getAttribute('data-theme') === 'dark';
       document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
-      document.getElementById('theme-btn').textContent = isDark ? '🌙' : '☀️';
     }
 
     window.onload = init;
@@ -1234,6 +1355,17 @@ HTML_PAGE = """<!DOCTYPE html>
 
 
 class PulseNoteDemoHandler(SimpleHTTPRequestHandler):
+    def do_HEAD(self):
+        parsed = urlparse(self.path)
+        if parsed.path in ["/", "/index.html"]:
+            encoded = HTML_PAGE.encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "text/html; charset=utf-8")
+            self.send_header("Content-Length", str(len(encoded)))
+            self.end_headers()
+            return
+        super().do_HEAD()
+
     def do_GET(self):
         parsed = urlparse(self.path)
         if parsed.path in ["/", "/index.html"]:
@@ -1332,7 +1464,7 @@ class PulseNoteDemoHandler(SimpleHTTPRequestHandler):
 def run_server(port=8080):
     server = HTTPServer(("0.0.0.0", port), PulseNoteDemoHandler)
     print(f"\n=======================================================")
-    print(f" PulseNote Interactive Clinical Auditor Web Demo")
+    print(f" PulseNote Professional Clinical Provenance Dashboard")
     print(f" Running at: http://localhost:{port}")
     print(f" Press Ctrl+C to terminate.")
     print(f"=======================================================\n")
