@@ -227,27 +227,141 @@ HTML_PAGE = """<!DOCTYPE html>
       border: 1px solid var(--primary-border);
     }
 
-    /* BENCHMARK STRIP */
-    .benchmark-strip {
-      display: flex;
+    /* BENCHMARK INTERACTIVE BADGE & POPOVER */
+    .benchmark-container {
+      position: relative;
+    }
+    .benchmark-pill {
+      display: inline-flex;
       align-items: center;
-      gap: 16px;
+      gap: 8px;
       background: var(--surface-subtle);
       border: 1px solid var(--border);
       padding: 4px 12px;
-      border-radius: 6px;
-      font-size: 0.78rem;
+      border-radius: 9999px;
+      font-size: 0.77rem;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
     }
-    .b-item { display: flex; align-items: center; gap: 5px; }
-    .b-label { color: var(--text-muted); }
-    .b-value { font-weight: 600; color: var(--text); }
+    .benchmark-pill:hover {
+      background: var(--surface);
+      border-color: var(--border-strong);
+      box-shadow: var(--shadow-sm);
+    }
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--success-text);
+      box-shadow: 0 0 0 2px var(--success-border);
+      flex-shrink: 0;
+    }
+    .b-title {
+      font-weight: 600;
+      color: var(--text);
+    }
+    .b-rate {
+      color: var(--success-text);
+      font-weight: 700;
+    }
+    .b-vs {
+      color: var(--text-muted);
+      font-size: 0.74rem;
+    }
     .b-delta {
       font-weight: 700;
       color: var(--success-text);
       background: var(--success-bg);
       border: 1px solid var(--success-border);
       padding: 1px 6px;
-      border-radius: 4px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+    }
+    .chevron-icon {
+      width: 12px;
+      height: 12px;
+      color: var(--text-muted);
+      transition: transform 0.15s ease;
+    }
+    .benchmark-container.active .chevron-icon {
+      transform: rotate(180deg);
+    }
+    .benchmark-popover {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
+      width: 440px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      box-shadow: var(--shadow-md);
+      padding: 16px;
+      z-index: 100;
+      display: none;
+    }
+    .benchmark-container.active .benchmark-popover {
+      display: block;
+      animation: popIn 0.12s ease-out;
+    }
+    @keyframes popIn {
+      from { opacity: 0; transform: translate(-50%, -4px); }
+      to { opacity: 1; transform: translate(-50%, 0); }
+    }
+    .popover-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .popover-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .popover-card {
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px;
+    }
+    .popover-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .popover-stat {
+      font-size: 1.25rem;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+    .popover-ci {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      margin-top: 2px;
+    }
+    .popover-pass {
+      font-size: 0.72rem;
+      color: var(--text-subtle);
+      margin-top: 4px;
+    }
+    .popover-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-size: 0.75rem;
     }
 
     /* ACTIONS & NAVIGATION */
@@ -763,25 +877,47 @@ HTML_PAGE = """<!DOCTYPE html>
       <span class="brand-version-pill">v2 Frozen</span>
     </div>
 
-    <!-- BENCHMARK STRIP -->
-    <div class="benchmark-strip">
-      <div class="b-item">
-        <span class="b-label">Held-Out Set:</span>
-        <span class="b-value">20 Encounters (1,015 Claims)</span>
+    <!-- BENCHMARK INTERACTIVE PILL -->
+    <div class="benchmark-container" id="benchmark-container">
+      <div class="benchmark-pill" onclick="toggleBenchmarkPopover(event)" title="Click to view full statistical breakdown">
+        <span class="pulse-dot"></span>
+        <span class="b-title">Held-Out Eval</span>
+        <span class="b-rate">3.6% Error</span>
+        <span class="b-vs">vs 7.0% Baseline</span>
+        <span class="b-delta">-48.6%</span>
+        <svg class="icon chevron-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
       </div>
-      <div style="width: 1px; height: 14px; background: var(--border);"></div>
-      <div class="b-item">
-        <span class="b-label">Grounded Errors:</span>
-        <span class="b-value" style="color: var(--success-text);">3.6%</span>
-        <span class="b-label">[2.4% - 5.3%]</span>
+
+      <!-- POPOVER DETAIL CARD -->
+      <div class="benchmark-popover" id="benchmark-popover" onclick="event.stopPropagation()">
+        <div class="popover-header">
+          <div>
+            <div style="font-weight: 700; font-size: 0.85rem; color: var(--text);">Pre-Registered Held-Out Cohort</div>
+            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 1px;">20 Consultations · 1,015 Sentences Evaluated</div>
+          </div>
+          <span class="brand-version-pill">validator-v2</span>
+        </div>
+
+        <div class="popover-grid">
+          <div class="popover-card">
+            <div class="popover-label">Grounded (Citation Check)</div>
+            <div class="popover-stat" style="color: var(--success-text);">3.6%</div>
+            <div class="popover-ci">95% CI: [2.4% – 5.3%]</div>
+            <div class="popover-pass">88.3% Clean Pass (594/673)</div>
+          </div>
+          <div class="popover-card">
+            <div class="popover-label">Baseline (Post-Hoc Check)</div>
+            <div class="popover-stat" style="color: var(--danger-text);">7.0%</div>
+            <div class="popover-ci">95% CI: [4.8% – 10.2%]</div>
+            <div class="popover-pass">60.8% Clean Pass (208/342)</div>
+          </div>
+        </div>
+
+        <div class="popover-footer">
+          <span class="b-delta" style="font-size: 0.72rem;">-48.6% Relative Risk Reduction</span>
+          <span style="font-size: 0.71rem; color: var(--text-muted);">Non-overlapping 95% Wilson intervals</span>
+        </div>
       </div>
-      <div style="width: 1px; height: 14px; background: var(--border);"></div>
-      <div class="b-item">
-        <span class="b-label">Baseline Errors:</span>
-        <span class="b-value" style="color: var(--danger-text);">7.0%</span>
-        <span class="b-label">[4.8% - 10.2%]</span>
-      </div>
-      <span class="b-delta">-48.6% Relative Risk</span>
     </div>
 
     <!-- CONTROLS -->
@@ -1341,6 +1477,19 @@ HTML_PAGE = """<!DOCTYPE html>
       if (!text) return '';
       return text.replace(/'/g, "\\\\'").replace(/"/g, '&quot;');
     }
+
+    function toggleBenchmarkPopover(e) {
+      if (e) e.stopPropagation();
+      const container = document.getElementById('benchmark-container');
+      container.classList.toggle('active');
+    }
+
+    document.addEventListener('click', (e) => {
+      const container = document.getElementById('benchmark-container');
+      if (container && !container.contains(e.target)) {
+        container.classList.remove('active');
+      }
+    });
 
     function toggleTheme() {
       const isDark = document.body.getAttribute('data-theme') === 'dark';
