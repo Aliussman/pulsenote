@@ -1,0 +1,402 @@
+{
+  "item_000": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_001": {
+    "system": "grounded",
+    "flagged": true
+  },
+  "item_002": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_003": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_004": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_005": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_006": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_007": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_008": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_009": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_010": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_011": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_012": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_013": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_014": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_015": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_016": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_017": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_018": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_019": {
+    "system": "grounded",
+    "flagged": true
+  },
+  "item_020": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_021": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_022": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_023": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_024": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_025": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_026": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_027": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_028": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_029": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_030": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_031": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_032": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_033": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_034": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_035": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_036": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_037": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_038": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_039": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_040": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_041": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_042": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_043": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_044": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_045": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_046": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_047": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_048": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_049": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_050": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_051": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_052": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_053": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_054": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_055": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_056": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_057": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_058": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_059": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_060": {
+    "system": "grounded",
+    "flagged": true
+  },
+  "item_061": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_062": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_063": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_064": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_065": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_066": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_067": {
+    "system": "baseline",
+    "flagged": true
+  },
+  "item_068": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_069": {
+    "system": "baseline",
+    "flagged": true
+  },
+  "item_070": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_071": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_072": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_073": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_074": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_075": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_076": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_077": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_078": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_079": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_080": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_081": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_082": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_083": {
+    "system": "grounded",
+    "flagged": true
+  },
+  "item_084": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_085": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_086": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_087": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_088": {
+    "system": "baseline",
+    "flagged": false
+  },
+  "item_089": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_090": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_091": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_092": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_093": {
+    "system": "grounded",
+    "flagged": true
+  },
+  "item_094": {
+    "system": "baseline",
+    "flagged": true
+  },
+  "item_095": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_096": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_097": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_098": {
+    "system": "grounded",
+    "flagged": false
+  },
+  "item_099": {
+    "system": "baseline",
+    "flagged": false
+  }
+}

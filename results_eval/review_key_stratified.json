@@ -1,0 +1,1407 @@
+{
+  "item_000": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_001": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_002": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_003": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_004": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_005": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_006": {
+    "system": "grounded",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "assessment_or_plan_not_from_clinician"
+    ]
+  },
+  "item_007": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.44"
+    ]
+  },
+  "item_008": {
+    "system": "baseline",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "negation_not_in_source",
+      "low_overlap:0.46"
+    ]
+  },
+  "item_009": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.25"
+    ]
+  },
+  "item_010": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.33"
+    ]
+  },
+  "item_011": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.40"
+    ]
+  },
+  "item_012": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_013": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.36"
+    ]
+  },
+  "item_014": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_015": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_016": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_017": {
+    "system": "grounded",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "numbers_not_in_source:3"
+    ]
+  },
+  "item_018": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.45"
+    ]
+  },
+  "item_019": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_020": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_021": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.33"
+    ]
+  },
+  "item_022": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.33"
+    ]
+  },
+  "item_023": {
+    "system": "grounded",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "quote_not_in_turn:50",
+      "low_overlap:0.43"
+    ]
+  },
+  "item_024": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_025": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_026": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_027": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_028": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.25"
+    ]
+  },
+  "item_029": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_030": {
+    "system": "baseline",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "negation_not_in_source"
+    ]
+  },
+  "item_031": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_032": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_033": {
+    "system": "grounded",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "numbers_not_in_source:1"
+    ]
+  },
+  "item_034": {
+    "system": "grounded",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "possible_dropped_negation"
+    ]
+  },
+  "item_035": {
+    "system": "baseline",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "no_matching_turn"
+    ]
+  },
+  "item_036": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_037": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_038": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_039": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.33"
+    ]
+  },
+  "item_040": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.33"
+    ]
+  },
+  "item_041": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.33"
+    ]
+  },
+  "item_042": {
+    "system": "baseline",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "negation_not_in_source"
+    ]
+  },
+  "item_043": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_044": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_045": {
+    "system": "grounded",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "possible_dropped_negation"
+    ]
+  },
+  "item_046": {
+    "system": "grounded",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "quote_not_in_turn:150"
+    ]
+  },
+  "item_047": {
+    "system": "grounded",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "possible_dropped_negation"
+    ]
+  },
+  "item_048": {
+    "system": "baseline",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "numbers_not_in_source:1.5"
+    ]
+  },
+  "item_049": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.25"
+    ]
+  },
+  "item_050": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.40"
+    ]
+  },
+  "item_051": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.33"
+    ]
+  },
+  "item_052": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_053": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_054": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_055": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_056": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_057": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_058": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_059": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.22"
+    ]
+  },
+  "item_060": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_061": {
+    "system": "grounded",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "possible_dropped_negation"
+    ]
+  },
+  "item_062": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.40"
+    ]
+  },
+  "item_063": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_064": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_065": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_066": {
+    "system": "grounded",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "quote_not_in_turn:68"
+    ]
+  },
+  "item_067": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.38"
+    ]
+  },
+  "item_068": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.29"
+    ]
+  },
+  "item_069": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.40"
+    ]
+  },
+  "item_070": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_071": {
+    "system": "baseline",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "negation_not_in_source",
+      "low_overlap:0.20"
+    ]
+  },
+  "item_072": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_073": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.25"
+    ]
+  },
+  "item_074": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_075": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_076": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_077": {
+    "system": "grounded",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "possible_dropped_negation"
+    ]
+  },
+  "item_078": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_079": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_080": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.46"
+    ]
+  },
+  "item_081": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_082": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_083": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.33"
+    ]
+  },
+  "item_084": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.44"
+    ]
+  },
+  "item_085": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.25"
+    ]
+  },
+  "item_086": {
+    "system": "baseline",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "numbers_not_in_source:1",
+      "low_overlap:0.36"
+    ]
+  },
+  "item_087": {
+    "system": "grounded",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "possible_dropped_negation"
+    ]
+  },
+  "item_088": {
+    "system": "grounded",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "possible_dropped_negation"
+    ]
+  },
+  "item_089": {
+    "system": "baseline",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "numbers_not_in_source:1"
+    ]
+  },
+  "item_090": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_091": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.43"
+    ]
+  },
+  "item_092": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_093": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_094": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.40"
+    ]
+  },
+  "item_095": {
+    "system": "grounded",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "quote_not_in_turn:33"
+    ]
+  },
+  "item_096": {
+    "system": "baseline",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "numbers_not_in_source:38",
+      "low_overlap:0.33"
+    ]
+  },
+  "item_097": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.43"
+    ]
+  },
+  "item_098": {
+    "system": "baseline",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "negation_not_in_source",
+      "low_overlap:0.17"
+    ]
+  },
+  "item_099": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_100": {
+    "system": "grounded",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "possible_dropped_negation"
+    ]
+  },
+  "item_101": {
+    "system": "baseline",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "negation_not_in_source",
+      "low_overlap:0.25"
+    ]
+  },
+  "item_102": {
+    "system": "baseline",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "negation_not_in_source"
+    ]
+  },
+  "item_103": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.43"
+    ]
+  },
+  "item_104": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_105": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_106": {
+    "system": "grounded",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "quote_not_in_turn:94",
+      "low_overlap:0.36"
+    ]
+  },
+  "item_107": {
+    "system": "baseline",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "negation_not_in_source"
+    ]
+  },
+  "item_108": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_109": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.40"
+    ]
+  },
+  "item_110": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.17"
+    ]
+  },
+  "item_111": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.33"
+    ]
+  },
+  "item_112": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.25"
+    ]
+  },
+  "item_113": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_114": {
+    "system": "baseline",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "negation_not_in_source",
+      "low_overlap:0.40"
+    ]
+  },
+  "item_115": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.33"
+    ]
+  },
+  "item_116": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_117": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_118": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_119": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_120": {
+    "system": "grounded",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "possible_dropped_negation"
+    ]
+  },
+  "item_121": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_122": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_123": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_124": {
+    "system": "baseline",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "negation_not_in_source"
+    ]
+  },
+  "item_125": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.42"
+    ]
+  },
+  "item_126": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.33"
+    ]
+  },
+  "item_127": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_128": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.17"
+    ]
+  },
+  "item_129": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_130": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_131": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_132": {
+    "system": "baseline",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "negation_not_in_source",
+      "low_overlap:0.40"
+    ]
+  },
+  "item_133": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.30"
+    ]
+  },
+  "item_134": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_135": {
+    "system": "baseline",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "numbers_not_in_source:30"
+    ]
+  },
+  "item_136": {
+    "system": "grounded",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "quote_not_in_turn:94",
+      "possible_dropped_negation"
+    ]
+  },
+  "item_137": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_138": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_139": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.17"
+    ]
+  },
+  "item_140": {
+    "system": "baseline",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "negation_not_in_source"
+    ]
+  },
+  "item_141": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_142": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.40"
+    ]
+  },
+  "item_143": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.25"
+    ]
+  },
+  "item_144": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.33"
+    ]
+  },
+  "item_145": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_146": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_147": {
+    "system": "baseline",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "negation_not_in_source",
+      "low_overlap:0.43"
+    ]
+  },
+  "item_148": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_149": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.33"
+    ]
+  },
+  "item_150": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_151": {
+    "system": "grounded",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "quote_not_in_turn:67"
+    ]
+  },
+  "item_152": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_153": {
+    "system": "grounded",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "negation_not_in_quote"
+    ]
+  },
+  "item_154": {
+    "system": "baseline",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "numbers_not_in_source:26"
+    ]
+  },
+  "item_155": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_156": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.46"
+    ]
+  },
+  "item_157": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_158": {
+    "system": "grounded",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "possible_dropped_negation"
+    ]
+  },
+  "item_159": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_160": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_161": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.33"
+    ]
+  },
+  "item_162": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_163": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_164": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_165": {
+    "system": "baseline",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "numbers_not_in_source:1"
+    ]
+  },
+  "item_166": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_167": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_168": {
+    "system": "grounded",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "possible_dropped_negation"
+    ]
+  },
+  "item_169": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_170": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_171": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.40"
+    ]
+  },
+  "item_172": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_173": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_174": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_175": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_176": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_177": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_178": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_179": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_180": {
+    "system": "grounded",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "quote_not_in_turn:99"
+    ]
+  },
+  "item_181": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_182": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.38"
+    ]
+  },
+  "item_183": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_184": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.14"
+    ]
+  },
+  "item_185": {
+    "system": "baseline",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "numbers_not_in_source:2"
+    ]
+  },
+  "item_186": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_187": {
+    "system": "baseline",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "negation_not_in_source"
+    ]
+  },
+  "item_188": {
+    "system": "grounded",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "possible_dropped_negation"
+    ]
+  },
+  "item_189": {
+    "system": "baseline",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "negation_not_in_source",
+      "low_overlap:0.38"
+    ]
+  },
+  "item_190": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_191": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.20"
+    ]
+  },
+  "item_192": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "soft",
+    "reasons": [
+      "low_overlap:0.36"
+    ]
+  },
+  "item_193": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_194": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_195": {
+    "system": "grounded",
+    "flagged": true,
+    "stratum": "hard",
+    "reasons": [
+      "quote_not_in_turn:133"
+    ]
+  },
+  "item_196": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_197": {
+    "system": "grounded",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  },
+  "item_198": {
+    "system": "baseline",
+    "flagged": false,
+    "stratum": "clean",
+    "reasons": []
+  }
+}

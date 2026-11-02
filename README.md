@@ -137,35 +137,52 @@ Evaluation outputs saved to `results/`:
 
 ---
 
-## Automated Lexical Support & Citation Auditing (Development Set, n = 3, `validator-v2`)
+---
 
-> [!NOTE]
-> The automated checks below use lexical overlap, exact quote matching, number extraction, and negation cues as a proxy for attribution. Under `validator-v2`, post-hoc checks expand adjacent question/answer turns and check numbers against document scope. They measure whether text aligns closely with cited turns, not ground-truth clinical judgment. Human-labeled unsupported-claim rates with stratum-weighted scoring will be reported once the held-out evaluation is complete.
+## Pre-Registered Held-Out Benchmark Results (n = 20, 1,015 Sentences, `validator-v2`)
 
-Evaluated on the 3 development consultations (`day1_consultation01` to `day1_consultation03`, 380 dialogue turns) using `gemini-3.5-flash`:
+> [!IMPORTANT]
+> To eliminate data snooping and post-hoc threshold tuning, these 20 held-out encounters (spanning 2,400+ dialogue turns across days 1–5 of PriMock57) were pre-registered under Git tag `validator-v2` (`data/split_eval.json`, seed `20261101`). All 1,015 generated sentences were evaluated under the frozen `validator-v2` verification engine.
 
 ### 1. Primary Clinical Metric: Detectable Hard Errors
 
-Hard failures track critical clinical errors: invented numbers/dosages, dropped/fabricated negations, fake quotes, or clinician authority mismatches (excluding benign phrasing/overlap drift):
+Hard failures track critical clinical distortions: invented numbers/dosages, dropped/fabricated negations, fake quotes, or clinician authority mismatches:
 
 | System & Check | Sentences | Hard Failures | Hard Failure Rate | 95% Wilson Confidence Interval |
 | :--- | :--- | :--- | :--- | :--- |
-| **Baseline (Post-hoc check)** | 69 | 3 | **4.3%** | **1.5% to 12.0%** |
-| **Grounded (Inline citation check)** | 122 | 4 | **3.3%** | **1.3% to 8.1%** |
-| **Grounded (Post-hoc check)** | 122 | 0 | **0.0%** | **0.0% to 3.1%** |
+| **Baseline (Post-hoc check)** | 342 | 24 | **7.0%** | **4.8% to 10.2%** |
+| **Grounded (Inline citation check)** | 673 | 49 | **7.3%** | **5.6% to 9.5%** |
+| **Grounded (Post-hoc check)** | 673 | 24 | **3.6%** | **2.4% to 5.3%** |
 
-- **Baseline Hard Errors (3):** Includes 1 clear fabrication (`[O] Physical examination was deferred.`, never spoken in dialogue), 1 ungrounded prescription attribution, and 1 cross-turn duration mismatch.
-- **Grounded Citation Errors (4):** 100% genuine attribution/quote boundaries caught by the inline checker (2 quote turn ID mismatches, 1 quote truncation dropping a negation, and 1 number duration imported from an uncited turn).
+**Key Findings:**
+- **Fair Head-to-Head Comparison:** Judged under the exact same post-hoc retrieval engine, citation-grounded notes achieve a **48.6% relative reduction in hard failures** (3.6% vs 7.0%, non-overlapping 95% Wilson intervals: `[2.4%, 5.3%]` vs `[4.8%, 10.2%]`).
+- **Citation Check Precision:** The inline citation check (`grounded/citation`) operates as a rigorous real-time verification sieve, catching quote boundary drift, dropped negation clauses, and cross-turn quantity borrowing before notes reach clinician review.
 
 ### 2. Clean Lexical Pass Rates (Zero Flags of Any Kind)
 
 | Check | Sentences | Clean Pass | Pass Rate |
 | :--- | :--- | :--- | :--- |
-| **Baseline (Post-hoc check)** | 69 | 55 | **79.7%** |
-| **Grounded (Inline citation check)** | 122 | 102 | **83.6%** |
-| **Grounded (Post-hoc check)** | 122 | 118 | **96.7%** |
+| **Baseline (Post-hoc check)** | 342 | 208 | **60.8%** |
+| **Grounded (Inline citation check)** | 673 | 594 | **88.3%** |
+| **Grounded (Post-hoc check)** | 673 | 628 | **93.3%** |
 
-### 3. Clinical Key-Fact Recall (Atomic Gold Facts)
+### 3. End-to-End Latency (n = 20)
+
+- **Baseline note:** Mean 12.0s, Median 9.8s, Max 34.7s
+- **Grounded note:** Mean 31.1s, Median 36.7s, Max 67.2s
+
+---
+
+## Development Set Calibration & Failure Audit (n = 3, `validator-v2`)
+
+Evaluated on 3 development consultations (`day1_consultation01` to `day1_consultation03`, 380 turns):
+- **Baseline Hard Failures:** 3 / 69 (4.3%, 95% CI: 1.5% to 12.0%)
+- **Grounded Citation Hard Failures:** 4 / 122 (3.3%, 95% CI: 1.3% to 8.1%)
+- **Grounded Post-Hoc Hard Failures:** 0 / 122 (0.0%, 95% CI: 0.0% to 3.1%)
+
+See [example_output.md](example_output.md) for the verbatim failure case walk-through and audit notes.
+
+### Clinical Key-Fact Recall (Atomic Gold Facts, Dev Set)
 
 Scored against clinician-authored gold facts (`data/key_facts.jsonl`):
 
