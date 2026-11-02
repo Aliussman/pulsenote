@@ -1,0 +1,298 @@
+{
+  "baseline": {
+    "encounters_scored": 20,
+    "recalled": 120,
+    "total": 127,
+    "recall": 0.9448818897637795,
+    "by_category": {
+      "diagnosis": {
+        "recalled": 19,
+        "total": 19
+      },
+      "exam": {
+        "recalled": 1,
+        "total": 1
+      },
+      "followup": {
+        "recalled": 2,
+        "total": 2
+      },
+      "history": {
+        "recalled": 3,
+        "total": 3
+      },
+      "medication": {
+        "recalled": 4,
+        "total": 4
+      },
+      "negative": {
+        "recalled": 14,
+        "total": 17
+      },
+      "plan": {
+        "recalled": 19,
+        "total": 19
+      },
+      "social": {
+        "recalled": 3,
+        "total": 3
+      },
+      "symptom": {
+        "recalled": 55,
+        "total": 59
+      }
+    },
+    "missed": [
+      {
+        "encounter_id": "day1_consultation07",
+        "fact": "cold symptoms"
+      },
+      {
+        "encounter_id": "day3_consultation07",
+        "fact": "no fever"
+      },
+      {
+        "encounter_id": "day4_consultation10",
+        "fact": "drinking lots of water"
+      },
+      {
+        "encounter_id": "day5_consultation04",
+        "fact": "difficulty passing urine"
+      },
+      {
+        "encounter_id": "day5_consultation06",
+        "fact": "no blood in stool"
+      },
+      {
+        "encounter_id": "day5_consultation08",
+        "fact": "cold symptoms"
+      },
+      {
+        "encounter_id": "day5_consultation08",
+        "fact": "no fever"
+      }
+    ]
+  },
+  "grounded_all": {
+    "encounters_scored": 20,
+    "recalled": 121,
+    "total": 127,
+    "recall": 0.952755905511811,
+    "by_category": {
+      "diagnosis": {
+        "recalled": 18,
+        "total": 19
+      },
+      "exam": {
+        "recalled": 1,
+        "total": 1
+      },
+      "followup": {
+        "recalled": 1,
+        "total": 2
+      },
+      "history": {
+        "recalled": 3,
+        "total": 3
+      },
+      "medication": {
+        "recalled": 4,
+        "total": 4
+      },
+      "negative": {
+        "recalled": 15,
+        "total": 17
+      },
+      "plan": {
+        "recalled": 19,
+        "total": 19
+      },
+      "social": {
+        "recalled": 3,
+        "total": 3
+      },
+      "symptom": {
+        "recalled": 57,
+        "total": 59
+      }
+    },
+    "missed": [
+      {
+        "encounter_id": "day1_consultation04",
+        "fact": "follow up advice"
+      },
+      {
+        "encounter_id": "day2_consultation03",
+        "fact": "no ear pain"
+      },
+      {
+        "encounter_id": "day3_consultation07",
+        "fact": "no fever"
+      },
+      {
+        "encounter_id": "day3_consultation10",
+        "fact": "gastroenteritis"
+      },
+      {
+        "encounter_id": "day4_consultation10",
+        "fact": "drinking lots of water"
+      },
+      {
+        "encounter_id": "day5_consultation08",
+        "fact": "cold symptoms"
+      }
+    ]
+  },
+  "grounded_unflagged": {
+    "encounters_scored": 20,
+    "recalled": 120,
+    "total": 127,
+    "recall": 0.9448818897637795,
+    "by_category": {
+      "diagnosis": {
+        "recalled": 18,
+        "total": 19
+      },
+      "exam": {
+        "recalled": 1,
+        "total": 1
+      },
+      "followup": {
+        "recalled": 1,
+        "total": 2
+      },
+      "history": {
+        "recalled": 3,
+        "total": 3
+      },
+      "medication": {
+        "recalled": 4,
+        "total": 4
+      },
+      "negative": {
+        "recalled": 15,
+        "total": 17
+      },
+      "plan": {
+        "recalled": 18,
+        "total": 19
+      },
+      "social": {
+        "recalled": 3,
+        "total": 3
+      },
+      "symptom": {
+        "recalled": 57,
+        "total": 59
+      }
+    },
+    "missed": [
+      {
+        "encounter_id": "day1_consultation04",
+        "fact": "follow up advice"
+      },
+      {
+        "encounter_id": "day2_consultation03",
+        "fact": "no ear pain"
+      },
+      {
+        "encounter_id": "day2_consultation03",
+        "fact": "neurological examination or referral"
+      },
+      {
+        "encounter_id": "day3_consultation07",
+        "fact": "no fever"
+      },
+      {
+        "encounter_id": "day3_consultation10",
+        "fact": "gastroenteritis"
+      },
+      {
+        "encounter_id": "day4_consultation10",
+        "fact": "drinking lots of water"
+      },
+      {
+        "encounter_id": "day5_consultation08",
+        "fact": "cold symptoms"
+      }
+    ]
+  },
+  "grounded_unflagged_strict": {
+    "encounters_scored": 20,
+    "recalled": 119,
+    "total": 127,
+    "recall": 0.937007874015748,
+    "by_category": {
+      "diagnosis": {
+        "recalled": 18,
+        "total": 19
+      },
+      "exam": {
+        "recalled": 1,
+        "total": 1
+      },
+      "followup": {
+        "recalled": 1,
+        "total": 2
+      },
+      "history": {
+        "recalled": 3,
+        "total": 3
+      },
+      "medication": {
+        "recalled": 4,
+        "total": 4
+      },
+      "negative": {
+        "recalled": 14,
+        "total": 17
+      },
+      "plan": {
+        "recalled": 18,
+        "total": 19
+      },
+      "social": {
+        "recalled": 3,
+        "total": 3
+      },
+      "symptom": {
+        "recalled": 57,
+        "total": 59
+      }
+    },
+    "missed": [
+      {
+        "encounter_id": "day1_consultation04",
+        "fact": "follow up advice"
+      },
+      {
+        "encounter_id": "day2_consultation03",
+        "fact": "no ear pain"
+      },
+      {
+        "encounter_id": "day2_consultation03",
+        "fact": "neurological examination or referral"
+      },
+      {
+        "encounter_id": "day3_consultation07",
+        "fact": "no fever"
+      },
+      {
+        "encounter_id": "day3_consultation10",
+        "fact": "gastroenteritis"
+      },
+      {
+        "encounter_id": "day4_consultation10",
+        "fact": "drinking lots of water"
+      },
+      {
+        "encounter_id": "day5_consultation08",
+        "fact": "cold symptoms"
+      },
+      {
+        "encounter_id": "day5_consultation08",
+        "fact": "no fever"
+      }
+    ]
+  }
+}
