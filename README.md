@@ -89,6 +89,21 @@ This generates:
 - `data/encounters.jsonl`: 57 standardized multi-turn consultations with normalized speaker roles (`Doctor` / `Patient`).
 - `data/reference_notes.json`: Clinician-authored reference notes and clinical highlights.
 
+### 3. Launch the Interactive Web Demo
+
+PulseNote includes a zero-dependency web dashboard (built with Python standard library) to inspect notes, citations, and heuristic flags interactively:
+
+```bash
+# Launch local auditor dashboard
+python demo/app.py
+
+# Open in browser: http://localhost:8080
+```
+
+- **Live Provenance Highlighting:** Hovering or clicking on any citation chip (e.g. `[T2: "headache for 3 days"]`) dynamically highlights and scrolls to the cited turn in the consultation transcript.
+- **Side-by-Side Comparison:** Toggle between Grounded (citation-enforced) and Baseline (standard ungrounded) clinical notes.
+- **Deterministic Failure Inspector:** Real-time visual badge inspection for hard failures (quantity/dosage mismatches, dropped negations, and speaker authority violations).
+
 ---
 
 ## Running the Evaluation
@@ -228,6 +243,8 @@ pulsenote/
 │   ├── key_facts.jsonl              # Gold key facts for dev encounters
 │   ├── reference_notes.json         # Clinician reference notes & highlights
 │   └── split_eval.json              # Pre-registered held-out split metadata
+├── demo/
+│   └── app.py                       # Zero-dependency interactive web dashboard & auditor
 ├── eval/
 │   ├── keyfacts.py                  # Term and negation matching for fact recall
 │   ├── label.py                     # Blind terminal labeling CLI
