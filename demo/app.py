@@ -1237,10 +1237,12 @@ class PulseNoteDemoHandler(SimpleHTTPRequestHandler):
     def do_GET(self):
         parsed = urlparse(self.path)
         if parsed.path in ["/", "/index.html"]:
+            encoded = HTML_PAGE.encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "text/html; charset=utf-8")
+            self.send_header("Content-Length", str(len(encoded)))
             self.end_headers()
-            self.wfile.write(HTML_PAGE.encode("utf-8"))
+            self.wfile.write(encoded)
             return
 
         if parsed.path == "/api/encounters":
@@ -1318,11 +1320,13 @@ class PulseNoteDemoHandler(SimpleHTTPRequestHandler):
         self.send_error(404, "Not Found")
 
     def send_json(self, data):
+        encoded = json.dumps(data).encode("utf-8")
         self.send_response(200)
         self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Length", str(len(encoded)))
         self.send_header("Access-Control-Allow-Origin", "*")
         self.end_headers()
-        self.wfile.write(json.dumps(data).encode("utf-8"))
+        self.wfile.write(encoded)
 
 
 def run_server(port=8080):
