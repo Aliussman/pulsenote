@@ -89,20 +89,29 @@ This generates:
 - `data/encounters.jsonl`: 57 standardized multi-turn consultations with normalized speaker roles (`Doctor` / `Patient`).
 - `data/reference_notes.json`: Clinician-authored reference notes and clinical highlights.
 
-### 3. Launch the Interactive Web Demo
+### 3. Launch the Interactive Clinical EHR Demo
 
-PulseNote includes a zero-dependency web dashboard (built with Python standard library) to inspect notes, citations, and heuristic flags interactively:
+PulseNote includes a production-grade, zero-dependency clinical auditor dashboard built with vanilla HTML5/CSS/JS and served directly via Python's standard library (`http.server`):
 
 ```bash
-# Launch local auditor dashboard
-python demo/app.py
+# Launch the local EHR auditor workspace (runs on port 8080 by default)
+python demo/app.py 8080
 
 # Open in browser: http://localhost:8080
 ```
 
-- **Live Provenance Highlighting:** Hovering or clicking on any citation chip (e.g. `[T2: "headache for 3 days"]`) dynamically highlights and scrolls to the cited turn in the consultation transcript.
-- **Side-by-Side Comparison:** Toggle between Grounded (citation-enforced) and Baseline (standard ungrounded) clinical notes.
-- **Deterministic Failure Inspector:** Real-time visual badge inspection for hard failures (quantity/dosage mismatches, dropped negations, and speaker authority violations).
+#### Core Workspace Features:
+
+- **EHR 3-Pane Clinical Layout:**
+  - **Directory & Cohort Filter (Left Pane):** Toggle between the **Pre-Registered Held-Out Set ($n = 20$)** and Development cohorts. Features real-time search across encounter IDs, chief presenting complaints, and diagnostic impressions.
+  - **Synchronized Dialogue Transcript (Center Pane):** Clean multi-turn doctor-patient consultation transcript with speaker role badges and conversational turns.
+  - **SOAP Note & Audit Inspector (Right Pane):** Full clinical SOAP notes organized by section (`[S] Subjective`, `[O] Objective`, `[A] Assessment`, `[P] Plan`) with inline citation pills and error badges.
+- **Bi-Directional Provenance Highlighting:** Clicking on any citation chip (e.g., `[T5: "wheezing for 2 days"]`) dynamically scrolls the transcript pane and highlights the exact cited turn and quote span.
+- **Side-by-Side System Comparison:** Seamlessly toggle between **Citation-Grounded** notes and **Baseline (Standard Ungrounded)** notes to inspect where ungrounded LLMs hallucinate numbers, durations, or symptoms.
+- **Deterministic Validator-v2 Inspector:** Inspect sentence-level verification badges that distinguish critical **Hard Hallucinations** (quantity/dosage mutations, dropped negations, fake quotes, speaker role authority violations) from soft warning notices.
+- **Interactive Benchmark Popover:** Click the minimal benchmark pill (`● Held-Out Eval 3.6% Error vs 7.0% Baseline -48.6% ▾`) in the navigation bar to expand a floating statistical summary card with exact 95% Wilson confidence intervals and key-fact recall metrics.
+- **Live Auditor Playground (`/api/audit_custom`):** An integrated testing workbench allowing clinicians and researchers to type arbitrary clinical statements against the active consultation transcript to evaluate `validator-v2` heuristic checks in real time.
+- **Zero Frontend Build Dependencies:** Requires no `npm`, `node_modules`, or complex frontend bundling—pure standard-library Python backend with a fast, responsive clinical UI.
 
 ---
 
