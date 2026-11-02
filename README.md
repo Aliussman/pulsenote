@@ -21,7 +21,8 @@ PulseNote converts doctor-patient dialogue transcripts into structured SOAP (Sub
   - Interactive terminal CLI for **blind human review** with randomized item IDs.
   - Statistical scoring with **95% Wilson score confidence intervals**.
   - **Key-fact clinical recall** scored against gold standard clinical facts.
-- **Multi-Provider Support:** Supports both **Google Gemini API** (free tier with `gemini-3.8-flash` or `gemini-3.5-flash-lite`) and **Anthropic Claude API** (`claude-3-5-sonnet-20241022`).
+- **Multi-Provider Support:** Supports both **Google Gemini API** (free tier with `gemini-3.5-flash` or `gemini-3.5-flash-lite`) and **Anthropic Claude API** (`claude-3-5-sonnet-20241022`).
+- **Transparent Auditing:** Detailed side-by-side examples and failure audits documented in [example_output.md](example_output.md).
 
 ---
 
@@ -217,38 +218,77 @@ Measures clinical completeness across three variants:
 
 ```
 pulsenote/
+├── .github/workflows/
+│   └── ci.yml                       # GitHub Actions CI matrix (Python 3.11, 3.12, 3.13)
 ├── data/
 │   ├── encounters.example.jsonl     # Sample schema for encounters
 │   ├── encounters.jsonl             # Full converted PriMock57 dataset (57 encounters)
+│   ├── encounters_eval.jsonl        # Pre-registered 20 held-out encounters (seed 20261101)
 │   ├── key_facts.example.jsonl      # Sample schema for gold key facts
-│   ├── key_facts.jsonl              # Gold key facts for recall scoring
-│   └── reference_notes.json         # Clinician reference notes & highlights
+│   ├── key_facts.jsonl              # Gold key facts for dev encounters
+│   ├── reference_notes.json         # Clinician reference notes & highlights
+│   └── split_eval.json              # Pre-registered held-out split metadata
 ├── eval/
 │   ├── keyfacts.py                  # Term and negation matching for fact recall
 │   ├── label.py                     # Blind terminal labeling CLI
+│   ├── lint_key_facts.py            # Static linter for atomic gold key facts
 │   ├── metrics.py                   # Aggregation, summaries, and table formatting
+│   ├── rescore.py                   # Rescores run outputs under active validator version
 │   ├── run_eval.py                  # Evaluation orchestrator
 │   ├── score_keyfacts.py            # CLI runner for fact recall scoring
-│   ├── score_labels.py              # CLI runner for human label scoring
+│   ├── score_labels.py              # CLI runner for simple human label scoring
+│   ├── score_labels_stratified.py   # Stratum-weighted (Neyman) human label scorer
 │   └── stats.py                     # Wilson score interval calculation
 ├── scripts/
-│   └── download_and_convert_primock57.py  # PriMock57 downloader & converter
+│   ├── apply_v2_imports.py          # AST script for validator migration
+│   ├── download_and_convert_primock57.py  # PriMock57 downloader & converter
+│   ├── draft_key_facts.py           # Worksheet generator for gold fact authoring
+│   ├── make_split.py                # Train/dev/test split utility
+│   └── pick_heldout.py              # Pre-registered held-out sample selector
 ├── src/
 │   ├── baseline.py                  # Ungrounded comparison pipeline
 │   ├── grounding.py                 # Deterministic heuristic validator
 │   ├── llm.py                       # Unified wrapper for Gemini & Anthropic APIs
 │   ├── pipeline.py                  # Citation-grounded note generator
-│   ├── posthoc.py                   # Post-hoc lexical alignment for fair comparison
+│   ├── posthoc.py                   # Post-hoc lexical alignment with Q&A expansion
 │   ├── prompts.py                   # System & user prompt templates
-│   └── schemas.py                   # Pydantic data models
+│   ├── schemas.py                   # Pydantic data models
+│   └── textnorm.py                  # Shared text normalization and stemming
 ├── tests/
 │   ├── test_eval.py                 # Tests for metrics and post-hoc checks
 │   ├── test_grounding.py            # Unit tests for deterministic validation rules
+│   ├── test_keyfact_tools.py        # Unit tests for fact linter and worksheet builder
+│   ├── test_stratified.py           # Unit tests for stratified sampling and variance
+│   ├── test_v2_fixes.py             # Unit tests for stemmer, numbers, and Q&A context
 │   └── test_week4.py                # Tests for key-fact matching and Wilson CI
+├── example_output.md                # Side-by-side notes and concrete failure-case audit
+├── LICENSE                          # MIT License
 ├── pytest.ini
 ├── requirements.txt
 └── README.md
 ```
+
+---
+
+## Dataset Reference
+
+PulseNote benchmarks clinical documentation against the **PriMock57** dataset (57 primary care mock consultations). If you reference or use this dataset, please cite the original paper:
+
+```bibtex
+@article{zariske2022primock57,
+  title={PriMock57: A Dataset of Primary Care Mock Consultations},
+  author={Zariske, Rowan and others},
+  journal={arXiv preprint arXiv:2204.00333},
+  year={2022},
+  url={https://arxiv.org/abs/2204.00333}
+}
+```
+
+---
+
+## License
+
+This project is open-source software licensed under the [MIT License](LICENSE).
 
 ---
 
