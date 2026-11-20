@@ -1246,6 +1246,21 @@ HTML_PAGE = """<!DOCTYPE html>
 
       if (c.support && c.support.length > 0) {
         jumpToTurn(c.support[0].turn_id, c.support[0].quote);
+      } else if (c.system === 'baseline' && currentData && currentData.turns) {
+        const words = c.text.toLowerCase().replace(/[^a-z0-9\\s]/g, ' ').split(/\\s+/).filter(w => w.length > 3);
+        let bestTurn = null;
+        let bestScore = 0;
+        currentData.turns.forEach(t => {
+          const tText = t.text.toLowerCase();
+          const score = words.filter(w => tText.includes(w)).length;
+          if (score > bestScore) {
+            bestScore = score;
+            bestTurn = t;
+          }
+        });
+        if (bestTurn && bestScore > 0) {
+          jumpToTurn(bestTurn.id, '');
+        }
       }
     }
 
@@ -1256,7 +1271,9 @@ HTML_PAGE = """<!DOCTYPE html>
       badge.className = `status-tag ${c.flagged ? 'discrepancy' : 'verified'}`;
       badge.textContent = c.flagged ? 'Discrepancy' : 'Verified';
 
+      const isBaseline = c.system === 'baseline';
       let supportHtml = '';
+
       if (c.support && c.support.length > 0) {
         supportHtml = c.support.map(sup => `
           <div class="audit-card">
@@ -1267,11 +1284,50 @@ HTML_PAGE = """<!DOCTYPE html>
             <div class="verbatim-box">"${escapeHtml(sup.quote)}"</div>
           </div>
         `).join('');
+      } else if (isBaseline) {
+        let matchedTurnHtml = '';
+        if (currentData && currentData.turns) {
+          const words = c.text.toLowerCase().replace(/[^a-z0-9\\s]/g, ' ').split(/\\s+/).filter(w => w.length > 3);
+          let bestTurn = null;
+          let bestScore = 0;
+          currentData.turns.forEach(t => {
+            const tText = t.text.toLowerCase();
+            const score = words.filter(w => tText.includes(w)).length;
+            if (score > bestScore) {
+              bestScore = score;
+              bestTurn = t;
+            }
+          });
+          if (bestTurn && bestScore > 0) {
+            matchedTurnHtml = `
+              <div style="margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                  <span style="font-size: 0.72rem; font-weight: 600; color: var(--text);">Post-Hoc Aligned Evidence (Turn ${bestTurn.id}):</span>
+                  <button class="btn" style="padding: 1px 6px; font-size: 0.68rem;" onclick="jumpToTurn(${bestTurn.id}, '')">Focus Turn ↗</button>
+                </div>
+                <div class="verbatim-box" style="font-size: 0.76rem;">"${escapeHtml(bestTurn.text)}"</div>
+              </div>
+            `;
+          }
+        }
+
+        supportHtml = `
+          <div class="audit-card" style="border-color: var(--border); background: var(--surface-subtle);">
+            <div class="audit-card-title" style="color: var(--text-muted);">
+              <span>Model Provenance: Ungrounded Baseline</span>
+              <span class="status-tag" style="background: var(--surface); border: 1px solid var(--border); color: var(--text-muted); font-size: 0.68rem;">Post-Hoc Check</span>
+            </div>
+            <div style="font-size: 0.74rem; color: var(--text-muted); line-height: 1.4;">
+              Standard baseline clinical models generate free-form text without citations. Factual grounding is verified post-hoc by scanning the consultation transcript.
+            </div>
+            ${matchedTurnHtml}
+          </div>
+        `;
       } else {
         supportHtml = `
           <div class="audit-card" style="border-color: var(--danger-border); background: var(--danger-bg);">
             <div class="audit-card-title" style="color: var(--danger-text);">Missing Dialogue Citation</div>
-            <div style="font-size: 0.75rem; color: var(--danger-text);">No turn citation was output for this claim.</div>
+            <div style="font-size: 0.75rem; color: var(--danger-text);">Grounded model failed to output a dialogue citation for this claim.</div>
           </div>
         `;
       }
@@ -1281,6 +1337,7 @@ HTML_PAGE = """<!DOCTYPE html>
       const numFail = hard.some(r => r.startsWith('numbers_not_in_source'));
       const negFail = hard.some(r => r.includes('negation'));
       const authFail = hard.some(r => r.startsWith('assessment_or_plan_not_from_clinician'));
+      const alignFail = hard.some(r => r === 'no_matching_turn' || r.startsWith('low_overlap'));
 
       container.innerHTML = `
         <div class="audit-card">
@@ -1300,11 +1357,13 @@ HTML_PAGE = """<!DOCTYPE html>
 
           <div class="rule-item">
             <div class="rule-header">
-              <span>1. Quote Verbatim Alignment</span>
-              <span class="rule-flag ${quoteFail ? 'fail' : 'pass'}">${quoteFail ? 'DISCREPANCY' : 'PASS'}</span>
+              <span>1. ${isBaseline ? 'Dialogue Alignment & Retrieval' : 'Quote Verbatim Alignment'}</span>
+              <span class="rule-flag ${isBaseline ? (alignFail ? 'fail' : 'pass') : (quoteFail ? 'fail' : 'pass')}">${isBaseline ? (alignFail ? 'DISCREPANCY' : 'ALIGNED') : (quoteFail ? 'DISCREPANCY' : 'PASS')}</span>
             </div>
             <div class="rule-desc">
-              ${quoteFail ? 'Quoted text does not match dialogue turn (SequenceMatcher ratio &lt; 0.90).' : 'Verbatim quotation verified cleanly against cited turn text.'}
+              ${isBaseline
+                ? (alignFail ? 'Post-hoc retrieval found no matching dialogue turn or insufficient lexical overlap.' : 'Sentence semantically aligns with dialogue turns retrieved from the consultation transcript.')
+                : (quoteFail ? 'Quoted text does not match dialogue turn (SequenceMatcher ratio &lt; 0.90).' : 'Verbatim quotation verified cleanly against cited turn text.')}
             </div>
           </div>
 
@@ -1314,7 +1373,7 @@ HTML_PAGE = """<!DOCTYPE html>
               <span class="rule-flag ${numFail ? 'fail' : 'pass'}">${numFail ? 'DISCREPANCY' : 'PASS'}</span>
             </div>
             <div class="rule-desc">
-              ${numFail ? 'Assertion contains numbers, dosages, or durations absent from cited turn.' : 'All extracted numbers match evidence dialogue tokens.'}
+              ${numFail ? 'Assertion contains numbers, dosages, or durations absent from dialogue.' : 'All extracted numbers match evidence dialogue tokens.'}
             </div>
           </div>
 
@@ -1324,7 +1383,7 @@ HTML_PAGE = """<!DOCTYPE html>
               <span class="rule-flag ${negFail ? 'fail' : 'pass'}">${negFail ? 'DISCREPANCY' : 'PASS'}</span>
             </div>
             <div class="rule-desc">
-              ${negFail ? 'Polarity inconsistency: dropped negation or ungrounded denial clause.' : 'Negative/affirmative polarity strictly matches quoted evidence.'}
+              ${negFail ? 'Polarity inconsistency: dropped negation or ungrounded denial clause.' : 'Negative/affirmative polarity strictly matches consultation dialogue.'}
             </div>
           </div>
 
