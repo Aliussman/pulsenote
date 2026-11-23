@@ -100,18 +100,16 @@ python demo/app.py 8080
 # Open in browser: http://localhost:8080
 ```
 
-#### Core Workspace Features:
+<p align="center">
+  <video src="assets/demo.mp4" controls="controls" width="100%" style="max-width: 840px; border-radius: 8px; border: 1px solid #e2e8f0;">
+    <a href="assets/demo.mp4">Watch the PulseNote EHR Demo Video</a>
+  </video>
+</p>
 
-- **EHR 3-Pane Clinical Layout:**
-  - **Directory & Cohort Filter (Left Pane):** Toggle between the **Pre-Registered Held-Out Set ($n = 20$)** and Development cohorts. Features real-time search across encounter IDs, chief presenting complaints, and diagnostic impressions.
-  - **Synchronized Dialogue Transcript (Center Pane):** Clean multi-turn doctor-patient consultation transcript with speaker role badges and conversational turns.
-  - **SOAP Note & Audit Inspector (Right Pane):** Full clinical SOAP notes organized by section (`[S] Subjective`, `[O] Objective`, `[A] Assessment`, `[P] Plan`) with inline citation pills and error badges.
-- **Bi-Directional Provenance Highlighting:** Clicking on any citation chip (e.g., `[T5: "wheezing for 2 days"]`) dynamically scrolls the transcript pane and highlights the exact cited turn and quote span.
-- **Side-by-Side System Comparison:** Seamlessly toggle between **Citation-Grounded** notes and **Baseline (Standard Ungrounded)** notes to inspect where ungrounded LLMs hallucinate numbers, durations, or symptoms.
-- **Deterministic Validator-v2 Inspector:** Inspect sentence-level verification badges that distinguish critical **Hard Hallucinations** (quantity/dosage mutations, dropped negations, fake quotes, speaker role authority violations) from soft warning notices.
-- **Interactive Benchmark Popover:** Click the minimal benchmark pill (`● Held-Out Eval 3.6% Error vs 7.0% Baseline -48.6% ▾`) in the navigation bar to expand a floating statistical summary card with exact 95% Wilson confidence intervals and key-fact recall metrics.
-- **Live Auditor Playground (`/api/audit_custom`):** An integrated testing workbench allowing clinicians and researchers to type arbitrary clinical statements against the active consultation transcript to evaluate `validator-v2` heuristic checks in real time.
-- **Zero Frontend Build Dependencies:** Requires no `npm`, `node_modules`, or complex frontend bundling—pure standard-library Python backend with a fast, responsive clinical UI.
+* **EHR 3-Pane Clinical Layout:** Multi-turn consultation transcript synchronized with clinical SOAP notes and real-time cohort filters.
+* **Bi-Directional Provenance Highlighting:** Clicking any citation chip (`[T2]`) dynamically auto-scrolls the transcript and highlights the cited dialogue turn.
+* **Deterministic Verification Matrix:** Side-by-side audit of Grounded vs. Baseline notes across verbatim quote alignment, quantities, negations, and clinician speaker authority.
+* **Live Auditor Playground:** An interactive testing workbench allowing clinicians to type custom claims against the dialogue to test `validator-v2` checks live.
 
 ---
 
@@ -289,6 +287,9 @@ Measures clinical completeness across three variants:
 pulsenote/
 ├── .github/workflows/
 │   └── ci.yml                       # GitHub Actions CI matrix (Python 3.11, 3.12, 3.13)
+├── assets/
+│   ├── demo.mp4                     # Screen recording of the interactive clinical EHR demo
+│   └── README.md                    # Media assets guide
 ├── data/
 │   ├── encounters.example.jsonl     # Sample schema for encounters
 │   ├── encounters.jsonl             # Full converted PriMock57 dataset (57 encounters)
