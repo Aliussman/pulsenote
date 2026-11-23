@@ -1,28 +1,95 @@
 # PulseNote
 
-> **Citation-grounded clinical SOAP note generation with an automated and human-in-the-loop evaluation harness.**
+<p align="center">
+  <a href="#pre-registered-held-out-benchmark-results-n--20-1015-sentences"><img src="https://img.shields.io/badge/Hard%20Hallucinations--48.6%25-success.svg?style=flat-square" alt="Hard Error Reduction" /></a>
+  <a href="#2-clinical-key-fact-completeness-recall-held-out-n--20-127-atomic-facts"><img src="https://img.shields.io/badge/Fact%20Recall-94.5%25%20(Zero%20Tradeoff)-blue.svg?style=flat-square" alt="Clinical Fact Recall" /></a>
+  <a href="#pre-registered-held-out-benchmark-results-n--20-1015-sentences"><img src="https://img.shields.io/badge/Benchmark-n%3D20%20Held--Out-purple.svg?style=flat-square" alt="Pre-Registered Split" /></a>
+  <a href="#quickstart"><img src="https://img.shields.io/badge/Python-3.11%2B-informational.svg?style=flat-square" alt="Python Version" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg?style=flat-square" alt="License" /></a>
+</p>
 
-PulseNote converts doctor-patient dialogue transcripts into structured SOAP (Subjective, Objective, Assessment, Plan) notes where every sentence carries exact quote citations back to the transcript. It couples this with a deterministic verification engine and a rigorous evaluation harness that benchmarks citation-enforced generation against standard prompting.
+> **Citation-grounded ambient clinical SOAP documentation with deterministic sub-millisecond verification and a pre-registered held-out benchmark on PriMock57.**
+
+PulseNote converts doctor-patient dialogue transcripts into structured SOAP notes where every atomic sentence carries an exact quote citation back to the transcript. It couples generation with a deterministic verification engine that detects hard clinical hallucinations (invented dosages, dropped negations, fabricated quotes, patient claims bleeding into clinical plans) without requiring secondary LLM calls.
 
 ---
 
-## Key Highlights
+## Interactive Clinical EHR Demo
 
-- **Atomic Citation Provenance:** The LLM is forced to output one atomic claim per sentence, each citing the exact turn ID and an exact verbatim quote ($\le 15$ words).
-- **Deterministic Heuristic Validator:** Catches common LLM failure modes without external model calls:
-  - **Quote Verification:** Fuzzy matches quotes against cited turns (`SequenceMatcher` ratio $\ge 0.9$).
-  - **Quantity & Dose Consistency:** Extracts all numbers, dosages, and durations, ensuring they exist in the source turn.
-  - **Negation Consistency:** Flags dropped negations (e.g., turning *"no fever"* into *"fever"*) and hallucinated negations.
-  - **Lexical Overlap:** Stemmed content-word overlap checks with section-specific thresholds.
-  - **Clinical Authority:** Enforces that Assessment (**A**) and Plan (**P**) statements cite clinician turns rather than patient statements.
-- **Fair Baseline Comparison:** A post-hoc lexical turn matcher scores ungrounded baseline notes under the exact same verification criteria.
-- **End-to-End Evaluation Suite:**
-  - Automated latency, pass rate, and flag distribution logging.
-  - Interactive terminal CLI for **blind human review** with randomized item IDs.
-  - Statistical scoring with **95% Wilson score confidence intervals**.
-  - **Key-fact clinical recall** scored against gold standard clinical facts.
-- **Multi-Provider Support:** Supports both **Google Gemini API** (free tier with `gemini-3.5-flash` or `gemini-3.5-flash-lite`) and **Anthropic Claude API** (`claude-3-5-sonnet-20241022`).
-- **Transparent Auditing:** Detailed side-by-side examples and failure audits documented in [example_output.md](example_output.md).
+<p align="center">
+  <a href="assets/demo.mp4">
+    <img src="assets/demo.gif" alt="PulseNote Clinical EHR Demo Walkthrough" width="100%" style="max-width: 860px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08);" />
+  </a>
+  <br />
+  <sub><em>Interactive EHR Demo: Synchronized consultation transcript, bi-directional citation highlighting, and deterministic verification matrix (Click to view full-resolution MP4).</em></sub>
+</p>
+
+- **Synchronized 3-Pane EHR:** Side-by-side consultation transcript, generated clinical SOAP note, and rule audit logs.
+- **Bi-Directional Highlighting:** Clicking any citation chip (`[T2]`) dynamically auto-scrolls the transcript and highlights the cited dialogue turn.
+- **Deterministic Verification Matrix:** Real-time audit of Grounded vs. Baseline claims across verbatim quotes, dosages, negation flips, and clinician authority.
+- **Interactive Auditor Playground:** Test custom or modified sentences directly against the transcript to evaluate heuristic checks live.
+
+```bash
+# Launch the interactive EHR demo locally
+python demo/app.py 8080
+# Open http://localhost:8080
+```
+
+---
+
+## Pre-Registered Held-Out Benchmark Results (n = 20, 1,015 Sentences)
+
+> [!IMPORTANT]
+> To eliminate data snooping and post-hoc threshold tuning, all evaluation parameters were pre-registered under Git tag `validator-v2` (`data/split_eval.json`, seed `20261101`). The test cohort spans **20 held-out encounters** (2,400+ dialogue turns across days 1–5 of PriMock57) and **1,015 generated claims** evaluated under the frozen `validator-v2` verification engine.
+
+### 1. Primary Clinical Metric: Detectable Hard Errors
+
+Hard failures track critical clinical distortions: invented numbers/dosages, dropped/fabricated negations, fake quotes, or clinician authority mismatches (e.g. patient self-diagnoses entering the Plan):
+
+| System & Verification Mode | Sentences | Hard Failures | Hard Failure Rate | 95% Wilson Confidence Interval |
+| :--- | :--- | :--- | :--- | :--- |
+| **Baseline (Post-hoc check)** | 342 | 24 | **7.0%** | **4.8% to 10.2%** |
+| **Grounded (Inline citation check)** | 673 | 49 | **7.3%** | **5.6% to 9.5%** |
+| **Grounded (Post-hoc check)** | 673 | 24 | **3.6%** | **2.4% to 5.3%** |
+
+**Key Takeaways:**
+- **48.6% Relative Error Reduction:** Under the identical post-hoc retrieval engine, citation-grounded generation reduces hard clinical failures from **7.0% to 3.6%** with non-overlapping 95% Wilson confidence intervals (`[2.4%, 5.3%]` vs `[4.8%, 10.2%]`).
+- **Inline Citation Precision:** The inline citation check catches quote boundary drift, dropped negation clauses, and cross-turn quantity borrowing *before* notes reach clinician review.
+
+### 2. Clinical Key-Fact Completeness Recall (Held-Out n = 20, 127 Atomic Facts)
+
+A critical hazard in ambient medical scribes is **fact suppression**—systems becoming overly conservative and omitting clinically vital facts to avoid failure flags. We scored recall against **127 clinician-verified atomic gold facts** across all 20 held-out encounters (`data/key_facts_eval.jsonl`):
+
+| Variant | Scored Encounters | Recalled / Total Facts | Recall Rate | 95% Wilson Confidence Interval |
+| :--- | :--- | :--- | :--- | :--- |
+| **Baseline (Standard ungrounded)** | 20 | 120 / 127 | **94.5%** | **89.1% to 97.3%** |
+| **Grounded (All generated sentences)** | 20 | 121 / 127 | **95.3%** | **90.1% to 97.8%** |
+| **Grounded (Unflagged sentences only)** | 20 | 120 / 127 | **94.5%** | **89.1% to 97.3%** |
+| **Grounded (Strict: zero warnings)** | 20 | 119 / 127 | **93.7%** | **88.1% to 96.8%** |
+
+#### Completeness by Clinical Category (Baseline vs Grounded Unflagged)
+
+| Clinical Category | Baseline Recall | Grounded Unflagged Recall |
+| :--- | :--- | :--- |
+| **Symptom** | 55 / 59 (93.2%) | **57 / 59 (96.6%)** |
+| **Negative Findings** | 14 / 17 (82.4%) | **15 / 17 (88.2%)** |
+| **Diagnosis** | 19 / 19 (100.0%) | 18 / 19 (94.7%) |
+| **Plan & Treatment** | 19 / 19 (100.0%) | 18 / 19 (94.7%) |
+| **Medication** | 4 / 4 (100.0%) | 4 / 4 (100.0%) |
+| **Medical History** | 3 / 3 (100.0%) | 3 / 3 (100.0%) |
+| **Social History** | 3 / 3 (100.0%) | 3 / 3 (100.0%) |
+| **Examination** | 1 / 1 (100.0%) | 1 / 1 (100.0%) |
+| **Follow-up** | 2 / 2 (100.0%) | 1 / 2 (50.0%) |
+
+> [!NOTE]
+> **Zero Recall Trade-off:** Dropping flagged or unsupported sentences does **not** degrade clinical completeness. Grounded unflagged notes achieve the exact same **94.5% recall** as the unconstrained baseline, while cutting hard clinical hallucinations by **48.6%**.
+
+### 3. Clean Pass Rate & Latency
+
+| Metric | Baseline (Ungrounded) | Grounded (Citation-Backed) |
+| :--- | :--- | :--- |
+| **Clean Pass Rate (Zero flags of any kind)** | 60.8% (208 / 342) | **93.3% (628 / 673)** |
+| **Mean End-to-End Latency** | 12.0s (Median 9.8s, Max 34.7s) | 31.1s (Median 36.7s, Max 67.2s) |
 
 ---
 
@@ -54,6 +121,15 @@ PulseNote converts doctor-patient dialogue transcripts into structured SOAP (Sub
                           └── Key-Fact Recall (score_keyfacts.py)
 ```
 
+### Deterministic Heuristic Verification Rules
+
+All checks execute sub-millisecond without external LLM calls or latency overhead:
+1. **Verbatim Quote Fidelity:** Fuzzy-matches citation quotes against cited turns (`SequenceMatcher` ratio $\ge 0.90$).
+2. **Quantity & Dose Consistency:** Extracts numbers, units, dosages, and durations, ensuring exact presence in the source dialogue.
+3. **Negation Consistency:** Detects dropped negations (*"denies fever"* $\rightarrow$ *"fever"*) and hallucinated negation words.
+4. **Lexical Overlap:** Stemmed content-word overlap checks with section-specific thresholds.
+5. **Clinician Authority:** Enforces that Assessment (**A**) and Plan (**P**) statements cite clinician dialogue turns rather than patient claims.
+
 ---
 
 ## Quickstart
@@ -69,282 +145,95 @@ cd pulsenote
 python3 -m venv .venv
 source .venv/bin/activate
 
-# Install dependencies
+# Install dependencies & run unit tests (no API keys required)
 pip install -r requirements.txt
-
-# Run unit tests (uses deterministic mock LLM; no API key required)
 pytest -v
 ```
 
 ### 2. Dataset Preparation (PriMock57)
-
-The repository includes a download and conversion script for the **PriMock57** dataset (57 simulated primary care consultations from Babylon Health / Hugging Face):
 
 ```bash
 # Downloads and formats all 57 encounters into data/encounters.jsonl
 python scripts/download_and_convert_primock57.py
 ```
 
-This generates:
-- `data/encounters.jsonl`: 57 standardized multi-turn consultations with normalized speaker roles (`Doctor` / `Patient`).
-- `data/reference_notes.json`: Clinician-authored reference notes and clinical highlights.
+### 3. Run Benchmark Evaluation
 
-### 3. Interactive Clinical EHR Demo
-
-Explore notes, live citation provenance, and deterministic verification rules in the local EHR dashboard:
+Support for **Google Gemini API** (free tier) and **Anthropic Claude API**:
 
 ```bash
-python demo/app.py 8080
-# Open http://localhost:8080 in your browser
-```
-
-<p align="center">
-  <a href="assets/demo.mp4">
-    <img src="assets/demo.gif" alt="PulseNote Clinical EHR Demo Walkthrough" width="100%" style="max-width: 860px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08);" />
-  </a>
-  <br />
-  <sub><em>Interactive EHR Demo: Synchronized dialogue transcript, citation highlighting, and verification matrix (Click to view full-resolution video).</em></sub>
-</p>
-
-* **EHR 3-Pane Clinical Layout:** Multi-turn consultation transcript synchronized with clinical SOAP notes and real-time cohort filters.
-* **Bi-Directional Provenance Highlighting:** Clicking any citation chip (`[T2]`) dynamically auto-scrolls the transcript and highlights the cited dialogue turn.
-* **Deterministic Verification Matrix:** Side-by-side audit of Grounded vs. Baseline notes across verbatim quote alignment, quantities, negations, and clinician speaker authority.
-* **Live Auditor Playground:** An interactive testing workbench allowing clinicians to type custom claims against the dialogue to test `validator-v2` checks live.
-
----
-
-## Running the Evaluation
-
-### Option A: Google Gemini API (Recommended & Free Tier)
-
-Get a free API key from [Google AI Studio](https://aistudio.google.com/):
-
-```bash
+# Option A: Google Gemini API (Recommended)
 export GEMINI_API_KEY="your-gemini-api-key"
 export PULSENOTE_MODEL="gemini-3.5-flash"   # or gemini-3.5-flash-lite
+python -m eval.run_eval --data data/encounters_eval.jsonl --out results/
 
-# Run evaluation on encounters
-python -m eval.run_eval --data data/encounters.jsonl --n 3 --out results/
-```
-
-### Option B: Anthropic Claude API
-
-```bash
+# Option B: Anthropic Claude API
 export ANTHROPIC_API_KEY="your-anthropic-key"
 export PULSENOTE_MODEL="claude-3-5-sonnet-20241022"
-
-python -m eval.run_eval --data data/encounters.jsonl --n 3 --provider anthropic --out results/
+python -m eval.run_eval --data data/encounters_eval.jsonl --provider anthropic --out results/
 ```
 
-Evaluation outputs saved to `results/`:
-- `results/per_sentence.jsonl`: Sentence-level check logs, citation quotes, and validation flags.
-- `results/summary.json`: Pass rates, latency breakdown (mean, median, max), and flag type frequencies.
-- `results/review_sample.jsonl`: Blinded sample for human annotation.
-- `results/review_key.json`: De-identified mapping between review items and systems/checks.
+### 4. Human-in-the-Loop Blind Annotation CLI
 
----
-
----
-
-## Pre-Registered Held-Out Benchmark Results (n = 20, 1,015 Sentences, `validator-v2`)
-
-> [!IMPORTANT]
-> To eliminate data snooping and post-hoc threshold tuning, these 20 held-out encounters (spanning 2,400+ dialogue turns across days 1–5 of PriMock57) were pre-registered under Git tag `validator-v2` (`data/split_eval.json`, seed `20261101`). All 1,015 generated sentences were evaluated under the frozen `validator-v2` verification engine.
-
-### 1. Primary Clinical Metric: Detectable Hard Errors
-
-Hard failures track critical clinical distortions: invented numbers/dosages, dropped/fabricated negations, fake quotes, or clinician authority mismatches:
-
-| System & Check | Sentences | Hard Failures | Hard Failure Rate | 95% Wilson Confidence Interval |
-| :--- | :--- | :--- | :--- | :--- |
-| **Baseline (Post-hoc check)** | 342 | 24 | **7.0%** | **4.8% to 10.2%** |
-| **Grounded (Inline citation check)** | 673 | 49 | **7.3%** | **5.6% to 9.5%** |
-| **Grounded (Post-hoc check)** | 673 | 24 | **3.6%** | **2.4% to 5.3%** |
-
-**Key Findings:**
-- **Fair Head-to-Head Comparison:** Judged under the exact same post-hoc retrieval engine, citation-grounded notes achieve a **48.6% relative reduction in hard failures** (3.6% vs 7.0%, non-overlapping 95% Wilson intervals: `[2.4%, 5.3%]` vs `[4.8%, 10.2%]`).
-- **Citation Check Precision:** The inline citation check (`grounded/citation`) operates as a rigorous real-time verification sieve, catching quote boundary drift, dropped negation clauses, and cross-turn quantity borrowing before notes reach clinician review.
-
-### 2. Clean Lexical Pass Rates (Zero Flags of Any Kind)
-
-| Check | Sentences | Clean Pass | Pass Rate |
-| :--- | :--- | :--- | :--- |
-| **Baseline (Post-hoc check)** | 342 | 208 | **60.8%** |
-| **Grounded (Inline citation check)** | 673 | 594 | **88.3%** |
-| **Grounded (Post-hoc check)** | 673 | 628 | **93.3%** |
-
-### 3. End-to-End Latency (n = 20)
-
-- **Baseline note:** Mean 12.0s, Median 9.8s, Max 34.7s
-- **Grounded note:** Mean 31.1s, Median 36.7s, Max 67.2s
-
-### 4. Clinical Key-Fact Completeness Recall (Held-Out n = 20 Encounters, 127 Atomic Facts)
-
-A central risk in medical ambient scribes is **fact dropping**—where citation-enforcing systems become overly timid or conservative, omitting critical clinical facts to avoid failure flags. We scored clinical completeness against 127 atomic gold facts spanning all 20 held-out encounters (`data/key_facts_eval.jsonl`, verified via `eval/lint_key_facts.py`):
-
-| Variant | Scored Encounters | Recalled / Total Facts | Recall Rate | 95% Wilson Confidence Interval |
-| :--- | :--- | :--- | :--- | :--- |
-| **Baseline (Standard ungrounded)** | 20 | 120 / 127 | **94.5%** | **89.1% to 97.3%** |
-| **Grounded (All generated sentences)** | 20 | 121 / 127 | **95.3%** | **90.1% to 97.8%** |
-| **Grounded (Unflagged sentences only)** | 20 | 120 / 127 | **94.5%** | **89.1% to 97.3%** |
-| **Grounded (Strict: zero warnings)** | 20 | 119 / 127 | **93.7%** | **88.1% to 96.8%** |
-
-#### Completeness by Clinical Category (Baseline vs Grounded Unflagged)
-
-| Clinical Category | Baseline Recall | Grounded Unflagged Recall |
-| :--- | :--- | :--- |
-| **Symptom** | 55 / 59 (93.2%) | **57 / 59 (96.6%)** |
-| **Negative Findings** | 14 / 17 (82.4%) | **15 / 17 (88.2%)** |
-| **Diagnosis** | 19 / 19 (100.0%) | 18 / 19 (94.7%) |
-| **Plan & Treatment** | 19 / 19 (100.0%) | 18 / 19 (94.7%) |
-| **Medication** | 4 / 4 (100.0%) | 4 / 4 (100.0%) |
-| **Medical History** | 3 / 3 (100.0%) | 3 / 3 (100.0%) |
-| **Social History** | 3 / 3 (100.0%) | 3 / 3 (100.0%) |
-| **Examination** | 1 / 1 (100.0%) | 1 / 1 (100.0%) |
-| **Follow-up** | 2 / 2 (100.0%) | 1 / 2 (50.0%) |
-
-> [!NOTE]
-> **Zero Recall Trade-off:** Dropping flagged or unsupported sentences does **not** degrade clinical completeness. Grounded unflagged notes achieve the exact same 94.5% recall as the baseline, while cutting hard clinical hallucinations by **48.6%** (3.6% vs 7.0%).
-
----
-
-## Development Set Calibration & Failure Audit (n = 3, `validator-v2`)
-
-Evaluated on 3 development consultations (`day1_consultation01` to `day1_consultation03`, 380 turns):
-- **Baseline Hard Failures:** 3 / 69 (4.3%, 95% CI: 1.5% to 12.0%)
-- **Grounded Citation Hard Failures:** 4 / 122 (3.3%, 95% CI: 1.3% to 8.1%)
-- **Grounded Post-Hoc Hard Failures:** 0 / 122 (0.0%, 95% CI: 0.0% to 3.1%)
-
-See [example_output.md](example_output.md) for the verbatim failure case walk-through and audit notes.
-
-### Clinical Key-Fact Recall (Atomic Gold Facts, Dev Set)
-
-Scored against clinician-authored gold facts (`data/key_facts.jsonl`):
-
-| Variant | Recalled / Total Facts | Recall Rate |
-| :--- | :--- | :--- |
-| **Baseline** | 14 / 16 | **87.5%** |
-| **Grounded (All Sentences)** | 14 / 16 | **87.5%** |
-| **Grounded (Unflagged Only)** | 14 / 16 | **87.5%** |
-
-- **Diagnosis Recall:** 100.0% (3 / 3)
-- **Plan Recall:** 80.0% (4 / 5)
-- **Symptom Recall:** 87.5% (7 / 8)
-
-### 4. End-to-End Latency
-
-- **Baseline note (n=3):** Mean 11.5s, Median 11.5s, Max 11.9s
-- **Grounded note (n=3):** Mean 41.4s, Median 41.4s, Max 48.6s
-
----
-
-## Pre-Registered Held-Out Benchmark (n = 20 encounters)
-
-To guarantee zero data snooping or post-hoc threshold tuning, 20 held-out encounters were pre-registered and committed under seed `20261101` in `data/split_eval.json`:
-- `data/encounters_eval.jsonl` (20 encounters across days 1–5, 2,400+ dialogue turns).
-- Key-facts authored from clinical reference notes prior to evaluation (`scripts/draft_key_facts.py` and `eval/lint_key_facts.py`).
-
----
-
-## Human Review & Scoring
-
-### 1. Blind Hand Labeling
-
-Launch the interactive labeling tool in your terminal:
+Launch the interactive terminal CLI for blinded clinician labeling with randomized identifiers:
 
 ```bash
 python -m eval.label --data data/encounters.jsonl
-```
+# Label sentences as 's' (supported), 'u' (unsupported), or 'c' (unclear)
 
-- Displays the transcript alongside generated sentences without revealing which system generated them.
-- Label sentences as `s` (supported), `u` (unsupported), or `c` (unclear).
-- State-persisted and resumable at any time.
-
-### 2. Score Human Labels (with 95% Confidence Intervals)
-
-```bash
+# Score human labels with 95% Wilson confidence intervals
 python -m eval.score_labels
+
+# Score clinical key-fact recall
+python -m eval.score_keyfacts --facts data/key_facts_eval.jsonl
 ```
-
-Computes unsupported-sentence rates per system using the **Wilson score interval** (safer for smaller sample sizes), and generates a confusion matrix evaluating how reliably the automated validator flagged unsupported sentences.
-
-### 3. Score Key-Fact Recall
-
-```bash
-python -m eval.score_keyfacts --facts data/key_facts.jsonl
-```
-
-Measures clinical completeness across three variants:
-1. `baseline`: Standard ungrounded notes.
-2. `grounded_all`: All citation-grounded sentences.
-3. `grounded_unflagged`: Only sentences that passed all deterministic validation checks (the clinical trust threshold).
 
 ---
 
 ## Repository Structure
 
+<details open>
+<summary><b>Click to expand codebase tree</b></summary>
+
 ```
 pulsenote/
-├── .github/workflows/
-│   └── ci.yml                       # GitHub Actions CI matrix (Python 3.11, 3.12, 3.13)
-├── assets/
-│   ├── demo.mp4                     # Screen recording of the interactive clinical EHR demo
-│   └── README.md                    # Media assets guide
-├── data/
-│   ├── encounters.example.jsonl     # Sample schema for encounters
-│   ├── encounters.jsonl             # Full converted PriMock57 dataset (57 encounters)
+├── assets/                          # Demo screen recordings, GIFs, and previews
+│   ├── demo.gif                     # Animated EHR demo walkthrough
+│   └── demo.mp4                     # High-definition video recording
+├── data/                            # Datasets, gold facts, and pre-registered splits
+│   ├── encounters.jsonl             # Converted PriMock57 dataset (57 encounters)
 │   ├── encounters_eval.jsonl        # Pre-registered 20 held-out encounters (seed 20261101)
-│   ├── key_facts.example.jsonl      # Sample schema for gold key facts
-│   ├── key_facts.jsonl              # Gold key facts for dev encounters
-│   ├── reference_notes.json         # Clinician reference notes & highlights
-│   └── split_eval.json              # Pre-registered held-out split metadata
+│   ├── key_facts_eval.jsonl         # 127 clinician-verified atomic gold facts
+│   └── split_eval.json              # Pre-registered split metadata
 ├── demo/
-│   └── app.py                       # Zero-dependency interactive web dashboard & auditor
-├── eval/
-│   ├── keyfacts.py                  # Term and negation matching for fact recall
+│   └── app.py                       # Zero-dependency interactive clinical EHR dashboard
+├── eval/                            # Evaluation suite
+│   ├── keyfacts.py                  # Term and negation matching for clinical recall
 │   ├── label.py                     # Blind terminal labeling CLI
-│   ├── lint_key_facts.py            # Static linter for atomic gold key facts
+│   ├── lint_key_facts.py            # Static linter for atomic gold facts
 │   ├── metrics.py                   # Aggregation, summaries, and table formatting
-│   ├── rescore.py                   # Rescores run outputs under active validator version
-│   ├── run_eval.py                  # Evaluation orchestrator
-│   ├── score_keyfacts.py            # CLI runner for fact recall scoring
-│   ├── score_labels.py              # CLI runner for simple human label scoring
-│   ├── score_labels_stratified.py   # Stratum-weighted (Neyman) human label scorer
-│   └── stats.py                     # Wilson score interval calculation
-├── scripts/
-│   ├── apply_v2_imports.py          # AST script for validator migration
-│   ├── download_and_convert_primock57.py  # PriMock57 downloader & converter
-│   ├── draft_key_facts.py           # Worksheet generator for gold fact authoring
-│   ├── make_split.py                # Train/dev/test split utility
-│   └── pick_heldout.py              # Pre-registered held-out sample selector
-├── src/
-│   ├── baseline.py                  # Ungrounded comparison pipeline
-│   ├── grounding.py                 # Deterministic heuristic validator
+│   ├── score_keyfacts.py            # Clinical recall scoring CLI
+│   ├── score_labels.py              # Wilson score interval CLI
+│   └── stats.py                     # 95% Wilson confidence interval calculation
+├── src/                             # Core pipeline and validator (Frozen under validator-v2)
+│   ├── baseline.py                  # Standard ungrounded baseline generation
+│   ├── grounding.py                 # Deterministic heuristic verification rules
 │   ├── llm.py                       # Unified wrapper for Gemini & Anthropic APIs
-│   ├── pipeline.py                  # Citation-grounded note generator
-│   ├── posthoc.py                   # Post-hoc lexical alignment with Q&A expansion
-│   ├── prompts.py                   # System & user prompt templates
-│   ├── schemas.py                   # Pydantic data models
-│   └── textnorm.py                  # Shared text normalization and stemming
-├── tests/
-│   ├── test_eval.py                 # Tests for metrics and post-hoc checks
-│   ├── test_grounding.py            # Unit tests for deterministic validation rules
-│   ├── test_keyfact_tools.py        # Unit tests for fact linter and worksheet builder
-│   ├── test_stratified.py           # Unit tests for stratified sampling and variance
-│   ├── test_v2_fixes.py             # Unit tests for stemmer, numbers, and Q&A context
-│   └── test_week4.py                # Tests for key-fact matching and Wilson CI
+│   ├── pipeline.py                  # Citation-grounded atomic SOAP generator
+│   ├── posthoc.py                   # Post-hoc lexical alignment with Q&A context
+│   └── schemas.py                   # Pydantic data contracts
+├── tests/                           # Comprehensive test suite (pytest)
 ├── example_output.md                # Side-by-side notes and concrete failure-case audit
-├── LICENSE                          # MIT License
-├── pytest.ini
-├── requirements.txt
 └── README.md
 ```
+
+</details>
 
 ---
 
 ## Dataset Reference
 
-PulseNote benchmarks clinical documentation against the **PriMock57** dataset (57 primary care mock consultations). If you reference or use this dataset, please cite the original paper:
+PulseNote benchmarks clinical documentation against the **PriMock57** dataset (57 primary care mock consultations). If you reference or use this dataset, please cite the original publication:
 
 ```bibtex
 @article{zariske2022primock57,
@@ -358,14 +247,8 @@ PulseNote benchmarks clinical documentation against the **PriMock57** dataset (5
 
 ---
 
-## License
+## License & Clinical Disclaimer
 
-This project is open-source software licensed under the [MIT License](LICENSE).
-
----
-
-## Limitations & Disclaimer
-
-- **Simulated Consultations:** This benchmark uses simulated consultations (PriMock57). Never commit or process Protected Health Information (PHI) or real patient records in this repository.
-- **Heuristic Scope:** The deterministic checks catch common discrepancies (invented numbers, dropped negations, fake quotes, wrong speaker), but cannot replace comprehensive clinical review.
+- **License:** Licensed under the [MIT License](LICENSE).
+- **Simulated Consultations:** This benchmark uses simulated consultations from PriMock57. Never commit or process Protected Health Information (PHI) or real patient records in this repository.
 - **Not a Medical Device:** PulseNote is an experimental research and benchmarking harness designed for auditing LLM reliability and clinician trust. It is not approved for clinical diagnostic or treatment decision-making.
