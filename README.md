@@ -101,9 +101,11 @@ python demo/app.py 8080
 ```
 
 <p align="center">
-  <video src="assets/demo.mp4" poster="assets/demo_preview.png" controls="controls" width="100%" style="max-width: 840px; border-radius: 8px; border: 1px solid #e2e8f0;">
-    <a href="assets/demo.mp4"><img src="assets/demo_preview.png" alt="PulseNote Clinical EHR Demo" width="100%" style="border-radius: 8px; border: 1px solid #e2e8f0;" /></a>
-  </video>
+  <a href="assets/demo.mp4">
+    <img src="assets/demo.gif" alt="PulseNote Clinical EHR Demo Walkthrough" width="100%" style="max-width: 860px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08);" />
+  </a>
+  <br />
+  <sub><em>Interactive EHR Demo: Synchronized dialogue transcript, citation highlighting, and verification matrix (Click to view full-resolution video).</em></sub>
 </p>
 
 * **EHR 3-Pane Clinical Layout:** Multi-turn consultation transcript synchronized with clinical SOAP notes and real-time cohort filters.
