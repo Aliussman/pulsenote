@@ -89,15 +89,13 @@ This generates:
 - `data/encounters.jsonl`: 57 standardized multi-turn consultations with normalized speaker roles (`Doctor` / `Patient`).
 - `data/reference_notes.json`: Clinician-authored reference notes and clinical highlights.
 
-### 3. Launch the Interactive Clinical EHR Demo
+### 3. Interactive Clinical EHR Demo
 
-PulseNote includes a production-grade, zero-dependency clinical auditor dashboard built with vanilla HTML5/CSS/JS and served directly via Python's standard library (`http.server`):
+Explore notes, live citation provenance, and deterministic verification rules in the local EHR dashboard:
 
 ```bash
-# Launch the local EHR auditor workspace (runs on port 8080 by default)
 python demo/app.py 8080
-
-# Open in browser: http://localhost:8080
+# Open http://localhost:8080 in your browser
 ```
 
 <p align="center">
